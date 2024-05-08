@@ -1,25 +1,31 @@
 package com.team.bookstore.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
-
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Table(name="role")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Role {
+public class Role extends  Auditable{
     @Id
-    String roleName;
+    String rolename;
     String description;
-    @ManyToMany
-    Set<Permission> permissions;
+    @JsonManagedReference("role")
+    @OneToMany(mappedBy = "role")
+    @JsonIgnore
+    Set<User_Role> user_role = new HashSet<>();
+    @OneToMany(mappedBy = "role",cascade = CascadeType.ALL,fetch =
+            FetchType.EAGER)
+    @JsonIgnore
+    Set<Role_Permission> role_permission = new HashSet<>();
 }

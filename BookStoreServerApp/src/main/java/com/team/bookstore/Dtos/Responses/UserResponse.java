@@ -15,6 +15,9 @@ import java.util.Set;
 public class UserResponse {
     String id;
     String username;
+    Date createAt;
+    Date updateAt;
+    String createBy;
+    String updateBy;
     Set<Role> roles;
-    Date createdTime;
 }

@@ -13,7 +13,10 @@ import java.util.Date;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PermissionResponse {
-    String permissionName;
+    String permissionname;
     String description;
-    Date createdTime;
+    Date createAt;
+    Date updateAt;
+    String createBy;
+    String updateBy;
 }
