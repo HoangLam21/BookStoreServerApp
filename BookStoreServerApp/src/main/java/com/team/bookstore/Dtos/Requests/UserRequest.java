@@ -1,22 +1,19 @@
 package com.team.bookstore.Dtos.Requests;
 
-import com.team.bookstore.Entities.Role_Permission;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.Set;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RoleRequest {
+public class UserRequest {
     @NotNull
-    String rolename;
+    String username;
     @NotNull
-    String description;
-    @NotNull
-    Set<Role_Permission> role_permission;
+    @Size(max = 16,min = 9)
+    String password;
 }
