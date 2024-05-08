@@ -28,6 +28,5 @@ public class GlobalExceptionHandler {
                     .message(applicationException.getMessage())
                     .build()
         );
-
     }
 }
