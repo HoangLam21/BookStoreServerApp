@@ -56,6 +56,9 @@ public class BookService {
     @Secured("ROLE_ADMIN")
     public BookResponse addBook(Book book){
         try {
+            book.setLanguage(languageRepository.findLanguageById(book.getLanguage().getId()));
+            book.setProvider(providerRepository.findProviderById(book.getProvider().getId()));
+            book.setPublisher(publisherRepository.findPublisherById(book.getPublisher().getId()));
             Set<GalleryManage> galleryManages = book.getGalleryManage();
             Set<GalleryManage> newGalleries = galleryManages.stream().map(galleryManage -> {
                 GalleryManage existGalleryManage =
