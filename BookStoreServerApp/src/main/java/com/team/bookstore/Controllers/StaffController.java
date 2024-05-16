@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/staff")
@@ -61,16 +62,16 @@ public class StaffController {
         return ResponseEntity.ok(APIResponse.builder().code(200).message("OK").result(result).build());
     }
     @PostMapping("/create/info/{id}")
-    public ResponseEntity<APIResponse<?>> createCustomerInformation(@PathVariable int id, @RequestBody StaffInformationRequest staffInformationRequest){
+    public ResponseEntity<APIResponse<?>> createCustomerInformation(@PathVariable int id, @RequestPart MultipartFile image, @RequestPart StaffInformationRequest staffInformationRequest){
         StaffInformationResponse result =
-                staffService.createStaffInformation(id,
+                staffService.createStaffInformation(id,image,
                         userMapper.toStaffInformation(staffInformationRequest));
         return ResponseEntity.ok(APIResponse.builder().code(200).message("OK").result(result).build());
     }
     @PatchMapping("/update/info/{id}")
-    public ResponseEntity<APIResponse<?>> updateCustomerInformation(@PathVariable int id, @RequestBody StaffInformationRequest staffInformationRequest){
+    public ResponseEntity<APIResponse<?>> updateCustomerInformation(@PathVariable int id,@RequestPart MultipartFile image ,@RequestPart StaffInformationRequest staffInformationRequest){
         StaffInformationResponse result =
-                staffService.updateStaffInformation(id,
+                staffService.updateStaffInformation(id,image,
                         userMapper.toStaffInformation(staffInformationRequest));
         return ResponseEntity.ok(APIResponse.builder().code(200).message("OK").result(result).build());
     }

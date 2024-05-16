@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,8 +43,10 @@ public class CategoryService {
         }
     }
     @Secured("ROLE_ADMIN")
-    public CategoryResponse createCategory(Category category){
+    public CategoryResponse createCategory(MultipartFile image,
+                                           Category category){
         try{
+            category.setAvatar(image.getBytes());
             return categoryMapper.toCategoryResponse(categoryRepository.save(category));
         }catch(Exception e){
             log.info(e);
@@ -51,8 +54,10 @@ public class CategoryService {
         }
     }
     @Secured("ROLE_ADMIN")
-    public CategoryResponse updateCategory(int id,Category category){
+    public CategoryResponse updateCategory(int id,MultipartFile image,
+                                           Category category){
         try{
+            category.setAvatar(image.getBytes());
             if(!categoryRepository.existsById(id)){
                 throw new ApplicationException(ErrorCodes.OBJECT_NOT_EXIST);
             }

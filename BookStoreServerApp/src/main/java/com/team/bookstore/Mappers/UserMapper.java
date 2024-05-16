@@ -60,6 +60,7 @@ public interface UserMapper {
     @Mapping(target = "customer_book",ignore = true)
     @Mapping(target = "user",ignore = true)
     @Mapping(target = "feedback",ignore = true)
+    @Mapping(target = "avatar",ignore = true)
     CustomerInformation toCustomerInformation(CustomerInformationRequest customerInformationRequest);
     CustomerInformationResponse toCustomerInformationResponse(CustomerInformation customerInformation);
     @Mapping(target = "avatar",ignore = true)
@@ -71,6 +72,7 @@ public interface UserMapper {
     @Mapping(target = "id",ignore = true)
     @Mapping(target = "staff_shift",ignore = true)
     @Mapping(target = "user",ignore = true)
+    @Mapping(target = "avatar",ignore = true)
     StaffInformation toStaffInformation(StaffInformationRequest staffInformationRequest);
     StaffInformationResponse toStaffInformationResponse(StaffInformation staffInformation);
 

@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 @RestController
 @RequestMapping("/gallery")
 public class GalleryManageController {
@@ -17,9 +19,11 @@ public class GalleryManageController {
     GalleryManageMapper galleryManageMapper;
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/add")
-    public ResponseEntity<APIResponse<?>> addGallery(@RequestBody GalleryManageRequest galleryManageRequest){
+    public ResponseEntity<APIResponse<?>> addGallery(@RequestPart MultipartFile image,
+                                                     @RequestPart GalleryManageRequest galleryManageRequest){
         GalleryManageResponse result =
-                galleryManageService.addGallery(galleryManageMapper.toGalleryManage(galleryManageRequest));
+                galleryManageService.addGallery(image,
+                        galleryManageMapper.toGalleryManage(galleryManageRequest));
         return ResponseEntity.ok(APIResponse.builder().code(200).message("OK").result(result).build());
     }
     @GetMapping("/all")
@@ -33,9 +37,10 @@ public class GalleryManageController {
     @SecurityRequirement(name = "bearerAuth")
     @PatchMapping("/update/{id}")
     public ResponseEntity<APIResponse<?>> updateGallery(@PathVariable int id,
-                                                         @RequestBody GalleryManageRequest galleryManageRequest){
+                                                        @RequestPart MultipartFile image,
+                                                         @RequestPart GalleryManageRequest galleryManageRequest){
         GalleryManageResponse result =
-                galleryManageService.updateGallery(id,
+                galleryManageService.updateGallery(id,image,
                 galleryManageMapper.toGalleryManage(galleryManageRequest));
         return ResponseEntity.ok(APIResponse.builder().code(200).message("OK").result(result).build());
 

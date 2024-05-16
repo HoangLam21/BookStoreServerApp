@@ -24,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -86,8 +87,10 @@ public class CustomerService {
         }
     }
     public CustomerInformationResponse createCustomerInformation(int id,
+                                                                 MultipartFile image,
             CustomerInformation customerInformation){
         try{
+            customerInformation.setAvatar(image.getBytes());
             if(!userRepository.existsById(id)){
                 throw new ApplicationException(ErrorCodes.USER_NOT_EXIST);
             }
@@ -102,8 +105,10 @@ public class CustomerService {
         }
     }
     public CustomerInformationResponse updateCustomerInformation(int id,
+                                                                 MultipartFile image,
                                                                  CustomerInformation customerInformation){
         try{
+            customerInformation.setAvatar(image.getBytes());
             if(!userRepository.existsById(customerInformation.getId()) && customerInformationRepository.existsCustomerInformationById(customerInformation.getId())){
                 throw new ApplicationException(ErrorCodes.USER_NOT_EXIST);
             }

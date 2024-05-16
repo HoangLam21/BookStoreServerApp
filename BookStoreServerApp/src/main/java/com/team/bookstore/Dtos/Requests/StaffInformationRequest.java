@@ -37,5 +37,4 @@ public class StaffInformationRequest{
     Date initiate_time;
     @Digits(integer = 10000,fraction = 0)
     int salary;
-    String avatar;
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,8 +47,10 @@ public class GalleryManageService {
         }
     }
     @Secured("ROLE_ADMIN")
-    public GalleryManageResponse addGallery(GalleryManage galleryManage){
+    public GalleryManageResponse addGallery(MultipartFile image,
+                                            GalleryManage galleryManage){
         try{
+            galleryManage.setThumbnail(image.getBytes());
             return galleryManageMapper.toGalleryManageResponse(galleryManageRepository.save(galleryManage));
         }catch(Exception e){
             log.info(e);
@@ -55,9 +58,10 @@ public class GalleryManageService {
         }
     }
     @Secured("ROLE_ADMIN")
-    public GalleryManageResponse updateGallery(int id,
+    public GalleryManageResponse updateGallery(int id, MultipartFile image,
                                                GalleryManage galleryManage){
         try{
+            galleryManage.setThumbnail(image.getBytes());
             if(!galleryManageRepository.existsById(id)){
                 throw new ApplicationException(ErrorCodes.OBJECT_NOT_EXIST);
             }
