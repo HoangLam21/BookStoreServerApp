@@ -12,6 +12,7 @@ import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.function.EntityResponse;
 
 @RestController
@@ -73,17 +74,17 @@ public class CustomerController {
     }
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/create/info/{id}")
-    public ResponseEntity<APIResponse<?>> createCustomerInformation(@PathVariable int id, @RequestBody CustomerInformationRequest customerInformationRequest){
+    public ResponseEntity<APIResponse<?>> createCustomerInformation(@PathVariable int id, @RequestPart MultipartFile image, @RequestPart CustomerInformationRequest customerInformationRequest){
         CustomerInformationResponse result =
-                customerService.createCustomerInformation(id,
+                customerService.createCustomerInformation(id,image,
                         userMapper.toCustomerInformation(customerInformationRequest));
         return ResponseEntity.ok(APIResponse.builder().code(200).message("OK").result(result).build());
     }
     @SecurityRequirement(name = "bearerAuth")
     @PatchMapping("/update/info/{id}")
-    public ResponseEntity<APIResponse<?>> updateCustomerInformation(@PathVariable int id, @RequestBody CustomerInformationRequest customerInformationRequest){
+    public ResponseEntity<APIResponse<?>> updateCustomerInformation(@PathVariable int id,@RequestPart MultipartFile image, @RequestPart CustomerInformationRequest customerInformationRequest){
         CustomerInformationResponse result =
-                customerService.updateCustomerInformation(id,
+                customerService.updateCustomerInformation(id,image,
                         userMapper.toCustomerInformation(customerInformationRequest));
         return ResponseEntity.ok(APIResponse.builder().code(200).message("OK").result(result).build());
     }

@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("category")
@@ -21,9 +22,10 @@ public class CategoryController {
     CategoryMapper categoryMapper;
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/add")
-    public ResponseEntity<APIResponse<?>> addCategory(@RequestBody CategoryRequest categoryRequest){
+    public ResponseEntity<APIResponse<?>> addCategory(@RequestPart MultipartFile image, @RequestPart CategoryRequest categoryRequest){
         CategoryResponse result =
-                categoryService.createCategory(categoryMapper.toCategory(categoryRequest));
+                categoryService.createCategory(image,
+                        categoryMapper.toCategory(categoryRequest));
         return ResponseEntity.ok(APIResponse.builder().code(200).message("OK").result(result).build());
     }
     @GetMapping("/all")
@@ -36,9 +38,10 @@ public class CategoryController {
     }
     @SecurityRequirement(name = "bearerAuth")
     @PatchMapping("/update/{id}")
-    public ResponseEntity<APIResponse<?>> updateCategory(@PathVariable int id,
-                                                         @RequestBody CategoryRequest categoryRequest){
-        CategoryResponse result = categoryService.updateCategory(id,
+    public ResponseEntity<APIResponse<?>> updateCategory(@PathVariable int id
+            , @RequestPart MultipartFile image,
+                                                         @RequestPart CategoryRequest categoryRequest){
+        CategoryResponse result = categoryService.updateCategory(id,image,
                 categoryMapper.toCategory(categoryRequest));
         return ResponseEntity.ok(APIResponse.builder().code(200).message("OK").result(result).build());
 

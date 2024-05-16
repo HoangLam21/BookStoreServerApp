@@ -27,5 +27,4 @@ public class CustomerInformationRequest {
     String phonenumber;
     @NotNull
     String address;
-    String avatar;
 }
