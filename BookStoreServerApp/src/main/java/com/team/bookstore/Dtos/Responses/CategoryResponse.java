@@ -16,6 +16,7 @@ public class CategoryResponse {
     int id;
     String name;
     short hot;
+    byte[] avatar;
     Date createAt;
     Date updateAt;
     String createBy;

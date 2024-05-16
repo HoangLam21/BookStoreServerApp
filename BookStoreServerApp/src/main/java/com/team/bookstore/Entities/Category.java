@@ -25,7 +25,8 @@ public class Category extends Auditable{
     int id;
     String name;
     Short hot;
-    String avatar;
+    @Lob
+    byte[] avatar;
     @JsonBackReference("book")
     @OneToMany(mappedBy = "category")
     @JsonIgnore

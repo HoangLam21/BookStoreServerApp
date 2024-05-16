@@ -29,7 +29,8 @@ public class StaffInformation extends Auditable{
     String address;
     Date initiate_time;
     int salary;
-    String avatar;
+    @Lob
+    byte[] avatar;
     @JsonBackReference("staff_shift")
     @OneToMany(mappedBy = "staff_information")
     @JsonIgnore

@@ -21,6 +21,7 @@ public class CustomerInformationResponse {
     Date birthday;
     String phonenumber;
     String address;
+    byte[] avatar;
     Date createAt;
     Date updateAt;
     String createBy;
