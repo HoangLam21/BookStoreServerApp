@@ -15,6 +15,7 @@ public interface CategoryMapper {
     @Mapping(target = "createBy",ignore = true)
     @Mapping(target = "updateBy",ignore = true)
     @Mapping(target = "book",ignore = true)
+    @Mapping(target = "avatar",ignore = true)
     Category toCategory(CategoryRequest categoryRequest);
     CategoryResponse toCategoryResponse(Category category);
 }

@@ -22,7 +22,7 @@ public interface GalleryManageMapper {
     @Mapping(target =  "updateBy",ignore = true)
     @Mapping(target = "createAt",ignore = true)
     @Mapping(target = "book",source = "book_id",qualifiedByName = "toBook")
-
+    @Mapping(target = "thumbnail",ignore = true)
     GalleryManage toGalleryManage(GalleryManageRequest galleryManageRequest);
     @Mapping(target="book_id",source="book",qualifiedByName = "toBook_id")
     GalleryManageResponse toGalleryManageResponse(GalleryManage galleryManage);

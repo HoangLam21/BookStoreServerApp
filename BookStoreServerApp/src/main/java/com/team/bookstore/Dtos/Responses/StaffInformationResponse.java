@@ -23,6 +23,7 @@ public class StaffInformationResponse {
     String address;
     Date initiate_time;
     int salary;
+    byte[] avatar;
     Date createAt;
     Date updateAt;
     String createBy;

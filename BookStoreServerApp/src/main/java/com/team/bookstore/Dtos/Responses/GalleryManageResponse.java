@@ -15,7 +15,7 @@ import java.util.Date;
 public class GalleryManageResponse {
     int id;
     int book_id;
-    String thumbnail;
+    byte[] thumbnail;
     String description;
     Date createAt;
     Date updateAt;

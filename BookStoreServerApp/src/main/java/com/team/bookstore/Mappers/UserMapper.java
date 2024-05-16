@@ -50,6 +50,7 @@ public interface UserMapper {
         });
         return roles;
     }
+    @Mapping(target = "avatar",ignore = true)
     CustomerInformation toCustomerInformation(CustomerInformation customerInformation);
     @Mapping(target = "createAt",ignore = true)
     @Mapping(target = "updateAt",ignore = true)
@@ -61,6 +62,7 @@ public interface UserMapper {
     @Mapping(target = "feedback",ignore = true)
     CustomerInformation toCustomerInformation(CustomerInformationRequest customerInformationRequest);
     CustomerInformationResponse toCustomerInformationResponse(CustomerInformation customerInformation);
+    @Mapping(target = "avatar",ignore = true)
     StaffInformation toStaffInformation(StaffInformation staffInformation);
     @Mapping(target = "createAt",ignore = true)
     @Mapping(target = "updateAt",ignore = true)
