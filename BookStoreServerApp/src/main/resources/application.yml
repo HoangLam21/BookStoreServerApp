@@ -14,7 +14,8 @@ spring:
     url: jdbc:postgresql://tiny.db.elephantsql.com:5432/uwozougo
     username: uwozougo
     password: jJAMR3w_ThgBUVj2gY3fTWPCLagp89bS
-
+  banner:
+    location: banner.txt
   mvc:
     path match:
       matching-strategy: ant_path_matcher
