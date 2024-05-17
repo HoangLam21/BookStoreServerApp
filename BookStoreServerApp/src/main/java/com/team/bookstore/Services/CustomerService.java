@@ -130,6 +130,7 @@ public class CustomerService {
             throw new ApplicationException(ErrorCodes.NOT_FOUND);
         }
     }
+    @Secured("ROLE_STAFF")
     public List<CustomerInformationResponse> findCustomerInformationBy(String keyword){
         try{
             Specification<CustomerInformation> spec =
@@ -138,6 +139,23 @@ public class CustomerService {
         } catch(Exception e){
             log.info(e);
             throw new ApplicationException(ErrorCodes.USER_NOT_EXIST);
+        }
+    }
+    @Secured("ROLE_ADMIN")
+    public String verifyVip(boolean paymentStatus){
+        try{
+            Authentication authentication =
+                    SecurityContextHolder.getContext().getAuthentication();
+            if(authentication == null){
+                throw new ApplicationException(ErrorCodes.UN_AUTHENTICATED);
+            }
+            CustomerInformation verifyCustomer =
+                    customerInformationRepository.findCustomerInformationById(userRepository.findUsersByUsername(authentication.getName()).getId());
+            verifyCustomer.setIsvip(true);
+            return "Verify Successfully";
+        }catch (Exception e){
+            log.info(e);
+            throw  new ApplicationException(ErrorCodes.CANNOT_VERIFY);
         }
     }
 }
