@@ -97,6 +97,7 @@ public class CustomerService {
             customerInformation.setId(id);
             CustomerInformation savedCustomerInformation =
                     customerInformationRepository.save(customerInformation);
+            customerInformation.setIsvip(false);
             return userMapper.toCustomerInformationResponse(savedCustomerInformation);
 
         } catch(Exception e){
