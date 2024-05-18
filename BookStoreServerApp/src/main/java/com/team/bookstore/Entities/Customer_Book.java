@@ -16,13 +16,14 @@ import lombok.experimental.FieldDefaults;
 public class Customer_Book {
     @EmbeddedId
     CustomerBookKey id = new CustomerBookKey();
+    int readingprocess;
     @JsonBackReference("customer")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("customer_id")
     @JoinColumn(name = "customer_id")
     CustomerInformation customer_information;
     @JsonBackReference("book")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("book_id")
     @JoinColumn(name = "book_id")
     Book book;

@@ -1,6 +1,7 @@
 package com.team.bookstore.Dtos.Responses;
 
 import com.team.bookstore.Entities.*;
+import jakarta.persistence.Lob;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,9 @@ public class BookResponse {
     int hot;
     int total_pay;
     int available;
+    Boolean isebook;
+    Boolean isvip;
+    Integer readingsession;
     Date createAt;
     Date updateAt;
     String createBy;

@@ -19,15 +19,18 @@ public class UserController {
     UserMapper userMapper;
     @Autowired
     UserService userService;
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/all")
     public ResponseEntity<APIResponse<?>> getAllUsers(){
         List<UserResponse> result = userService.getAllUser();
         return ResponseEntity.ok(APIResponse.builder().code(200).message("OK").result(result).build());
     }
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/find")
     public ResponseEntity<APIResponse<?>> findUserBy(@RequestParam String keyword){
         return ResponseEntity.ok(APIResponse.builder().code(200).message("OK").result(userService.findUser(keyword)).build());
     }
+    @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<APIResponse<?>> deleteUser(@PathVariable int id){
         UserResponse result = userService.deleteUser(id);

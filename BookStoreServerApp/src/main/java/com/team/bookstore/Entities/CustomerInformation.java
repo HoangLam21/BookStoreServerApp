@@ -25,7 +25,6 @@ public class CustomerInformation extends Auditable{
     Date birthday;
     String phonenumber;
     String address;
-    @Lob
     byte[] avatar;
     boolean isvip;
     @JsonManagedReference("customer")

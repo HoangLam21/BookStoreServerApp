@@ -18,6 +18,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Set;
@@ -54,8 +55,19 @@ public class BookService {
     @Autowired
     PublisherRepository publisherRepository;
     @Secured("ROLE_ADMIN")
-    public BookResponse addBook(Book book){
+    public BookResponse addBook(MultipartFile sourceFile,Book book){
         try {
+            if(book.getIsebook() && sourceFile.isEmpty()){
+                throw  new ApplicationException(ErrorCodes.NULL_FIELD);
+            }
+            if(!sourceFile.isEmpty()  && book.getIsebook()){
+                book.setSourcefile(sourceFile.getBytes());
+                book.setReadingsession(0);
+            }
+            if(!book.getIsebook()){
+                book.setSourcefile(null);
+                book.setIsvip(null);
+            }
             book.setLanguage(languageRepository.findLanguageById(book.getLanguage().getId()));
             book.setProvider(providerRepository.findProviderById(book.getProvider().getId()));
             book.setPublisher(publisherRepository.findPublisherById(book.getPublisher().getId()));
@@ -78,7 +90,7 @@ public class BookService {
     }
     public List<BookResponse> getAllBook(){
         try {
-            return bookRepository.findAll().stream().map(bookMapper::toBookResponse).collect(Collectors.toList());
+            return bookRepository.findAllByIsebook(false).stream().map(bookMapper::toBookResponse).collect(Collectors.toList());
         }catch (Exception e){
             throw new ApplicationException(ErrorCodes.NOT_FOUND);
         }
@@ -115,9 +127,20 @@ public class BookService {
         }
     }
     @Secured("ROLE_ADMIN")
-    public BookResponse updateABook(int id, Book updateContent){
+    public BookResponse updateABook(int id,MultipartFile sourceFile,
+                                    Book updateContent){
         try{
         Book updateBook = bookRepository.findBookById(id);
+            if(updateContent.getIsebook() && sourceFile.isEmpty()){
+                throw  new ApplicationException(ErrorCodes.NULL_FIELD);
+            }
+            if(!sourceFile.isEmpty()  && updateContent.getIsebook()){
+                updateBook.setSourcefile(sourceFile.getBytes());
+            }
+            if(!updateContent.getIsebook()){
+                updateBook.setSourcefile(null);
+                updateBook.setIsvip(null);
+            }
         if (updateBook == null) {
             throw new ApplicationException(ErrorCodes.OBJECT_NOT_EXIST
             );
@@ -200,6 +223,5 @@ public class BookService {
         }
         return bookRepository.save(book);
     }
-
 
 }

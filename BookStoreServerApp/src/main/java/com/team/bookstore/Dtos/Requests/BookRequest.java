@@ -40,6 +40,10 @@ public class BookRequest {
     int publisher_id;
     @NotNull
     int provider_id;
+    @NotNull
+    boolean isebook;
+    @NotNull
+    boolean isvip;
     Set<Integer> gallery_ids;
     Set <Integer> author_ids;
 }

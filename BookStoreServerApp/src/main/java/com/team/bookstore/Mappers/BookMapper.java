@@ -27,6 +27,8 @@ public interface BookMapper {
     @Mapping(target = "order_detail",ignore = true)
     @Mapping(target = "customer_book",ignore = true)
     @Mapping(target = "feedback",ignore = true)
+    @Mapping(target = "sourcefile",ignore = true)
+    @Mapping(target = "readingsession",ignore = true)
     @Mapping(target = "language",source = "language_id",qualifiedByName =
             "toLanguage")
     @Mapping(target = "category",source = "category_id",qualifiedByName =
