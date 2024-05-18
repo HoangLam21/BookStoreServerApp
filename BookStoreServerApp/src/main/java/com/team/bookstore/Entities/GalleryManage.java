@@ -18,7 +18,6 @@ public class GalleryManage extends Auditable{
     @Column(name = "id_gallery")
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     int id;
-    @Lob
     byte[] thumbnail;
     String description;
     @JsonBackReference("book")

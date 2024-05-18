@@ -29,7 +29,8 @@ public class SecurityConfig{
             "/find","book/all","book/find","category/all","category/find",
             "customer/register","feedback/all","gallery/all","gallery/find",
             "keyword/all","keyword/find","language/all","language/find",
-            "provider/all","provider/find","publisher/all","publisher/all"};
+            "provider/all","provider/find","publisher/all","publisher/all",
+            "ebook/all"};
     public static String[] CustomerEndpoints = {"/book/mine","/customer" +
             "/myinfo","customer/my-payments","customer/my-orders","customer" +
             "/update/**","/customer/create/info/**","/feedback/add",

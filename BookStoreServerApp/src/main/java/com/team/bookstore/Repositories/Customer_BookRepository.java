@@ -13,4 +13,5 @@ import java.util.List;
 public interface Customer_BookRepository extends JpaRepository<Customer_Book, CustomerBookKey> {
     boolean existsCustomer_BookById(CustomerBookKey id);
     List<Customer_Book> findAll(Specification<Customer_Book> spec);
+    Customer_Book findCustomer_BookById(CustomerBookKey id);
 }

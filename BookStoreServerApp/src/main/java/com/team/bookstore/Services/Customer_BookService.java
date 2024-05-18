@@ -9,15 +9,21 @@ import com.team.bookstore.Exceptions.ApplicationException;
 import com.team.bookstore.Repositories.BookRepository;
 import com.team.bookstore.Repositories.CustomerInformationRepository;
 import com.team.bookstore.Repositories.Customer_BookRepository;
+import com.team.bookstore.Repositories.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.team.bookstore.Specifications.Customer_BookSpecification.CreateCustomerBookByCustomerIDSpec;
 
 @Service
 @Log4j2
@@ -28,6 +34,32 @@ public class Customer_BookService {
     CustomerInformationRepository customerInformationRepository;
     @Autowired
     BookRepository bookRepository;
+    @Autowired
+    UserRepository userRepository;
+
+    public int updateReadingProcess(int book_id,int process){
+        try{
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if(authentication == null){
+                throw new ApplicationException(ErrorCodes.UN_AUTHENTICATED);
+            }
+            if(!bookRepository.existsById(book_id)){
+                throw new ApplicationException(ErrorCodes.OBJECT_NOT_EXIST);
+            }
+            int customerId =
+                    userRepository.findUsersByUsername(authentication.getName()).getId();
+            CustomerBookKey customerBookKey = new CustomerBookKey();
+            customerBookKey.setBook_id(book_id);
+            customerBookKey.setBook_id(book_id);
+            Customer_Book customer_book =
+                    customerBookRepository.findCustomer_BookById(customerBookKey);
+            customer_book.setReadingprocess(process);
+            return customerBookRepository.save(customer_book).getReadingprocess();
+        }catch(Exception e){
+            log.info(e);
+            throw new ApplicationException(ErrorCodes.CANNOT_UPDATE);
+        }
+    }
     @Secured("ROLE_ADMIN")
     public void updateCustomer_Book(int customer_id,
                                     Set<Order_Detail> order_details){

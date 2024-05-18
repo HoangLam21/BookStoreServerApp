@@ -34,6 +34,10 @@ public class Book extends Auditable{
     int hot;
     int total_pay;
     int available;
+    Boolean isebook;
+    Boolean isvip;
+    byte[] sourcefile;
+    Integer readingsession;
     @JsonManagedReference("book")
     @OneToMany(mappedBy = "book",cascade = CascadeType.ALL,
             orphanRemoval=true,
@@ -47,10 +51,10 @@ public class Book extends Auditable{
     @OneToMany(mappedBy = "book")
     @JsonIgnore
     Set<Order_Detail> order_detail = new HashSet<>();
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book",fetch = FetchType.EAGER)
     @JsonIgnore
     Set<Customer_Book> customer_book = new HashSet<>();
-    @OneToMany(mappedBy = "book",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "book")
     Set<GalleryManage> galleryManage;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "provider_id")
@@ -64,6 +68,7 @@ public class Book extends Auditable{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     Category category;
-    @OneToMany(mappedBy = "book",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "book",cascade = CascadeType.REMOVE,fetch =
+            FetchType.EAGER)
     Set<Feedback> feedback = new HashSet<>();
 }
