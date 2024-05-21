@@ -35,7 +35,6 @@ public class Book extends Auditable{
     int total_pay;
     int available;
     Boolean isebook;
-    Boolean isvip;
     byte[] sourcefile;
     Integer readingsession;
     @JsonManagedReference("book")
