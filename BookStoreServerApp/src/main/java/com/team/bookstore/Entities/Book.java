@@ -51,7 +51,8 @@ public class Book extends Auditable{
     @OneToMany(mappedBy = "book",fetch = FetchType.EAGER)
     @JsonIgnore
     Set<Customer_Book> customer_book = new HashSet<>();
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book",cascade = CascadeType.REMOVE,fetch =
+            FetchType.EAGER)
     Set<GalleryManage> galleryManage;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "provider_id")

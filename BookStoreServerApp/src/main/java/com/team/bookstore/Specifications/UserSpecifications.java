@@ -36,6 +36,7 @@ public class UserSpecifications {
             @Override
             public Predicate toPredicate(@Nullable Root<CustomerInformation> root,@Nullable CriteriaQuery<?> query,@Nullable CriteriaBuilder criteriaBuilder) {
                 if (keyword.isEmpty()) {
+                    assert criteriaBuilder != null;
                     return criteriaBuilder.conjunction();
                 }
                 String likeKeyword = "%" + keyword.toLowerCase() + "%";

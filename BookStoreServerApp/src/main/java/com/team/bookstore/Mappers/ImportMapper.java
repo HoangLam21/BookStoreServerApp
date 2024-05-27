@@ -2,6 +2,7 @@ package com.team.bookstore.Mappers;
 
 import com.team.bookstore.Dtos.Requests.ImportDetailRequest;
 import com.team.bookstore.Dtos.Requests.ImportRequest;
+import com.team.bookstore.Dtos.Responses.ImportDetailResponse;
 import com.team.bookstore.Dtos.Responses.ImportResponse;
 import com.team.bookstore.Entities.Book;
 import com.team.bookstore.Entities.Import;
@@ -41,6 +42,22 @@ public interface ImportMapper {
         });
         return importDetails;
     }
+    @Mapping(target = "importDetailResponse",source = "import_detail",
+            qualifiedByName = "toImportDetailResponse")
     ImportResponse toImportResponse(Import _import);
+    @Named("toImportDetailResponse")
+    default List<ImportDetailResponse> toImportDetailResponse(Set<Import_Detail>importDetails){
+        List<ImportDetailResponse> importDetailResponses = new ArrayList<>();
+        importDetails.forEach(import_detail -> {
+            ImportDetailResponse importDetailResponse =
+                    new ImportDetailResponse();
+            importDetailResponse.setTitle(import_detail.getBook().getTitle());
+            importDetailResponse.setQuantity(import_detail.getQuantity());
+            importDetailResponse.setImport_cost(import_detail.getImport_cost());
+            importDetailResponse.setTotal_cost(import_detail.getTotal_import_cost());
+            importDetailResponses.add(importDetailResponse);
+        });
+        return importDetailResponses;
+    }
 }
 

@@ -2,16 +2,15 @@ package com.team.bookstore.Mappers;
 
 import com.team.bookstore.Dtos.Requests.OrderDetailRequest;
 import com.team.bookstore.Dtos.Requests.OrderRequest;
+import com.team.bookstore.Dtos.Responses.OrderDetailResponse;
 import com.team.bookstore.Dtos.Responses.OrderResponse;
-import com.team.bookstore.Entities.Book;
-import com.team.bookstore.Entities.Order;
-import com.team.bookstore.Entities.Order_Detail;
-import com.team.bookstore.Entities.Payment;
+import com.team.bookstore.Entities.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.security.core.parameters.P;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,9 +56,25 @@ public interface OrderMapper {
     }
     @Mapping(target = "method_payment",source = "payment",qualifiedByName =
             "toMethod_payment")
+    @Mapping(target = "orderDetailResponse",source = "order_detail",
+            qualifiedByName = "toOrderDetailResponse")
     OrderResponse toOrderResponse(Order order);
     @Named("toMethod_payment")
     default int toMethod_payment(Payment payment){
         return payment.getMethod_payment();
+    }
+    @Named("toOrderDetailResponse")
+    default List<OrderDetailResponse> toOrderDetailResponse(Set<Order_Detail> order_detail){
+        List<OrderDetailResponse> orderDetailResponses = new ArrayList<>();
+        order_detail.forEach(orderDetail->{
+            OrderDetailResponse orderDetailResponse = new OrderDetailResponse();
+            orderDetailResponse.setTitle(orderDetail.getBook().getTitle());
+            orderDetailResponse.setQuantity(orderDetail.getQuantity());
+            orderDetailResponse.setPrice(orderDetail.getPrice());
+            orderDetailResponse.setDiscount(orderDetail.getDiscount());
+            orderDetailResponse.setTotal_price(orderDetail.getTotal_money());
+            orderDetailResponses.add(orderDetailResponse);
+        });
+        return orderDetailResponses;
     }
 }
