@@ -2,6 +2,7 @@ package com.team.bookstore.Specifications;
 
 import com.team.bookstore.Entities.Book;
 import com.team.bookstore.Entities.CustomerInformation;
+import com.team.bookstore.Utilities.StringUtils;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -18,18 +19,20 @@ public class BookSpecification {
                 if (keyword.isEmpty()) {
                     return criteriaBuilder.conjunction();
                 }
-                String likeKeyword = "%" + keyword.toLowerCase() + "%";
-                return criteriaBuilder.and(criteriaBuilder.or(
-                        criteriaBuilder.like(root.get("id").as(String.class)
-                        , likeKeyword.toLowerCase()),
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get(
-                                "title")),
-                                likeKeyword.toLowerCase()),
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get(
-                                "description")),
-                                likeKeyword.toLowerCase()),
-                        criteriaBuilder.equal(root.get("isebook"),"false"))
-                );
+                String likeKeyword =
+                        "%" + StringUtils.removeAccents(keyword.toLowerCase()) +
+                        "%";
+                return criteriaBuilder.or(
+                        criteriaBuilder.like(criteriaBuilder.function(
+                                "unaccent", String.class,
+                                criteriaBuilder.lower(root.get("title"))),
+                                likeKeyword),
+                        criteriaBuilder.like(criteriaBuilder.function(
+                                        "unaccent", String.class,
+                                        criteriaBuilder.lower(root.get(
+                                                "description"))),
+                                likeKeyword)
+                        );
             }
         };
     }

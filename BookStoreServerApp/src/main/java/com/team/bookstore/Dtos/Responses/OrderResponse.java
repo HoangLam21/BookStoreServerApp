@@ -24,10 +24,10 @@ public class OrderResponse {
     int status_trans;
     int total_price;
     String address;
-    List<Order_Detail> order_detail;
     int method_payment;
     Date createAt;
     Date updateAt;
     String createBy;
     String updateBy;
+    List<OrderDetailResponse> orderDetailResponse;
 }

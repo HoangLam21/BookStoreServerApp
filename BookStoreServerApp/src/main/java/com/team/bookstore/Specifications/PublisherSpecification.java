@@ -1,6 +1,7 @@
 package com.team.bookstore.Specifications;
 
 import com.team.bookstore.Entities.Publisher;
+import com.team.bookstore.Utilities.StringUtils;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -15,12 +16,13 @@ public class PublisherSpecification {
                 if(keyword.isEmpty()){
                     return criteriaBuilder.conjunction();
                 }
-                String likeKeyword = "%" + keyword.toLowerCase() + "%";
-                return criteriaBuilder.or(
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get("id").as(String.class)),likeKeyword),
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get(
-                                "publisher_name")),likeKeyword)
-                );
+                String likeKeyword =
+                        "%" + StringUtils.removeAccents(keyword.toLowerCase()) + "%";
+                return criteriaBuilder.like(criteriaBuilder.function(
+                                "unaccent", String.class,
+                                criteriaBuilder.lower(root.get(
+                                        "publisher_name"))),
+                        likeKeyword);
             }
         };
     }

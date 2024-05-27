@@ -21,7 +21,7 @@ public class ImportResponse {
     Date updateAt;
     String createBy;
     String updateBy;
-    List<Import_Detail> import_detail;
+    List<ImportDetailResponse> importDetailResponse;
     int import_total;
     boolean import_status;
 }

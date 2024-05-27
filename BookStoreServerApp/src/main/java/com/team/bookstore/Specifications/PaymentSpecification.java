@@ -18,7 +18,6 @@ public class PaymentSpecification {
                 }
                 String likeKeyword = "%" + keyword.toLowerCase() + "%";
                 return criteriaBuilder.or(
-                        criteriaBuilder.like(root.get("id").as(String.class),likeKeyword),
                         criteriaBuilder.like(root.get("method_payment").as(String.class), likeKeyword),
                         criteriaBuilder.like(root.get("payment_status").as(String.class),likeKeyword)
 

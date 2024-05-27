@@ -1,6 +1,7 @@
 package com.team.bookstore.Specifications;
 
 import com.team.bookstore.Entities.Import;
+import com.team.bookstore.Utilities.StringUtils;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -21,11 +22,14 @@ public class ImportSpecification {
                 if(keyword.isEmpty()){
                     return criteriaBuilder.conjunction();
                 }
-                String likeKeyword = "%" + keyword.toLowerCase() + "%";
+                String likeKeyword =
+                        "%" + StringUtils.removeAccents(keyword.toLowerCase()) + "%";
                 return criteriaBuilder.or(
-                        criteriaBuilder.like(root.get("id").as(String.class),
+                        criteriaBuilder.like(criteriaBuilder.function(
+                                        "unaccent", String.class,
+                                        criteriaBuilder.lower(root.get(
+                                                "create_by"))),
                                 likeKeyword),
-                        criteriaBuilder.like(root.get("create_by").as(String.class),likeKeyword),
                         criteriaBuilder.like(root.get("import_total").as(String.class),likeKeyword),
                         criteriaBuilder.like(root.get("import_status").as(String.class),likeKeyword)
                 );

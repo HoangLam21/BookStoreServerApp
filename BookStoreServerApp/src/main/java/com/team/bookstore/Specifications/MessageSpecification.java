@@ -1,6 +1,7 @@
 package com.team.bookstore.Specifications;
 
 import com.team.bookstore.Entities.Message;
+import com.team.bookstore.Utilities.StringUtils;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -16,17 +17,24 @@ public class MessageSpecification {
                 if(keyword.isEmpty()){
                     return criteriaBuilder.conjunction();
                 }
-                String likeKeyword = "%" + keyword.toLowerCase() + "%";
+                String likeKeyword =
+                        "%" + StringUtils.removeAccents(keyword.toLowerCase()) + "%";
                 return criteriaBuilder.or(
-                        criteriaBuilder.like(root.get("id").as(String.class),
+                        criteriaBuilder.like(criteriaBuilder.function(
+                                        "unaccent", String.class,
+                                        criteriaBuilder.lower(root.get(
+                                                "message_content"))),
                                 likeKeyword),
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get(
-                                "message_content")),likeKeyword),
-                        criteriaBuilder.like(root.get(
-                                "message_status").as(String.class),
+                        criteriaBuilder.like(criteriaBuilder.function(
+                                        "unaccent", String.class,
+                                        criteriaBuilder.lower(root.get(
+                                                "sender"))),
                                 likeKeyword),
-                        criteriaBuilder.like(root.get("sender").get("id").as(String.class),likeKeyword),
-                        criteriaBuilder.like(root.get("receiver").get("id").as(String.class),likeKeyword)
+                        criteriaBuilder.like(criteriaBuilder.function(
+                                        "unaccent", String.class,
+                                        criteriaBuilder.lower(root.get(
+                                                "receiver"))),
+                                likeKeyword)
                 );
             }
         };
