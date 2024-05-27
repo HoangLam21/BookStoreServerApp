@@ -19,6 +19,15 @@ spring:
   mvc:
     path match:
       matching-strategy: ant_path_matcher
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    enabled: true
+    encoding: UTF-8
+    cache: false
+  web:
+    resources:
+      static-locations: classpath:/static/
 jwt:
   signerKey: "IY8j5sGpRsZbvezfml0pd+JL5OzhmPuiaz1nEw1KxQA="
   valid-duration: 3600 # in second

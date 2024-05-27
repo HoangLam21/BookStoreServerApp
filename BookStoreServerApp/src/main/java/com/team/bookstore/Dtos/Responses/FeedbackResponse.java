@@ -18,8 +18,8 @@ public class FeedbackResponse {
     int id;
     String feedback_comment;
     int rating;
-    int customer_id;
     String fullname;
+    byte[] avatar;
     Book book;
     Date createAt;
     Date updateAt;

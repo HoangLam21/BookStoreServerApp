@@ -31,18 +31,18 @@ public interface FeedbackMapper {
         book.setId(book_id);
         return book;
     }
-    @Mapping(target = "customer_id", source = "customer_information",
-            qualifiedByName = "toCustomer_id")
     @Mapping(target = "fullname",source = "customer_information",
             qualifiedByName = "toFullname")
+    @Mapping(target = "avatar",source = "customer_information",qualifiedByName =
+            "toAvatar")
     FeedbackResponse toFeedbackResponse(Feedback feedback);
-    @Named("toCustomer_id")
-    default int toCustomer_id(CustomerInformation customerInformation){
-        return customerInformation.getId();
-    }
     @Named("toFullname")
     default int toFullname(CustomerInformation customerInformation){
         return customerInformation.getId();
+    }
+    @Named("toAvatar")
+    default byte[] toAvatar(CustomerInformation customerInformation){
+        return customerInformation.getAvatar();
     }
 
 }
