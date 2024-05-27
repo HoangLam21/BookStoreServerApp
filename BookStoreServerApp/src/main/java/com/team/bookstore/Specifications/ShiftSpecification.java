@@ -1,6 +1,7 @@
 package com.team.bookstore.Specifications;
 
 import com.team.bookstore.Entities.Shift;
+import com.team.bookstore.Utilities.StringUtils;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -15,15 +16,18 @@ public class ShiftSpecification {
                 if(keyword.isEmpty()){
                     return criteriaBuilder.conjunction();
                 }
-                String likeKeyword = "%" + keyword.toLowerCase() + "%";
+                String likeKeyword =
+                        "%" + StringUtils.removeAccents(keyword.toLowerCase()) + "%";
                 return criteriaBuilder.or(
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("id").as(String.class)),likeKeyword),
                     criteriaBuilder.like(criteriaBuilder.lower(root.get(
                             "start_time").as(String.class)),likeKeyword),
                         criteriaBuilder.like(criteriaBuilder.lower(root.get(
                                 "end_time").as(String.class)),likeKeyword),
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get(
-                                "description")),likeKeyword)
+                        criteriaBuilder.like(criteriaBuilder.function(
+                                        "unaccent", String.class,
+                                        criteriaBuilder.lower(root.get(
+                                                "description"))),
+                                likeKeyword)
                 );
             }
         };

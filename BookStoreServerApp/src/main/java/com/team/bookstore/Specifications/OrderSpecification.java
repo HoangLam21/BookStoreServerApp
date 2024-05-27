@@ -1,6 +1,7 @@
 package com.team.bookstore.Specifications;
 
 import com.team.bookstore.Entities.Order;
+import com.team.bookstore.Utilities.StringUtils;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -20,17 +21,22 @@ public class OrderSpecification {
                 if(keyword.isEmpty()){
                     return criteriaBuilder.conjunction();
                 }
-                String likeKeyword = "%" + keyword.toLowerCase() + "%";
+                String likeKeyword =
+                        "%" + StringUtils.removeAccents(keyword.toLowerCase()) + "%";
                 return criteriaBuilder.or(
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get(
-                                "id").as(String.class)),likeKeyword),
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get(
-                                "order_note")),likeKeyword),
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get(
-                                "address")),likeKeyword)
+                        criteriaBuilder.like(criteriaBuilder.function(
+                                        "unaccent", String.class,
+                                        criteriaBuilder.lower(root.get(
+                                                "order_note"))),
+                                likeKeyword),
+                        criteriaBuilder.like(criteriaBuilder.function(
+                                        "unaccent", String.class,
+                                        criteriaBuilder.lower(root.get(
+                                                "address"))),
+                                likeKeyword)
                 );
             }
-        };
+    };
     }
     public static Specification<Order> CreateOrderDateSpec(String date){
         return new Specification<Order>() {

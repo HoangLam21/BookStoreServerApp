@@ -1,6 +1,7 @@
 package com.team.bookstore.Specifications;
 
 import com.team.bookstore.Entities.Provider;
+import com.team.bookstore.Utilities.StringUtils;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -15,15 +16,24 @@ public class ProviderSpecification {
                 if(keyword.isEmpty()){
                     return criteriaBuilder.conjunction();
                 }
-                String likeKeyword = "%" + keyword.toLowerCase() + "%";
+                String likeKeyword =
+                        "%" + StringUtils.removeAccents(keyword.toLowerCase()) + "%";
                 return criteriaBuilder.or(
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get("id").as(String.class)),likeKeyword),
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get(
-                                "providername")),likeKeyword),
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get(
-                                "address")),likeKeyword),
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get(
-                                "representativename")),likeKeyword)
+                        criteriaBuilder.like(criteriaBuilder.function(
+                                        "unaccent", String.class,
+                                        criteriaBuilder.lower(root.get(
+                                                "providername"))),
+                                likeKeyword),
+                        criteriaBuilder.like(criteriaBuilder.function(
+                                        "unaccent", String.class,
+                                        criteriaBuilder.lower(root.get(
+                                                "address"))),
+                                likeKeyword),
+                        criteriaBuilder.like(criteriaBuilder.function(
+                                        "unaccent", String.class,
+                                        criteriaBuilder.lower(root.get(
+                                                "representativename"))),
+                                likeKeyword)
                 );
             }
         };
