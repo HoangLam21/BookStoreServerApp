@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface BookRepository extends JpaRepository<Book,Integer> {
     Book findBookById(int id);
-    List<Book> findAllByIsebook(boolean isEbook);
     List<Book> findAll(Specification<Book> spec);
+    List<Book> findBooksByAvailable(boolean available);
 }

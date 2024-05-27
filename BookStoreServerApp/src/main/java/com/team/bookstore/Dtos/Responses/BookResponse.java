@@ -21,15 +21,13 @@ public class BookResponse {
     String title;
     short num_pages;
     Date publication_date;
-    float bookQuantity;
+    int bookQuantity;
     int price;
     int discount;
     String description;
-    int hot;
+    boolean hot;
     int total_pay;
-    int available;
-    Boolean isebook;
-    Boolean isvip;
+    boolean available;
     Integer readingsession;
     Date createAt;
     Date updateAt;

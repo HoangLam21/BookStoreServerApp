@@ -1,6 +1,7 @@
 package com.team.bookstore.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -22,9 +23,11 @@ public class Feedback extends Auditable{
     @JsonBackReference("customer_information")
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonIgnore
     CustomerInformation customer_information;
     @JsonBackReference("book")
     @ManyToOne
     @JoinColumn(name = "book_id",insertable=false, updatable=false)
+    @JsonIgnore
     Book book;
 }

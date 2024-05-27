@@ -22,26 +22,16 @@ public class BookRequest {
     @Max(10000)
     short num_pages;
     Date publication_date;
-    @NotNull
-    float bookQuantity;
-    @NotNull
+    int bookQuantity;
     int price;
     int discount;
     String description;
-    @Max(100)
-    int hot;
-    @NotNull
-    int available;
-    @NotNull
+    boolean hot;
+    boolean available;
     int language_id;
-    @NotNull
     int category_id;
-    @NotNull
     int publisher_id;
-    @NotNull
     int provider_id;
-    @NotNull
-    boolean isebook;
     Set<Integer> gallery_ids;
     Set <Integer> author_ids;
 }

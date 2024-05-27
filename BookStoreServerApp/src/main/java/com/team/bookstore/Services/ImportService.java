@@ -179,7 +179,7 @@ public class ImportService {
                  }
                  Book existBook =
                          bookRepository.findBookById(import_detail.getBook().getId());
-                 float newQuantity =
+                 int newQuantity =
                          existBook.getBookQuantity() + import_detail.getQuantity();
                  existBook.setBookQuantity(newQuantity);
              });

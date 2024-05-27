@@ -55,19 +55,8 @@ public class BookService {
     @Autowired
     PublisherRepository publisherRepository;
     @Secured("ROLE_ADMIN")
-    public BookResponse addBook(MultipartFile sourceFile,Book book){
+    public BookResponse addBook(Book book){
         try {
-            if(book.getIsebook() && sourceFile.isEmpty()){
-                throw  new ApplicationException(ErrorCodes.NULL_FIELD);
-            }
-            if(!sourceFile.isEmpty()  && book.getIsebook()){
-                book.setSourcefile(sourceFile.getBytes());
-                book.setReadingsession(0);
-            }
-            if(!book.getIsebook()){
-                book.setSourcefile(null);
-                book.setIsvip(null);
-            }
             book.setLanguage(languageRepository.findLanguageById(book.getLanguage().getId()));
             book.setProvider(providerRepository.findProviderById(book.getProvider().getId()));
             book.setPublisher(publisherRepository.findPublisherById(book.getPublisher().getId()));
@@ -90,7 +79,14 @@ public class BookService {
     }
     public List<BookResponse> getAllBook(){
         try {
-            return bookRepository.findAllByIsebook(false).stream().map(bookMapper::toBookResponse).collect(Collectors.toList());
+            return bookRepository.findBooksByAvailable(true).stream().map(bookMapper::toBookResponse).collect(Collectors.toList());
+        }catch (Exception e){
+            throw new ApplicationException(ErrorCodes.NOT_FOUND);
+        }
+    }
+    public List<BookResponse> getRemovedBooks(){
+        try{
+            return bookRepository.findBooksByAvailable(false).stream().map(bookMapper::toBookResponse).collect(Collectors.toList());
         }catch (Exception e){
             throw new ApplicationException(ErrorCodes.NOT_FOUND);
         }
@@ -127,20 +123,10 @@ public class BookService {
         }
     }
     @Secured("ROLE_ADMIN")
-    public BookResponse updateABook(int id,MultipartFile sourceFile,
+    public BookResponse updateABook(int id,
                                     Book updateContent){
         try{
         Book updateBook = bookRepository.findBookById(id);
-            if(updateContent.getIsebook() && sourceFile.isEmpty()){
-                throw  new ApplicationException(ErrorCodes.NULL_FIELD);
-            }
-            if(!sourceFile.isEmpty()  && updateContent.getIsebook()){
-                updateBook.setSourcefile(sourceFile.getBytes());
-            }
-            if(!updateContent.getIsebook()){
-                updateBook.setSourcefile(null);
-                updateBook.setIsvip(null);
-            }
         if (updateBook == null) {
             throw new ApplicationException(ErrorCodes.OBJECT_NOT_EXIST
             );
@@ -220,6 +206,7 @@ public class BookService {
            }
            book.getBook_author().clear();
            book.getBook_author().addAll(existBook_Authors);
+           book.setReadingsession(0);
         }
         return bookRepository.save(book);
     }

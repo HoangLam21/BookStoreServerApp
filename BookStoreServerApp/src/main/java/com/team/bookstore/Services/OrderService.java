@@ -80,6 +80,7 @@ public class OrderService {
             int customer_id =
                     userRepository.findUsersByUsername(authentication.getName()).getId();
             if(!customerInformationRepository.existsCustomerInformationById(customer_id)){
+                log.info("customer");
                 throw new ApplicationException(ErrorCodes.OBJECT_NOT_EXIST);
             }
             order.setCustomerId(customer_id);
@@ -120,7 +121,7 @@ public class OrderService {
              throw new ApplicationException(ErrorCodes.CANNOT_UPDATE);
          }
     }
-    @Secured("ROLE_ADMIN")
+
     public OrderResponse verifyOrder(int id, int status){
         //0:unverified,1:accept,2:prepair,3:Delivery,4:Payment!
         try{
@@ -139,7 +140,7 @@ public class OrderService {
                     }
                     Book existBook =
                             bookRepository.findBookById(order_detail.getBook().getId());
-                    float newQuantity =
+                    int newQuantity =
                             existBook.getBookQuantity() - order_detail.getQuantity();
                     existBook.setBookQuantity(newQuantity);
                     bookRepository.save(existBook);

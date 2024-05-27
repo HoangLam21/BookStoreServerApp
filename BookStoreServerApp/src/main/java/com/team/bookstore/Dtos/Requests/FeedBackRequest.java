@@ -13,10 +13,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class FeedBackRequest {
-    @NotNull
     int book_id;
-    @NotNull
     String feedback_comment;
-    @NotNull
     int rating;
 }

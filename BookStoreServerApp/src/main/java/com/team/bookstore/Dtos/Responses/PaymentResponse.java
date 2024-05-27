@@ -17,5 +17,6 @@ public class PaymentResponse {
     int  order_id;
     int  method_payment;
     boolean  payment_status;
+    String paymentURL;
     Date createAt;
 }

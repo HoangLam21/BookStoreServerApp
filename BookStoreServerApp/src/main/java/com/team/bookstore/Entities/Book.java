@@ -27,16 +27,14 @@ public class Book extends Auditable{
     String title;
     short num_pages;
     Date publication_date;
-    float bookQuantity;
+    int bookQuantity;
     int price;
     int discount;
     String description;
-    int hot;
+    boolean hot;
     int total_pay;
-    int available;
-    Boolean isebook;
-    byte[] sourcefile;
-    Integer readingsession;
+    boolean available;
+    int readingsession;
     @JsonManagedReference("book")
     @OneToMany(mappedBy = "book",cascade = CascadeType.ALL,
             orphanRemoval=true,
