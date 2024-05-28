@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RevenueDayResponse {
-    Date day;
+    String day;
     long total_sale;
     long total_import;
     long revenue;

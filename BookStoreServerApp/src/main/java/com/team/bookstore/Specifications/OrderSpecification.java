@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 @Log4j2
 public class OrderSpecification {
@@ -60,6 +61,78 @@ public class OrderSpecification {
                         criteriaBuilder.greaterThanOrEqualTo(root.get(
                                 "createAt"),startTime),
                         criteriaBuilder.lessThan(root.get("createAt"),endTime)
+                );
+            }
+        };
+    }
+    public static Specification<Order> createRevenueMonthSpec(String year_month) {
+        return new Specification<Order>() {
+            @Override
+            public Predicate toPredicate(Root<Order> root,
+                                         CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                if (year_month.length() != 7) {
+                    return criteriaBuilder.conjunction();
+                }
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+                Date startDate = null;
+                Date endDate = null;
+
+                try {
+                    startDate = sdf.parse(year_month);
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(startDate);
+                    calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+                    endDate = calendar.getTime();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return criteriaBuilder.conjunction();
+                }
+
+                return criteriaBuilder.and(
+                        criteriaBuilder.greaterThanOrEqualTo(root.get(
+                                "createAt"),
+                                startDate),
+                        criteriaBuilder.lessThanOrEqualTo(root.get("createAt"),
+                                endDate)
+                );
+            }
+        };
+    }
+    public static Specification<Order> createRevenueYearSpec(String year) {
+        return new Specification<Order>() {
+            @Override
+            public Predicate toPredicate(Root<Order> root,
+                                         CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                if (year.length() != 4) {
+                    return criteriaBuilder.conjunction();
+                }
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+                Date startDate = null;
+                Date endDate = null;
+
+                try {
+                    startDate = sdf.parse(year);
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(startDate);
+                    calendar.set(Calendar.MONTH, Calendar.JANUARY);
+                    calendar.set(Calendar.DAY_OF_MONTH, 1);
+                    startDate = calendar.getTime();
+
+                    calendar.set(Calendar.MONTH, Calendar.DECEMBER);
+                    calendar.set(Calendar.DAY_OF_MONTH, 31);
+                    endDate = calendar.getTime();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return criteriaBuilder.conjunction();
+                }
+
+                return criteriaBuilder.and(
+                        criteriaBuilder.greaterThanOrEqualTo(root.get(
+                                "createAt"), startDate),
+                        criteriaBuilder.lessThanOrEqualTo(root.get("createAt"),
+                                endDate)
                 );
             }
         };

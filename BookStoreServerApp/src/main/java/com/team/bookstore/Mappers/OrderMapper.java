@@ -28,8 +28,7 @@ public interface OrderMapper {
     @Mapping(target = "total_price",ignore = true)
     @Mapping(target = "order_detail",source = "order_details",
             qualifiedByName = "toOrderDetail")
-    @Mapping(target = "payment",source = "method_payment",qualifiedByName =
-            "toPayment")
+    @Mapping(target = "payment",ignore = true)
     @Mapping(target = "customerId",ignore = true)
 
     Order toOrder(OrderRequest orderRequest);
@@ -46,13 +45,6 @@ public interface OrderMapper {
             new_order_details.add(orderDetail);
         });
         return new_order_details;
-    }
-    @Named("toPayment")
-    default Payment toPayment(int method_payment){
-        Payment payment = new Payment();
-        payment.setMethod_payment(method_payment);
-        payment.setPayment_status(false);
-        return payment;
     }
     @Mapping(target = "method_payment",source = "payment",qualifiedByName =
             "toMethod_payment")

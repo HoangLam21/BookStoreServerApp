@@ -20,8 +20,7 @@ public class BookSpecification {
                     return criteriaBuilder.conjunction();
                 }
                 String likeKeyword =
-                        "%" + StringUtils.removeAccents(keyword.toLowerCase()) +
-                        "%";
+                        "%" + StringUtils.removeAccents(keyword.toLowerCase()) + "%";
                 return criteriaBuilder.or(
                         criteriaBuilder.like(criteriaBuilder.function(
                                 "unaccent", String.class,
