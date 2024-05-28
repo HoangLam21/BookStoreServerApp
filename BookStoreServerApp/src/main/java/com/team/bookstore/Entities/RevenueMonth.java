@@ -1,21 +1,23 @@
 package com.team.bookstore.Entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
 
 @Entity
-@Table(name = "revenueDay")
+@Table(name = "revenueMonth")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RevenueDay extends Auditable{
+public class RevenueMonth extends Auditable{
     @Id
-    Date day;
+    Date month;
     long total_sale;
     long total_import;
     long revenue;
