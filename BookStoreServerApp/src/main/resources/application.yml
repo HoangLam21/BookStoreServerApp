@@ -12,9 +12,9 @@ spring:
     open-in-view: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://tiny.db.elephantsql.com:5432/asnqldlc
-    username: asnqldlc
-    password: 96QqI1o1HyL9noDa9jhEBWGiUimlJGKX
+    url: jdbc:postgresql://tiny.db.elephantsql.com:5432/kdzdiuud
+    username: kdzdiuud
+    password: zX-RCvKxRQCJtYz4yb5hf6pERL4mTI3T
   banner:
     location: banner.txt
   mvc:
