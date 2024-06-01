@@ -95,6 +95,8 @@ public interface BookMapper {
     @Mapping(target = "authors",source = "book_author",qualifiedByName = "toAuthor")
     @Mapping(target = "feedback",source = "feedback",qualifiedByName =
             "toFeedbackResponse")
+    @Mapping(target = "category_id",source = "category",qualifiedByName =
+            "toCategoryId")
     BookResponse toBookResponse(Book book);
     @Named("toAuthor")
     default Set<Author> toAuthor(Set<Book_Author> book_author){
@@ -121,5 +123,9 @@ public interface BookMapper {
             feedbackResponses.add(feedbackResponse);
         });
         return feedbackResponses;
+    }
+    @Named("toCategoryId")
+    default int toCategoryId(Category category){
+        return category.getId();
     }
 }
