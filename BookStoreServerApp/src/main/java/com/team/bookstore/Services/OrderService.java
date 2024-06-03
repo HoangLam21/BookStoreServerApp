@@ -139,11 +139,11 @@ public class OrderService {
                         ErrorCodes.NOT_EXIST);
             }
             Order existOrder = orderRepository.findOrderById(id);
-            if(existOrder.getStatus_trans() == 1){
+            if(existOrder.getStatus_trans() == 4){
                 return orderMapper.toOrderResponse(existOrder);
             } else
-            if(status ==1) {
-                existOrder.setStatus_trans(1);
+            if(status ==4) {
+                existOrder.setStatus_trans(4);
                 existOrder.getOrder_detail().forEach(order_detail -> {
                     if(!bookRepository.existsById(order_detail.getBook().getId())){
                         throw new ObjectException(Object.BOOK.getName(),
@@ -151,6 +151,7 @@ public class OrderService {
                     }
                     Book existBook =
                             bookRepository.findBookById(order_detail.getBook().getId());
+                    increaseReadingSession(existBook.getId());
                     int newQuantity =
                             existBook.getBookQuantity() - order_detail.getQuantity();
                     existBook.setBookQuantity(newQuantity);
@@ -160,6 +161,11 @@ public class OrderService {
                 return orderMapper.toOrderResponse(orderRepository.save(existOrder));
             } else {
                 existOrder.setStatus_trans(status);
+                if(status == 5){
+                    existOrder.getOrder_detail().forEach(order_detail -> {
+                        increaseReadingSession(order_detail.getBook().getId());
+                    });
+                }
                 return orderMapper.toOrderResponse(orderRepository.save(existOrder));
             }
         } catch (Exception e){
@@ -270,5 +276,19 @@ public class OrderService {
                     ErrorCodes.CANNOT_UPDATE);
         }
     }
-
+    void increaseReadingSession(int book_id){
+        try{
+            if(!bookRepository.existsById(book_id)){
+                throw new ObjectException(Object.BOOK +" id: " + book_id,
+                        ErrorCodes.NOT_EXIST);
+            }
+            Book book = bookRepository.findBookById(book_id);
+            int currentSession = book.getReadingsession();
+            book.setReadingsession(currentSession+1);
+            bookRepository.save(book);
+        }catch (ObjectException e){
+            log.info(e);
+            throw e;
+        }
+    }
 }
