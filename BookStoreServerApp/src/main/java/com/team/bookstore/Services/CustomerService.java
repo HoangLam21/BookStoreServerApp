@@ -129,11 +129,11 @@ public class CustomerService {
                 throw new ApplicationException(ErrorCodes.USER_NOT_EXIST);
             }
             customerInformation.setId(id);
-            if(customerInformationRepository.existsCustomerInformationByEmail(customerInformation.getEmail())){
+            if(customerInformationRepository.existsCustomerInformationByEmail(customerInformation.getEmail())&&!customerInformationRepository.existsCustomerInformationByIdAndEmail(id,customerInformation.getEmail())){
                 throw new ObjectException(customerInformation.getEmail(),
                         ErrorCodes.HAS_BEEN_EXIST);
             }
-            if(customerInformationRepository.existsCustomerInformationByPhonenumber(customerInformation.getPhonenumber())){
+            if(customerInformationRepository.existsCustomerInformationByPhonenumber(customerInformation.getPhonenumber())&&!customerInformationRepository.existsCustomerInformationByIdAndPhonenumber(id,customerInformation.getPhonenumber())){
                 throw new ObjectException(customerInformation.getPhonenumber(),ErrorCodes.HAS_BEEN_EXIST);
             }
             CustomerInformation savedCustomerInformation = customerInformationRepository.save(customerInformation);

@@ -17,4 +17,6 @@ public interface StaffInformationRepository extends JpaRepository<StaffInformati
     StaffInformation findStaffInformationByEmail(String email);
     boolean existsStaffInformationByPhonenumber(String phoneNumber);
     boolean existsStaffInformationByEmail(String email);
+    boolean existsStaffInformationByIdAndEmail(int id, String email);
+    boolean existsStaffInformationByIdAndPhonenumber(int id,String phonenumber);
 }
