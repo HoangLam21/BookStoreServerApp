@@ -27,14 +27,14 @@ public class SecurityConfig{
     PasswordEncoder passwordEncoder;
     @Autowired
     CorsConfig corsConfig;
-    public static String[] PublicEndpoints = {"auth/**","author/all","author" +
-            "/find","book/all","book/find","category/all","category/find",
-            "customer/register","feedback/all","gallery/all","gallery/find",
-            "keyword/all","keyword/find","language/all","language/find",
-            "provider/all","provider/find","publisher/all","publisher/all",
-            "ebook/all"};
+    public static String[] PublicEndpoints = {"/auth/**","/author/all",
+            "author" +
+            "/find","book/all","/book/find","/category/all","/category/find",
+            "/customer/register","/feedback/all","/gallery/all","/gallery/find",
+            "/keyword/all","/keyword/find","/language/all","/language/find",
+            "/provider/all","/provider/find","/publisher/all","/publisher/all"};
     public static String[] CustomerEndpoints = {"/book/mine","/customer" +
-            "/myinfo","customer/my-payments","customer/my-orders","customer" +
+            "/myinfo","/customer/my-payments","customer/my-orders","/customer" +
             "/update/**","/customer/create/info/**","/feedback/add",
             "/feedback/all","/order/add","/order/cancel/**"};
     public static String[] StaffEndpoints = {"/author/**",
@@ -49,7 +49,10 @@ public class SecurityConfig{
                         .requestMatchers(PublicEndpoints).permitAll()
                         .requestMatchers(CustomerEndpoints).hasAnyRole(Role.CUSTOMER.name(),Role.ADMIN.name())
                         .requestMatchers(StaffEndpoints).hasAnyRole(Role.STAFF.name(),Role.ADMIN.name())
-                        .requestMatchers("/delete","/user").hasRole(Role.ADMIN.name())
+                        .requestMatchers("/delete","/user",
+                                "/staff/register",
+                                "/staff/update/info/**",
+                                "staff/create/info/**").hasRole(Role.ADMIN.name())
                         .requestMatchers("/message/loadchat").authenticated()
                         .anyRequest().permitAll()
                 )
