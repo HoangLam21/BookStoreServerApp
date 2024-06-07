@@ -126,11 +126,11 @@ public class StaffService {
                 throw new ApplicationException(ErrorCodes.USER_NOT_EXIST);
             }
             staffInformation.setId(id);
-            if(staffInformationRepository.existsStaffInformationByEmail(staffInformation.getEmail())){
+            if(staffInformationRepository.existsStaffInformationByEmail(staffInformation.getEmail())&&!staffInformationRepository.existsStaffInformationByIdAndEmail(id,staffInformation.getEmail())){
                 throw new ObjectException(staffInformation.getEmail(),
                         ErrorCodes.HAS_BEEN_EXIST);
             }
-            if(staffInformationRepository.existsStaffInformationByPhonenumber(staffInformation.getPhonenumber())){
+            if(staffInformationRepository.existsStaffInformationByPhonenumber(staffInformation.getPhonenumber())&&!staffInformationRepository.existsStaffInformationByIdAndPhonenumber(id,staffInformation.getPhonenumber())){
                 throw new ObjectException(staffInformation.getPhonenumber(),
                         ErrorCodes.HAS_BEEN_EXIST);
             }

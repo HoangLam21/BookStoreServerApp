@@ -47,6 +47,14 @@ dependencies {
     implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.5.0'
     //thymleaf
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '3.2.5'
+    //spring web socket
+    implementation group: 'org.springframework', name: 'spring-websocket', version: '6.1.8'
+    //spring messaging
+    implementation group: 'org.springframework', name: 'spring-messaging', version: '6.1.8'
+    //jackson core
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.17.1'
+    //jackson data bind
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.17.1'
 
 
 }
