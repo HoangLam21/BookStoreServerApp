@@ -8,39 +8,39 @@ const WebSocketChat = () => {
     const [messageContent, setMessageContent] = useState('');
     const username = "camlansuc"; 
 
-    useEffect(() => {
-        const connect = () => {
-            const socket = new SockJS('http://167.172.69.8:8010/BookStore/ws');
-            stompClientRef.current = Stomp.over(socket);
+    // useEffect(() => {
+    //     const connect = () => {
+    //         const socket = new SockJS('http://167.172.69.8:8010/BookStore/ws');
+    //         stompClientRef.current = Stomp.over(socket);
 
-            stompClientRef.current.connect({}, (frame) => {
-                console.log('Connected: ' + frame);
-                setConnected(true);
+    //         stompClientRef.current.connect({}, (frame) => {
+    //             console.log('Connected: ' + frame);
+    //             setConnected(true);
 
-                stompClientRef.current.subscribe('/topic/public', (message) => {
-                    showMessage(JSON.parse(message.body));
-                }, 7000);
+    //             stompClientRef.current.subscribe('/topic/public', (message) => {
+    //                 showMessage(JSON.parse(message.body));
+    //             }, 7000);
 
-                stompClientRef.current.subscribe('/queue/' + username, (message) => {
-                    showMessage(JSON.parse(message.body));
-                }, 7000);
-                setTimeout(function() {
-                    stompClientRef.current.subscribe('/topic/public', (message) => {
-                        showMessage(JSON.parse(message.body));
-                    });
-                 }, 5000);
+    //             stompClientRef.current.subscribe('/queue/' + username, (message) => {
+    //                 showMessage(JSON.parse(message.body));
+    //             }, 7000);
+    //             setTimeout(function() {
+    //                 stompClientRef.current.subscribe('/topic/public', (message) => {
+    //                     showMessage(JSON.parse(message.body));
+    //                 });
+    //              }, 5000);
 
-            }, (error) => {
-                console.error('Error: ' + error);
-                setConnected(false);
-                // Attempt reconnection after a delay
-                setTimeout(connect, 10000);
-            });
+    //         }, (error) => {
+    //             console.error('Error: ' + error);
+    //             setConnected(false);
+    //             // Attempt reconnection after a delay
+    //             setTimeout(connect, 10000);
+    //         });
 
-        };
+    //     };
 
-        connect();
-    }, []);
+    //     connect();
+    // }, []);
 
     const showMessage = (message) => {
         const messagesDiv = document.getElementById('messages');
