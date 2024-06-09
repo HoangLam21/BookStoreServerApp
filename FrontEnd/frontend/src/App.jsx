@@ -63,7 +63,7 @@ function App() {
 
           {/* Routes for customer */}
           <Route path="/" element={<CustomerLayout />}>
-            <Route path="home" element={<Home />} />
+            <Route index element={<Home />} />
             <Route path="aboutUs" element={<AboutUs />} />
             <Route path="books" element={<Books />} />
             <Route path="contact" element={<Contact />} />

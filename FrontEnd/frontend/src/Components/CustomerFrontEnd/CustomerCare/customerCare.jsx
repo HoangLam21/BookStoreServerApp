@@ -11,7 +11,7 @@ export default function CustomerCare() {
     return (
         <div className="bg-color-background-main mx-auto">
             <div className="flex ml-20 pt-10">
-                <Link style={{ color: '#a89b8f' }} className="active font-garamond text-xl font-semibold mr-3" to="/home">
+                <Link style={{ color: '#a89b8f' }} className="active font-garamond text-xl font-semibold mr-3" to="/">
                     <span className="hover:underline hover:tracking-wider">Home</span>
                 </Link>
                 <span className="text-color-main-2 text-xl mr-3"> / </span>
