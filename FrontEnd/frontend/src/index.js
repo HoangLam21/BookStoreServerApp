@@ -30,6 +30,20 @@
 //     </BrowserRouter>
 // );
 
+// import React from 'react';
+// import ReactDOM from 'react-dom/client';
+// import './index.css';
+// import App from './App';
+// import { BrowserRouter as Router } from 'react-router-dom';
+// import { AuthProvider } from './Components/context/AuthContext';
+// import { CartProvider } from './Components/context/Context';
+// import { BookProvider } from './Components/context/BookContext';
+// import { OrderProvider } from './Components/context/OrderContext';
+// import '@fortawesome/fontawesome-free/css/all.min.css';
+// import { CategoryProvider } from './Components/context/CategoryContext';
+// import { UserProvider } from './Components/context/UserContext';
+// import { CusUserProvider } from './Components/context/CusUserContext';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -42,14 +56,17 @@ import { OrderProvider } from './Components/context/OrderContext';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { CategoryProvider } from './Components/context/CategoryContext';
 import { UserProvider } from './Components/context/UserContext';
-import { CusUserProvider } from './Components/context/CusUserContext';
+import {CusUserProvider} from './Components/context/CusUserContext';
+import { MyInfoProvider } from './Components/context/MyInfoContext';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AuthProvider>
       <UserProvider>
-      <CusUserProvider>
+        <CusUserProvider>
+        <MyInfoProvider>
           <CategoryProvider>
             <BookProvider>
               <CartProvider>
@@ -59,7 +76,8 @@ root.render(
               </CartProvider>
             </BookProvider>
           </CategoryProvider>
-          </CusUserProvider>
+          </MyInfoProvider>
+        </CusUserProvider>
       </UserProvider>
     </AuthProvider>
   </React.StrictMode>

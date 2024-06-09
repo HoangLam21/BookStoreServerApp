@@ -1,0 +1,173 @@
+.wrapperr {
+    width: 90%;
+    height: 420px;
+    border-radius: 10px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.wrapperr header {
+    display: flex;
+    align-items: center;
+    padding: 25px 30px 10px;
+    justify-content: space-between;
+}
+
+header .iconss {
+    display: flex;
+}
+
+header .iconss span {
+    height: 38px;
+    width: 38px;
+    margin: 0 1px;
+    cursor: pointer;
+    color: #513820;
+    text-align: center;
+    line-height: 38px;
+    font-size: 1.9rem;
+    user-select: none;
+    border-radius: 50%;
+}
+
+.icons span:last-child {
+    margin-right: -10px;
+}
+
+header .iconss span:hover {
+    background: #f2f2f2;
+}
+
+header .current-datee {
+    font-size: 1.45rem;
+    font-weight: 500;
+}
+
+.calendarr {
+    padding: 20px;
+}
+
+.calendarr ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    text-align: center;
+}
+
+.calendarr .days {
+    margin-bottom: 20px;
+}
+
+.calendarr li {
+    color: #513820;
+    width: calc(100% / 7);
+    font-size: 1.07rem;
+}
+
+.calendarr .weekss li {
+    font-weight: 500;
+    cursor: default;
+}
+
+.calendarr .dayss li {
+    z-index: 1;
+    cursor: pointer;
+    position: relative;
+    margin-top: 30px;
+}
+
+.dayss li.inactive {
+    color: #513820;
+}
+
+.dayss li.selected::before {
+    position: absolute;
+    content: "";
+    left: 50%;
+    top: 50%;
+    height: 40px;
+    width: 40px;
+    z-index: -1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: #f2f2f2;
+}
+
+.dayss li:hover::before {
+    background: #f2f2f2;
+}
+
+
+@media (max-width: 640px) {
+
+
+    .wrapperr {
+        width: 90%;
+        height: 420px;
+        border-radius: 10px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+
+
+    header .current-datee {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+  
+
+    .calendarr li {
+        color: #513820;
+        width: calc(100% / 7);
+        font-size: 0.75rem;
+    }
+
+    header .iconss span {
+      height: 18px;
+      width: 18px;
+      margin: 0px 1px;
+      cursor: pointer;
+      color: #513820;
+      text-align: center;
+      line-height: 28px;
+      font-size: 1rem;
+      user-select: none;
+      border-radius: 50%;
+    }
+  }
+
+
+  @media (max-width: 1024px) {
+
+
+    .wrapperr {
+        width: 90%;
+        height: 420px;
+        border-radius: 10px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+
+
+    header .current-datee {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+  
+
+    .calendarr li {
+        color: #513820;
+        width: calc(100% / 7);
+        font-size: 0.75rem;
+    }
+
+    header .iconss span {
+        height: 18px;
+      width: 18px;
+      margin: 0px 1px;
+      cursor: pointer;
+      color: #878787;
+      text-align: center;
+      line-height: 28px;
+      font-size: 1rem;
+      user-select: none;
+      border-radius: 50%;
+    }
+  }

@@ -1,0 +1,58 @@
+[
+    {
+      "des":"Trả lương nhân viên",
+      "StockId": "DH001",
+      "total": 100000
+    },
+    {
+      "des":"Trả lương nhân viên",
+      "StockId": "DH002",
+      "total": 150000
+    },
+    {
+      "StockId": "DH003",
+      "des":"Trả lương nhân viên",
+      "total": 80000
+    },
+    {
+        "StockId": "DH004",
+      "des":"Trả lương nhân viên",
+
+        "total": 1000002
+      },
+      {
+        "StockId": "DH005",
+        "des":"Trả hàng hóa",
+        "total": 150032
+      },
+      {
+        "des":"Trả hàng hóa",
+        "StockId": "DH006",
+        "total": 800300
+      },
+      {
+        "des":"Trả hàng hóa",
+        "StockId": "DH007",
+        "total": 12200000
+      },
+      {
+        "StockId": "DH008",
+      "des":"Trả lương nhân viên",
+      "total": 150000222
+      },
+      {
+        "StockId": "DH009",
+      "des":"Trả lương nhân viên",
+      "total": 800001111
+      },
+      {
+        "StockId": "DH008",
+        "des":"Trả hàng hóa",
+        "total": 122111
+      },
+      {
+        "StockId": "DH009",
+        "des":"Trả hàng hóa",
+        "total": 123444
+      }
+  ]
