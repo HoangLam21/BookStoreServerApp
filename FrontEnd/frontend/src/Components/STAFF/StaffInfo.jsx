@@ -6,7 +6,7 @@ import { LayoutContext } from '../../Shared/userLayoutTitle';
 import StaffDetail from './StaffDetail';
 
 
-const STAFFALL_URL = 'https://bookstorewebdeploy-production.up.railway.app/BookStore/staff/all';
+const STAFFALL_URL = 'http://167.172.69.8:8010/BookStore/staff/all';
 
 
 export default function Staff() {

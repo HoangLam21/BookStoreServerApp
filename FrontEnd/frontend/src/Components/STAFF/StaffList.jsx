@@ -111,7 +111,7 @@ import axios from 'axios';
 import OverlayEditStaff from "./overlayStaff";
 import AddStaff from "./AddStaff";
 import AddNewStaff from "./AddNewStaff";
-const STAFFALL_URL = 'https://bookstorewebdeploy-production.up.railway.app/BookStore/staff/all';
+const STAFFALL_URL = 'http://167.172.69.8:8010/BookStore/staff/all';
 const token = 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uYXV0aGVudGljYXRpb24iLCJzdWIiOiJhZG1pbiIsImV4cCI6MTcxNzczOTk5MiwiaWF0IjoxNzE3NzI5MTkyLCJzY29wZSI6IlNUQUZGIEdFVF9DVVNUT01FUl9JTkZPUyBHRVRfUEFZTUVOVF9JTkZPUyBWRVJJRllfT1JERVIgSU1QT1JUX1dPUktfVVBEQVRFIElNUE9SVF9XT1JLX0NSRUFURSBJTVBPUlRfV09SS19GSU5EIElNUE9SVF9XT1JLX0RFTEVURSBDVVNUT01FUiBHRVRfTVlfUEFZTUVOVFMgQ0FOQ0xFX09SREVSIENSRUFURV9PUkRFUiBHRVRfTVlfQk9PS1MgQURNSU4gQURNSU5fTUFOQUdFIn0.7P6G8V3syh07oW6HvlWDK7X8ANAAidEEqsvph4y71Zk';
 
 
@@ -132,7 +132,6 @@ export default function StaffList() {
         setOverlayVisible(false); // Ẩn overlay khi đóng dialog
     };
     useEffect(() => {
-        localStorage.setItem('token', token);
     
         const fetchUserData = async () => {
             const token = localStorage.getItem('token');

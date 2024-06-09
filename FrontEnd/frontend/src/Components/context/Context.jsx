@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // Tạo một context cho giỏ hàng
 const CartContext = createContext();
 
@@ -20,6 +21,15 @@ export const CartProvider = ({ children }) => {
         item.id === selectedBook.id ? { ...item, quantity: item.quantity + 1 } : item
       );
       setCartItems(updatedCartItems);
+      toast.success('Thêm vào giỏ hàng thành công!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
     } else {
       setCartItems([...cartItems, { ...selectedBook, quantity: 1 }]);
     }

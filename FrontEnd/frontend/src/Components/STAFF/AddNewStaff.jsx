@@ -18,7 +18,7 @@ export default function AddNewStaff() {
     const [salary, setSalary] = useState(0);
     const [avatar, setAvatar] = useState('');
 
-    const url = `https://bookstorewebdeploy-production.up.railway.app/BookStore/staff/create/info/${20}`;
+    const url = `http://167.172.69.8:8010/BookStore/staff/create/info/${20}`;
 
     async function handleUpload() {
         if (!file) {
@@ -121,8 +121,10 @@ export default function AddNewStaff() {
                             alt="avatar"
                             className="rounded-xl"
                         />
-                        <input onChange={(e) => { setFile(e.target.files[0]) }} type="file" />
-                        <button onClick={handleAddOrder} className="border-2 ml-12 mt-5 m-2 text-header--lightcolor font-semibold py-2 px-4 rounded-full">Sửa ảnh</button>
+                        <label className="border-2 mt-20 m-2 text-header--lightcolor font-semibold py-2 px-4 rounded-full cursor-pointer">
+                            Sửa ảnh
+                            <input onChange={(e) => { setFile(e.target.files[0]) }} type="file" className="hidden" />
+                        </label>
                     </div>
                     <div className="content-staffinf flex-1 h-2/5 flex flex-col ml-2 w-4">
                         <div className="m-2 flex gap-1 text-primary--color">

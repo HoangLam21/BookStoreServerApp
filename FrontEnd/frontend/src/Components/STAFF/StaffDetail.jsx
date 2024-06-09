@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import OverlayEditStaff from "./overlayStaff";
 import AddStaff from "./AddStaff";
 
-const STAFFALL_URL = 'https://bookstorewebdeploy-production.up.railway.app/BookStore/staff/all';
+const STAFFALL_URL = 'http://167.172.69.8:8010/BookStore/staff/all';
 
 const StaffDetail = () => {
   const { id: staffId } = useParams();

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const BOOKALL_URL = 'https://bookstorewebdeploy-production.up.railway.app/BookStore/book';
+const BOOKALL_URL = 'http://167.172.69.8:8010/BookStore/book/all';
 
 const BookCard = ({ data, currentPage }) => {
   const [showAll, setShowAll] = useState(false);
@@ -50,7 +50,7 @@ const BookCard = ({ data, currentPage }) => {
   const handleClick = (book, index) => {
     setSelectedBook(book);
     setSelectedBookIndex(index);
-    navigate(`/book/all/${book.id}`);
+    navigate(`/admin/book/all/${book.id}`);
   };
 
   return (

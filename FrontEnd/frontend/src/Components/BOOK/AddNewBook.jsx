@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -6,18 +5,15 @@ export default function AddNewBook() {
     const [file, setFile] = useState(null);
     const [msg, setMsg] = useState(null);
     const [progress, setProgress] = useState({ started: false, pc: 0 });
-    const [id, setId] = useState('');
-    const [fullname, setFullname] = useState('');
-    const [gender, setGender] = useState(true);
-    const [initiate_time, setInitiate_time] = useState('2024-06-05T00:00');
-    const [birthday, setBirthday] = useState('2024-06-05T00:00');
-    const [phonenumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [address, setAddress] = useState('');
-    const [salary, setSalary] = useState(0);
     const [avatar, setAvatar] = useState('');
+    const [id, setId] = useState('');
+    const [bookname, setBookName] = useState('');
+    const [price, setPrice] = useState(0);
+    const [author, setAuthor] = useState(0);
+    const [publisher, setPublisher] = useState(0);
+    const [address, setAddress] = useState('');
 
-    const url = `http://167.172.69.8:8010/BookStore/book/create/info/${20}`;
+    const url = `https://bookstorewebdeploy-production.up.railway.app/BookStore/staff/create/info/${20}`;
 
     async function handleUpload() {
         if (!file) {
@@ -44,15 +40,12 @@ export default function AddNewBook() {
             const avatar = responseImage.data.avatar; // You might need to adjust this based on your backend response
 
             const bookInformationRequest = {
-                fullname: fullname,
-                gender: gender,
-                birthday: birthday,
-                phonenumber: phonenumber,
-                email: email,
-                address: address,
-                initiate_time: initiate_time,
-                salary: salary,
-                avatar: avatar
+                avatar: avatar,
+                bookname: bookname,
+                price: price,
+                author: author,
+                publisher: publisher,
+                address: address
             };
 
             await axios.post(url, bookInformationRequest, {
@@ -74,14 +67,12 @@ export default function AddNewBook() {
         const token = localStorage.getItem('token');
 
         const bookInformationRequest = {
-            fullname: fullname,
-            gender: gender,
-            birthday: birthday,
-            phonenumber: phonenumber,
-            email: email,
-            address: address,
-            initiate_time: initiate_time,
-            salary: salary
+            avatar: avatar,
+            bookname: bookname,
+            price: price,
+            author: author,
+            publisher: publisher,
+            address: address
         };
 
         const fd = new FormData();
@@ -100,7 +91,7 @@ export default function AddNewBook() {
           console.log('Book added:', response.data);
           // Clear the cart after successful submission
         } catch (error) {
-          console.error('Error adding book:', error);
+          console.error('Error adding staff:', error);
           if (error.response?.data) {
             console.error("Error response:", error.response.data);
           }
@@ -108,50 +99,44 @@ export default function AddNewBook() {
       };
 
     return (
-        <div className="w-full h-full flex flex-col">
-            <div className="mt-2 ml-3 text-base text-primary--color p-3">Chỉnh sửa thông tin nhân viên</div>
-            <div className="ml-4 font-medium w-11/12 text-lg text-primary--color border-b"></div>
+        <div className="w-full h-full">
+            <div className="text-base text-primary--color p-3 mt-4">Chỉnh sửa thông tin sách</div>
 
-            <div className='p-4 w-5/6 flex flex-col gap-10'>
-                <div className="setting-content flex flex-row w-full h-2/5">
-                    <div className='w-1/3 h-2/5 mt-3'>
+            <div className='p-4 w-5/6 flex flex-col items-center'>
+                <div className="setting-content w-full h-2/5 ">
+                    <div className='w-1/3 h-2/5 mt-3 flex flex-col items-center'>
                         <img
                             src={avatar ? `data:image/jpeg;base64,${avatar}` : 'https://via.placeholder.com/150'}
                             alt="avatar"
                             className="rounded-xl"
                         />
-                        <input onChange={(e) => { setFile(e.target.files[0]) }} type="file" />
-                        <button onClick={handleAddOrder} className="border-2 ml-12 mt-5 m-2 text-header--lightcolor font-semibold py-2 px-4 rounded-full">Sửa ảnh</button>
+                        <label className="border-2 mt-5 m-2 text-header--lightcolor font-semibold py-2 px-4 rounded-full cursor-pointer">
+                            Sửa ảnh
+                            <input onChange={(e) => { setFile(e.target.files[0]) }} type="file" className="hidden" />
+                        </label>
                     </div>
-                    <div className="content-bookinf flex-1 h-2/5 flex flex-col ml-2 w-4">
+                    <div className="content-bookinf flex-1 w-full flex flex-col items-start pt-2 ml-9">
                         <div className="m-2 flex gap-1 text-primary--color">
-                            <span className="text-header--lightcolor flex items-center">Mã nhân viên: </span>
-                            <input type="text" className="m-2" value={"NV" + id} readOnly />
+                            <span className="text-header--lightcolor flex items-center">Mã sách: </span>
+                            <input type="text" className="m-2" value={"Book" + id} readOnly />
                         </div>
                         <div className="m-2 flex gap-1 text-primary--color">
-                            <span className="text-header--lightcolor flex items-center">Họ và tên: </span>
-                            <input type="text" className="m-2" value={fullname} onChange={(e) => setFullname(e.target.value)} />
+                            <span className="text-header--lightcolor flex items-center">Tên sách: </span>
+                            <input type="text" className="m-2" value={bookname} onChange={(e) => setBookName(e.target.value)} />
                         </div>
                         <div className="m-2 flex gap-1 text-primary--color">
-                            <span className="text-header--lightcolor flex items-center">Giới tính: </span>
-                            <select className="m-2" value={gender} onChange={(e) => setGender(e.target.value === 'true')}>
-                                <option value={true}>Nữ</option>
-                                <option value={false}>Nam</option>
-                            </select>
+                            <span className="text-header--lightcolor flex items-center">Giá: </span>
+                            <input type="datetime-local" className="m-2" value={price} onChange={(e) => setPrice(e.target.value)} />
                         </div>
                         <div className="m-2 flex gap-1 text-primary--color">
-                            <span className="text-header--lightcolor flex items-center">Ngày sinh: </span>
-                            <input type="datetime-local" className="m-2" value={birthday} onChange={(e) => setBirthday(e.target.value)} />
+                            <span className="text-header--lightcolor flex items-center">Tác giả: </span>
+                            <input type="text" className="m-2" value={author} onChange={(e) => setAuthor(e.target.value)} />
                         </div>
                         <div className="m-2 flex gap-1 text-primary--color">
-                            <span className="text-header--lightcolor flex items-center">Số điện thoại: </span>
-                            <input type="text" className="m-2" value={phonenumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                            <span className="text-header--lightcolor flex items-center">Nhà xuất bản: </span>
+                            <input type="email" className="m-2" value={publisher} onChange={(e) => setPublisher(e.target.value)} />
                         </div>
-                        <div className="m-2 flex gap-1 text-primary--color">
-                            <span className="text-header--lightcolor flex items-center">Email: </span>
-                            <input type="email" className="m-2" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        </div>
-                        <div className="m-2 flex gap-1 text-primary--color">
+                        <div className="m-2 mt-4 flex gap-1 text-primary--color">
                             <div className="w-20 whitespace-nowrap">
                                 <span className="text-header--lightcolor flex items-center">Địa chỉ: </span>
                             </div>
@@ -159,31 +144,7 @@ export default function AddNewBook() {
                         </div>
                     </div>
                 </div>
-                <div className="z-10 w-full mt-2 max-md:max-w-full h-1/4">
-                    <div className="font-medium text-lg text-primary--color border-b w-full h-5"></div>
-                    <div className="text-base text-primary--color p-3">Chỉnh sửa thông tin làm việc</div>
-                    <div className="font-medium text-lg text-primary--color border-b w-full"></div>
-
-                    <div className="content-jobinfor ml-9 flex-1 w-full flex-col pt-2">
-                        <div className="m-2 flex gap-1 text-primary--color">
-                            <div className='w-30'>
-                                <span className="text-header--lightcolor flex items-center">Chức vụ: </span>
-                            </div>
-                            <input type="text" className="m-2 -mt-0" value="Nhân viên" readOnly />
-                        </div>
-                        <div className="m-2 flex gap-1 text-primary--color">
-                            <div className='w-15'>
-                                <span className="text-header--lightcolor flex items-center">Ngày vào làm: </span>
-                            </div>
-                            <input type="datetime-local" className="m-2 -mt-0" value={initiate_time} onChange={(e) => setInitiate_time(e.target.value)} />
-                        </div>
-                        <div className="m-2 flex gap-1 text-primary--color">
-                            <span className="text-header--lightcolor flex items-center">Lương: </span>
-                            <input type="number" className="m-2" value={salary} onChange={(e) => setSalary(Number(e.target.value))} />
-                        </div>
-                    </div>
-                </div>
-                <button className="bg-primary--color m-2 text-[#fff] font-bold py-2 px-4 rounded h-12" onClick={handleUpload}>Tạo nhân viên mới</button>
+                <button className="bg-primary--color m-2 text-[#fff] font-bold py-2 px-4 rounded" onClick={handleUpload}>Thêm sách mới</button>
                 <div className="w-full h-6 flex items-center justify-center text-primary--color">{msg}</div>
             </div>
         </div>
