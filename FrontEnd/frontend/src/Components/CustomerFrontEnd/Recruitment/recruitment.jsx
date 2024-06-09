@@ -11,7 +11,7 @@ export default function AboutUs(){
         <div>
           <div className="flex ml-20">
             <div className="mb-5">
-              <Link style={{ color: '#a89b8f' }} className="active font-garamond text-xl font-semibold mr-3" to="/home">
+              <Link style={{ color: '#a89b8f' }} className="active font-garamond text-xl font-semibold mr-3" to="/">
                 <span className="hover:underline hover:tracking-wider">Home</span>
               </Link>
             </div>
