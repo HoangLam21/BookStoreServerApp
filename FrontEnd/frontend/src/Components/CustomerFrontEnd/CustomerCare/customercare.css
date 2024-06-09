@@ -1,0 +1,10 @@
+@media (max-width:673px){
+    .content{
+        margin-left:10px
+    }
+}
+@media (max-width:600px){
+    .content{
+        margin-left: 10%
+    }
+}

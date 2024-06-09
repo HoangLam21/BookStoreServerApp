@@ -1,0 +1,79 @@
+@media (max-width: 882px) {
+    .filter-books{
+        display: block
+    }
+    .box-book{
+        width:205px
+    }
+  }
+
+  @media (max-width: 541px) {
+    .filter-books{
+        display: block
+    }
+    .box-book{
+        width:180px;
+    }
+    .img-book{
+        height:280px
+    }
+  }
+
+  @media (max-width: 480px) {
+    .filter-books{
+        display: block
+    }
+    .box-book{
+        width:170px;
+    }
+    .img-book{
+        height:270px
+    }
+  }
+
+  
+  @media (max-width: 460px) {
+    .filter-books{
+        display: block
+    }
+    .box-book{
+        width:160px;
+    }
+    .img-book{
+        height:260px
+    }
+  }
+  @media (max-width: 437px) {
+    .filter-books{
+        display: block
+    }
+    .box-book{
+        width:155px;
+    }
+    .img-book{
+        height:250px
+    }
+  }
+
+  @media (max-width: 426px) {
+    .filter-books{
+        display: block
+    }
+    .box-book{
+        width:145px;
+    }
+    .img-book{
+        height:230px
+    }
+  }
+
+  .no{
+    margin-left:30%;
+    height:700px;
+    margin-top:50px;
+
+  }
+
+  .bookss{
+    margin-left:10%
+  }

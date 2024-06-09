@@ -1,0 +1,98 @@
+.header {
+  background-color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 50;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.navbar {
+  display: flex;
+  gap: 1rem;
+  transition: clip-path 0.3s ease;
+}
+
+.navbar.open {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.fabar-container {
+  display: none;
+}
+
+.fabar {
+  font-size: 3rem;
+  color: #A89B8F;
+  padding: 0.5rem 1.5rem;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.navbar a:hover {
+  color: #513820;
+  tracking: 0.015rem;
+}
+
+.fabar {
+  font-size: 2rem;
+    color: #A89B8F;
+    padding: .5rem 1.5rem;
+    background-color: #fff;
+    cursor: pointer;
+    display: none;
+}
+
+@media (max-width: 915px) {
+  .fabar{
+    display: block
+  }
+
+  .fabar-container {
+    display: block;
+  }
+
+  
+
+  .navbar {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    display: flex;
+    flex-direction: column; /* Thay đổi flex-direction thành column */
+    gap: 0;
+    transition: clip-path 0.3s ease;
+    
+  }
+  .active-link {
+    color: #513820 !important;
+  }
+
+  .navbar.open {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .navbar a {
+    display: block;
+    margin: 0;
+    padding: 1rem;
+    width: 100%;
+    text-align: left;
+
+  }
+}
+@media(max-width:430px)
+{
+  .logo{
+    width:170px
+  }
+}

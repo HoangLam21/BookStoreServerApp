@@ -1,0 +1,148 @@
+/* Home.css */
+@keyframes animate {
+  from {
+    transform: translate(0, 100px);
+    opacity: 0;
+    filter: blur(33px);
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.de {
+  opacity: 0;
+  animation: animate 1s ease-in-out 1 forwards;
+}
+
+.title {
+  opacity: 0;
+  animation: animate 1s ease-in-out 1 forwards;
+}
+
+.description {
+  opacity: 0;
+  animation: animate 1s ease-in-out 1 forwards;
+}
+
+.btn {
+  opacity: 0;
+  animation: animate 1s ease-in-out 1 forwards;
+}
+
+.content {
+  margin-left: 10%;
+}
+.contentBL {
+  margin-left: 10%;
+}
+
+.swiper-button-prev, .swiper-button-next,
+.swiper-button-prev-2, .swiper-button-next-2 {
+  color: #000; /* Màu của các nút điều hướng */
+  position: absolute;
+  top: 50%;
+  width: 2rem;
+  height: 2rem;
+  margin-top: -1rem;
+  z-index: 10;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.5); /* Màu nền của các nút điều hướng */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-button-prev {
+  left: 10px;
+}
+
+.swiper-button-next {
+  right: 10px;
+}
+
+.swiper-button-prev-2 {
+  left: 10px;
+}
+
+.swiper-button-next-2 {
+  right: 10px;
+}
+
+/* Home.css */
+.swiper-button-next, .swiper-button-prev,
+.button-next-slide, .button-prev-slide,
+.button-next-slide-2, .button-prev-slide-2 {
+  color: #000; /* Adjust the color as needed */
+  position: absolute;
+  top: 50%;
+  width: 2rem;
+  height: 2rem;
+  margin-top: -1rem;
+  z-index: 10;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.5); /* Adjust the background color as needed */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-prev-slide {
+  left: 10px;
+}
+
+.button-next-slide {
+  right: 10px;
+}
+
+.button-prev-slide-2 {
+  left: 10px;
+}
+.slide{
+  margin-right:10%;
+}
+
+.button-next-slide-2 {
+  right: 10px;
+}
+@media(max-width:905px){
+  .slide{
+    display:block;
+    
+  }
+  .imageBook{
+    margin-left:8%;
+    margin-top:20px
+  }
+  .contentNA{
+    margin-left:8%;
+    margin-top:20px;
+    width:90%
+  }
+  .contentBL{
+    width:90%
+  }
+}
+.categories-container {
+  display: flex;
+  margin-left:10%;
+  margin-right:8%;
+
+  overflow-x: auto; /* Tạo thanh cuộn ngang khi cần */
+  white-space: nowrap; /* Đảm bảo các mục danh mục nằm trên cùng một hàng */
+}
+
+.category-item {
+  flex: 0 0 auto; /* Đảm bảo các mục danh mục không co lại */
+}
+.Category{
+  margin-left:10%;
+}
+.customer{
+  margin-left:10%;
+
+}
