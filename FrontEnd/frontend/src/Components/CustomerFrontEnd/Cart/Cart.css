@@ -1,0 +1,26 @@
+.container{
+    width:28rem
+}
+.checkout{
+    width:30rem;
+    margin-right:3rem
+}
+
+
+
+@media(max-width:530px){
+    .container{
+        width:23rem
+    }
+    .imgBook{
+        width:120px;
+        height:200px
+    }
+}
+
+@media(max-width:517px){
+    .soluong{
+        display:none
+    }
+
+}

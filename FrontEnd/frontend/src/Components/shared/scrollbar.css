@@ -1,0 +1,20 @@
+/* Thiết lập chiều rộng của thanh scrollbar */
+::-webkit-scrollbar {
+    width: 2px;
+  }
+  
+  /* Thiết lập màu nền cho phần track của scrollbar */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Thiết lập màu và kiểu dáng cho thanh scrollbar */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  /* Hiệu ứng hover cho thanh scrollbar */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }

@@ -1,0 +1,193 @@
+.detail-book{
+    margin-top: 20rem;
+    display: flex;
+    width: 950px;
+    width: 90%;
+
+}
+.detail-book .img-detail {
+    vertical-align: middle;
+}
+.detail-book .img-detail img{
+    height: 132px;
+    width: 97px;
+}
+.detail-book .img-main img{
+    height: 348px;
+    width: 239px;
+}
+
+.detail-book .content-detail-book{
+    margin-left: 5rem;
+}
+
+.detail-book .content-detail-book span{
+    font-size: 4rem;
+    color: #513820;
+    font-weight:500;
+
+}
+
+.detail-book .content-detail-book h6{
+    font-size: 2rem;
+    color: #A89B8F;
+    font-weight: lighter;
+}
+
+
+.detail-book .content-detail-book h5{
+    font-size: 2.5rem;
+    color: #513820;
+    font-weight: lighter;
+    margin-top: 2rem;
+}
+
+.detail-book .content-detail-book .review-book{
+    margin-top: 2rem;
+    display: flex;
+    color: #513820;
+}
+.detail-book .content-detail-book .review-book h3{
+    margin-left: 5rem;
+    font-size: 1.5rem;
+}
+.detail-book .content-detail-book .review-book h4{
+    font-size: 1.5rem;
+    font-weight: lighter;
+}
+.detail-book .content-detail-book .review-book a{
+    margin-top: .5rem;
+    margin-left: 1rem;
+}
+
+.detail-book .content-detail-book h2{
+    margin-top: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: lighter;
+    color: #513820;
+}
+
+.detail-book .content-detail-book .detail-information-book{
+    margin-top: 2rem;
+    display: flex;
+    color: #513820;
+    font-size: 1.2rem;
+}
+.detail-book .content-detail-book .detail-information-book a{
+   margin-top: .5rem;
+   margin-left: 1rem;
+}
+
+.detail-book .content-detail-book .btn-sell .btn-add-to-cart{
+    display: inline-block;
+    border-radius: 5rem;
+    background: #A89B8F;
+    color: #513820;
+    padding: .9rem 3.5rem;
+    cursor: pointer;
+    font-size: 1.7rem;
+ }
+ .detail-book .content-detail-book .btn-sell .btn-add-to-cart:hover{
+    color: #fff;
+    background: #513820;
+    letter-spacing: .1rem;
+ }
+ .detail-book .content-detail-book .btn-sell {
+    margin-top: 2rem;
+ }
+ .detail-book .content-detail-book .btn-sell .btn-shop-now
+ {
+    display: inline-block;
+    border-radius: 5rem;
+    background: #513820;
+    color: #fff;
+    padding: .9rem 3.5rem;
+    cursor: pointer;
+    font-size: 1.7rem;
+    width: 230px;
+    margin-left: 1rem;
+ }
+
+.detail-book .content-detail-book .btn-sell .btn-shop-now:hover{
+    color: var(--brown);
+    background: #A89B8F;
+    letter-spacing: .1rem;
+ }
+ .detail-book-like h1{
+    margin-top: 10rem;
+    color: #513820;
+    margin-bottom: 2rem;
+ }
+
+ .detail-book-bestSeller  h1{
+    margin-top: 10rem;
+    color: #513820;
+    margin-bottom: 2rem;
+ }
+ .detail-book-newArrival h1{
+    margin-top: 10rem;
+    color: #513820;
+    margin-bottom: 2rem;
+ }
+ .detail-book-discount h1{
+    margin-top: 10rem;
+    color: #513820;
+    margin-bottom: 2rem;
+ }
+
+.detail-book-like .books{
+    display: flex;
+}
+
+.detail-book-bestSeller .books{
+    display: flex;
+}
+
+.detail-book-newArrival .books{
+    display: flex;
+}
+.detail-book-discount .books{
+    display: flex;
+}
+
+.detail-book-like{
+    margin-left: 10%;
+    margin-top: 5rem;
+}
+
+.detail-book-bestSeller{
+    margin-left: 10%;
+    margin-top: 5rem;
+}
+.detail-book-newArrival{
+    margin-left: 10%;
+    margin-top: 5rem;
+}
+.detail-book-discount{
+    margin-left: 10%;
+    margin-top: 5rem;
+}
+
+
+.container{
+    width:28rem
+}
+
+@media(max-width:1380px){
+    .feedback{
+        display:block
+    }
+}
+@media(max-width:1031px){
+    .main{
+        display:block;
+        margin-top:30px
+    }
+}
+
+@media(max-width:797px){
+    .content{
+        width:70%;
+        margin-left:20%
+    }
+}

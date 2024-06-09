@@ -1,0 +1,94 @@
+.avatar-container {
+  width: 100px; /* Đặt kích thước của khung hình ảnh */
+  height: 100px; /* Đặt kích thước của khung hình ảnh */
+  border-radius: 50%; /* Làm tròn khung hình ảnh */
+  overflow: hidden; /* Đảm bảo hình ảnh không vượt ra khỏi khung */
+}
+
+.avatar-image {
+  width: 100%; /* Đảm bảo hình ảnh trong khung hình ảnh */
+  height: auto; /* Đảm bảo tỷ lệ khung hình ảnh */
+}
+@media(max-width:497px){
+  .account-info{
+    width:100%;
+  }
+
+  .account-order{
+    width:100%;
+  }
+
+  .info-order{
+    width:380px;
+    display:block
+  }
+  .login{
+    width:100%;
+  }
+
+  .signup{
+    width:100%;
+  }
+
+  .login-signup{
+    width:380px;
+    display:block
+  }
+}
+.btn-logout{
+  width:410px
+}
+
+@media(max-width:455px){
+  .account-info{
+    width:100%;
+  }
+
+  .account-order{
+    width:100%;
+  }
+
+  .info-order{
+    width:360px;
+    display:block
+  }
+  .login{
+    width:100%;
+  }
+
+  .signup{
+    width:100%;
+  }
+
+  .login-signup{
+    width:360px;
+    display:block
+  }
+}
+
+@media(max-width:400px){
+  .account-info{
+    width:100%;
+  }
+
+  .account-order{
+    width:100%;
+  }
+
+  .info-order{
+    width:340px;
+    display:block
+  }
+  .login{
+    width:100%;
+  }
+
+  .signup{
+    width:100%;
+  }
+
+  .login-signup{
+    width:340px;
+    display:block
+  }
+}
