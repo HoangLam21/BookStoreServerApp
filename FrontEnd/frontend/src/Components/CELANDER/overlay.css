@@ -1,0 +1,113 @@
+.overlay__background {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    cursor: pointer;
+    z-index: 9;
+    background-color: rgba(0, 0, 0, 0.3);
+    
+
+  }
+  
+  .overlay__container {
+    background-color: white;
+    position: fixed;
+    height: 100%;
+    width: 40%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 10;
+    padding: 20px;
+    padding-top: 0px;
+    color: #513820;
+  }
+  
+  .overlay__controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .overlay__close:after {
+    display: inline-block;
+    content: "\00d7";
+  }
+  
+  .overlay__close {
+    border: none;
+    background-color: transparent;
+    font-size: 36px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 640px) {
+
+    .overlay__background {
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      cursor: pointer;
+      z-index: 9;
+      background-color: rgba(0, 0, 0, 0.3);
+      
+  
+    }
+    
+    .overlay__container {
+      background-color: white;
+      position: fixed;
+      height: 100%;
+      width: 90%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      z-index: 10;
+      padding: 20px;
+      padding-top: 0px;
+      color: #513820;
+    }
+    
+  }
+
+
+  @media (max-width: 1024px) {
+
+    .overlay__background {
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      cursor: pointer;
+      z-index: 9;
+      background-color: rgba(0, 0, 0, 0.3);
+      
+  
+    }
+    
+    .overlay__container {
+      background-color: white;
+      position: fixed;
+      height: 100%;
+      width: 50%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      z-index: 10;
+      padding: 20px;
+      padding-top: 0px;
+      color: #513820;
+    }
+    
+  }

@@ -98,7 +98,7 @@ export default function NavBar() {
         <img className="logo" src={Logo} alt="Logo" />
       </div>
       <div className={`navbar ${menuOpen ? 'open' : ''}`}>
-        <Link to="/home" onClick={handleMenuItemClick} className={`text-color-main-2 text-xl font-garamond font-semibold ${isActive('/home')}`}>Home</Link>
+        <Link to="/" onClick={handleMenuItemClick} className={`text-color-main-2 text-xl font-garamond font-semibold ${isActive('/home')}`}>Home</Link>
         <Link to="/books" onClick={handleMenuItemClick} className={`text-color-main-2 text-xl font-garamond font-semibold ${isActive('/books')}`}>Books</Link>
         <Link to="/discount" onClick={handleMenuItemClick} className={`text-color-main-2 text-xl font-garamond font-semibold ${isActive('/discount')}`}>Discount</Link>
         <Link to="/contact" onClick={handleMenuItemClick} className={`text-color-main-2 text-xl font-garamond font-semibold ${isActive('/contact')}`}>Contact</Link>

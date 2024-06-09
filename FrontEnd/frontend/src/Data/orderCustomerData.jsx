@@ -1,48 +1,48 @@
 export const orderCustomerData =[
  {
-    orderCusId: 'HD001',
+    OrderId: 'HD001',
     orderCusDay: '13/03/2024',
     orderCusStatus: 1,
     orderCusStaff: 'NV004'
  },
  {
-    orderCusId: 'HD002',
+    OrderId: 'HD002',
     orderCusDay: '13/03/2024',
     orderCusStatus: 1,
     orderCusStaff: 'NV001'
  },
  {
-    orderCusId: 'HD003',
+    OrderId: 'HD003',
     orderCusDay: '13/03/2024',
     orderCusStatus: 1,
     orderCusStaff: 'NV002'
  },
  {
-    orderCusId: 'HD004',
+    OrderId: 'HD004',
     orderCusDay: '13/03/2024',
     orderCusStatus: 1,
     orderCusStaff: 'NV002'
  },
  {
-    orderCusId: 'HD005',
+    OrderId: 'HD005',
     orderCusDay: '13/03/2024',
     orderCusStatus: 1,
     orderCusStaff: 'NV002'
  },
  {
-    orderCusId: 'HD006',
+    OrderId: 'HD006',
     orderCusDay: '13/02/2024',
     orderCusStatus: 1,
     orderCusStaff: 'NV003'
  },
  {
-    orderCusId: 'HD007',
+    OrderId: 'HD007',
     orderCusDay: '14/03/2024',
     orderCusStatus: 1,
     orderCusStaff: 'NV001'
  },
  {
-    orderCusId: 'HD008',
+    OrderId: 'HD008',
     orderCusDay: '13/04/2024',
     orderCusStatus: 1,
     orderCusStaff: 'NV001'

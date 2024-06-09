@@ -4,62 +4,70 @@ import { FaPeopleGroup,FaChartLine,FaBox,FaBook } from "react-icons/fa6";
 import { IoIosPeople,IoMdSettings } from "react-icons/io";
 import { IoReaderSharp  } from "react-icons/io5";
 import { LuCalendarDays } from "react-icons/lu";
-
+import { BsChatDotsFill } from "react-icons/bs";
 
 export const DASHBOARD_SIDEBAR_LINKS = [
 	{
 		key: 'dashboard',
-		label: 'Dashboard',
-		path: '/',
+		label: 'Trang chủ',
+		path: '/admin/Dashboard',
 		icon: <BiHome />
 	},
 	{
 		key: 'staff',
 		label: 'Nhân Viên',
-		path: '/Staff',
+		path: '/admin/Staff',
 		icon: <FaPeopleGroup/>
 	},
 	{
 		key: 'book',
 		label: 'Sách',
-		path: '/Book',
+		path: '/admin/Book',
 		icon: <FaBook />
 	},
 	{
 		key: 'customers',
 		label: 'Khách hàng',
-		path: '/Customer',
+		path: '/admin/Customer',
 		icon: <IoIosPeople />
 	},
 	{
 		key: 'order',
 		label: 'Đơn hàng',
-		path: '/Order',
+		path: '/admin/Order', // Sử dụng đường dẫn tương đối thay vì tuyệt đối
 		icon: <IoReaderSharp />
 	},
 	{
 		key: 'stock',
 		label: 'Nhập hàng',
-		path: '/Stock',
+		path: '/admin/Stock',
 		icon: <FaBox />
 	},
     {
 		key: 'revenue',
 		label: 'Doanh thu',
-		path: '/Revenue',
+		path: '/admin/Revenue',
 		icon: <FaChartLine />
 	},
     {
 		key: 'celander',
 		label: 'Lịch làm việc',
-		path: '/Celander',
+		path: '/admin/Celander',
 		icon: <LuCalendarDays />
+	},
+	{
+		key: 'chatting',
+		label: 'Tin nhắn',
+		path: '/admin/Chatting',
+		icon: <BsChatDotsFill />
 	},
     {
 		key: 'setting',
 		label: 'Cài đặt',
-		path: '/Setting',
+		path: '/admin/Setting',
 		icon: <IoMdSettings />
-	}
-]
+	},
 
+	
+	
+]
