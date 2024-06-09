@@ -29,6 +29,7 @@ module.exports = {
       'background--overlay':"#000000",
       'white': '#fff',
       'black':"#000000",
+      'red':"#ff0000"
 
 
     }

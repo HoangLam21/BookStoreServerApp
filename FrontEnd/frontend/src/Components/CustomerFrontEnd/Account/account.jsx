@@ -42,9 +42,43 @@ const Account = () => {
   const [addressUp, setAddressUp] = useState("");
   const [showUpdateInfo, setShowUpdateInfo] = useState(false); // Add state for showing update form
   const [avatarUp, setAvatarUp] = useState("");
+  const [errors, setErrors] = useState({});
+  const [errorsUp, setErrorsUp] = useState({});
 
 
 
+
+  const validate = () => {
+    const newErrors = {};
+    if (!fullname) newErrors.fullname = 'Họ tên là bắt buộc.';
+    if (!email) {
+      newErrors.email = 'Email là bắt buộc.';
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = 'Email không hợp lệ.';
+    }
+    if (!phonenumber) newErrors.phonenumber = 'Số điện thoại là bắt buộc.';
+    if (!address) newErrors.address = 'Địa chỉ là bắt buộc.';
+    if (!birthday) newErrors.birthday = 'Ngày sinh là bắt buộc.';
+    if (!gender) newErrors.gender = 'Giới tính là bắt buộc.';
+    return newErrors;
+  };
+
+
+
+  const validateUp = () => {
+    const newErrorsUp = {};
+    if (!fullnameUp) newErrorsUp.fullnameUp = 'Họ tên là bắt buộc.';
+    if (!emailUp) {
+      newErrorsUp.emailUp = 'Email là bắt buộc.';
+    } else if (!/\S+@\S+\.\S+/.test(emailUp)) {
+      newErrorsUp.emailUp = 'Email không hợp lệ.';
+    }
+    if (!phonenumberUp) newErrorsUp.phonenumberUp = 'Số điện thoại là bắt buộc.';
+    if (!addressUp) newErrorsUp.addressUp = 'Địa chỉ là bắt buộc.';
+    if (!birthdayUp) newErrorsUp.birthdayUp = 'Ngày sinh là bắt buộc.';
+    if (!genderUp) newErrorsUp.genderUp = 'Giới tính là bắt buộc.';
+    return newErrorsUp;
+  };
 
   
   const [selectedFile, setSelectedFile] = useState(null);
@@ -95,6 +129,7 @@ const Account = () => {
   };
 
   const handleLogin = async () => {
+    
     try {
       const response = await axios.post("http://167.172.69.8:8010/BookStore/auth/login", {
         username: username,
@@ -129,105 +164,117 @@ function extractDate(timestamp) {
 
 
 const handleAddInfo = async () => {
-  const customerInformationRequest = {
-    fullname,
-    email,
-    gender,
-    birthday,
-    phonenumber,
-    address,
-  };
-
-  const formData = new FormData();
-  formData.append('image', selectedFile);
-  formData.append('customerInformationRequest',  new Blob([JSON.stringify(customerInformationRequest)], { type: "application/json" }));
-
-  for (let pair of formData.entries()) {
-    console.log(pair[0], pair[1]);
-  }
-  const config={
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
-      'Accept':'application/json'
-    }
-  }
-
-  try {
-    const response = await axios.post(
-      `http://167.172.69.8:8010/BookStore/customer/create/info/${id}`,
-      formData,config
-    );
-
-    if (response.data.code === 200) {
-      console.log("Tạo thông tin thành công");
-      fetchUserInfo(token);  // Fetch and update the user data
-      setShowAddInfo(false);
+  const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
     } else {
-      setError("tao thong tin ko dc. Vui lòng thử lại.");
+      const customerInformationRequest = {
+        fullname,
+        email,
+        gender,
+        birthday,
+        phonenumber,
+        address,
+      };
+    
+      const formData = new FormData();
+      formData.append('image', selectedFile);
+      formData.append('customerInformationRequest',  new Blob([JSON.stringify(customerInformationRequest)], { type: "application/json" }));
+    
+      for (let pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+      const config={
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+          'Accept':'application/json'
+        }
+      }
+    
+      try {
+        const response = await axios.post(
+          `http://167.172.69.8:8010/BookStore/customer/create/info/${id}`,
+          formData,config
+        );
+    
+        if (response.data.code === 200) {
+          console.log("Tạo thông tin thành công");
+          fetchUserInfo(token);  // Fetch and update the user data
+          setShowAddInfo(false);
+        } else {
+          setError("tao thong tin ko dc. Vui lòng thử lại.");
+        }
+      } catch (error) {
+        if (error.response) {
+          console.error('Server responded with a status:', error.response.status);
+          console.error('Server response data:', error.response.data);
+          setError(`Đăng nhập thất bại. Lỗi: ${error.response.status}`);
+        } else {
+          console.error('Error message:', error.message);
+          setError("Đăng nhập thất bại. Vui lòng thử lại.");
+        }
+      }
     }
-  } catch (error) {
-    if (error.response) {
-      console.error('Server responded with a status:', error.response.status);
-      console.error('Server response data:', error.response.data);
-      setError(`Đăng nhập thất bại. Lỗi: ${error.response.status}`);
-    } else {
-      console.error('Error message:', error.message);
-      setError("Đăng nhập thất bại. Vui lòng thử lại.");
-    }
-  }
+  
 };
 
 
 const handleUpdateInfo = async () => {
-  const customerInformationRequest = {
-    fullname:fullnameUp,
-    email:emailUp,
-    gender:genderUp,
-    birthday:birthdayUp,
-    phonenumber:phonenumberUp,
-    address:addressUp,
-  };
-
-  const formData = new FormData();
-  formData.append('image', selectedFileUp);
-  formData.append('customerInformationRequest',  new Blob([JSON.stringify(customerInformationRequest)], { type: "application/json" }));
-
-  for (let pair of formData.entries()) {
-    console.log(pair[0], pair[1]);
-  }
-  const config={
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
-      'Accept':'application/json'
-    }
-  }
-
-  try {
-    const response = await axios.patch(
-      `http://167.172.69.8:8010/BookStore/customer/update/info/${id}`,
-      formData,config
-    );
-
-    if (response.data.code === 200) {
-      console.log("Update thông tin thành công");
-      console.log(response)
-      fetchUserInfo(token); 
-      setShowUpdateInfo(false);
+  const validationErrors = validateUp();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrorsUp(validationErrors);
     } else {
-      setError("tao thong tin ko dc. Vui lòng thử lại.");
+      const customerInformationRequest = {
+        fullname:fullnameUp,
+        email:emailUp,
+        gender:genderUp,
+        birthday:birthdayUp,
+        phonenumber:phonenumberUp,
+        address:addressUp,
+      };
+    
+      const formData = new FormData();
+      formData.append('image', selectedFileUp);
+      formData.append('customerInformationRequest',  new Blob([JSON.stringify(customerInformationRequest)], { type: "application/json" }));
+    
+      for (let pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+      const config={
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+          'Accept':'application/json'
+        }
+      }
+    
+      try {
+        const response = await axios.patch(
+          `http://167.172.69.8:8010/BookStore/customer/update/info/${id}`,
+          formData,config
+        );
+    
+        if (response.data.code === 200) {
+          console.log("Update thông tin thành công");
+          console.log(response)
+          fetchUserInfo(token); 
+          setShowUpdateInfo(false);
+        } else {
+          setError("tao thong tin ko dc. Vui lòng thử lại.");
+        }
+      } catch (error) {
+        if (error.response) {
+          console.error('Server responded with a status:', error.response.status);
+          console.error('Server response data:', error.response.data);
+          setError(`Đăng nhập thất bại. Lỗi: ${error.response.status}`);
+        } else {
+          console.error('Error message:', error.message);
+          setError("Đăng nhập thất bại. Vui lòng thử lại.");
+        }
+      }
     }
-  } catch (error) {
-    if (error.response) {
-      console.error('Server responded with a status:', error.response.status);
-      console.error('Server response data:', error.response.data);
-      setError(`Đăng nhập thất bại. Lỗi: ${error.response.status}`);
-    } else {
-      console.error('Error message:', error.message);
-      setError("Đăng nhập thất bại. Vui lòng thử lại.");
-    }
-  }
+  
 };
 
 
@@ -361,6 +408,7 @@ const handleUpdateInfo = async () => {
               value={fullnameUp}
               onChange={(e) => setFullnameUp(e.target.value)}
             />
+            {errorsUp.fullnameUp && <div className="error text-red text-xl font-garamond">{errorsUp.fullnameUp}</div>}
           </div>
           <div className="input">
             <span className="text-color-main text-xl font-garamond h-9 font-light w-full rounded-md pl-1 border-color-main-2">
@@ -372,6 +420,8 @@ const handleUpdateInfo = async () => {
               value={emailUp}
               onChange={(e) => setEmailUp(e.target.value)}
             />
+                    {errorsUp.emailUp && <div className="error text-red text-xl font-garamond">{errorsUp.emailUp}</div>}
+
           </div>
           <div className="input">
             <span className="text-color-main text-xl font-garamond h-9 font-light w-full rounded-md pl-1 border-color-main-2">
@@ -383,6 +433,8 @@ const handleUpdateInfo = async () => {
               value={phonenumberUp}
               onChange={(e) => setPhonenumberUp(e.target.value)}
             />
+                    {errorsUp.phonenumberUp && <div className="error text-red text-xl font-garamond">{errorsUp.phonenumberUp}</div>}
+
           </div>
           <div className="input">
             <span className="text-color-main text-xl font-garamond h-9 font-light w-full rounded-md pl-1 border-color-main-2">
@@ -394,6 +446,8 @@ const handleUpdateInfo = async () => {
               value={addressUp}
               onChange={(e) => setAddressUp(e.target.value)}
             />
+                    {errorsUp.addressUp && <div className="error text-red text-xl font-garamond">{errorsUp.addressUp}</div>}
+
           </div>
           <div className="input">
             <span className="text-color-main text-xl font-garamond h-9 font-light w-full rounded-md pl-1 border-color-main-2">
@@ -405,6 +459,8 @@ const handleUpdateInfo = async () => {
               value={birthdayUp}
               onChange={(e) => setBirthdayUp(e.target.value)}
             />
+                    {errorsUp.birthdayUp && <div className="error text-red text-xl font-garamond">{errorsUp.birthdayUp}</div>}
+
           </div>
           <div className="input">
             <span className="text-color-main text-xl font-garamond h-9 font-light w-full rounded-md pl-1 border-color-main-2">
@@ -418,6 +474,8 @@ const handleUpdateInfo = async () => {
               <option value="true">Nữ</option>
               <option value="false">Nam</option>
             </select>
+            {errorsUp.genderUp && <div className="error text-red text-xl font-garamond">{errorsUp.genderUp}</div>}
+
           </div>
           <button
             className="account-save bg-color-main hover:bg-white mt-10 hover:text-color-main w-full h-9 border border-color-main-2 text-white font-garamond text-xl font-light"
@@ -500,6 +558,8 @@ const handleUpdateInfo = async () => {
               value={fullname}
               onChange={(e) => setFullname(e.target.value)}
             />
+                    {errors.fullname && <div className="error text-red text-xl font-garamond">{errors.fullname}</div>}
+
           </div>
           <div className="input">
             <span className="text-color-main text-xl font-garamond h-9 font-light w-full rounded-md pl-1 border-color-main-2">
@@ -511,6 +571,8 @@ const handleUpdateInfo = async () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+                    {errors.email && <div className="error text-red text-xl font-garamond">{errors.email}</div>}
+
           </div>
           <div className="input">
             <span className="text-color-main text-xl font-garamond h-9 font-light w-full rounded-md pl-1 border-color-main-2">
@@ -522,6 +584,8 @@ const handleUpdateInfo = async () => {
               value={phonenumber}
               onChange={(e) => setPhonenumber(e.target.value)}
             />
+                    {errors.phonenumber && <div className="error text-red text-xl font-garamond">{errors.phonenumber}</div>}
+
           </div>
           <div className="input">
             <span className="text-color-main text-xl font-garamond h-9 font-light w-full rounded-md pl-1 border-color-main-2">
@@ -533,6 +597,8 @@ const handleUpdateInfo = async () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
+                    {errors.address && <div className="error text-red text-xl font-garamond">{errors.address}</div>}
+
           </div>
           <div className="input">
             <span className="text-color-main text-xl font-garamond h-9 font-light w-full rounded-md pl-1 border-color-main-2">
@@ -544,6 +610,8 @@ const handleUpdateInfo = async () => {
               value={birthday}
               onChange={(e) => setBirthday(e.target.value)}
             />
+                    {errors.birthday && <div className="error text-red text-xl font-garamond">{errors.birthday}</div>}
+
           </div>
           <div className="input">
             <span className="text-color-main text-xl font-garamond h-9 font-light w-full rounded-md pl-1 border-color-main-2">
@@ -557,6 +625,8 @@ const handleUpdateInfo = async () => {
               <option value="true">Nữ</option>
               <option value="false">Nam</option>
             </select>
+            {errors.gender && <div className="error text-red text-xl font-garamond">{errors.gender}</div>}
+
           </div>
           <button
             className="account-save bg-color-main hover:bg-white mt-10 hover:text-color-main w-full h-9 border border-color-main-2 text-white font-garamond text-xl font-light"
