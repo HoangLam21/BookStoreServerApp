@@ -240,10 +240,10 @@ const Celander = () => {
         event.preventDefault();
         toast.warn(
             <div className='flex flex-col'>
-             <p>Bạn có muốn xóa đơn hàng này</p>
-               <div className='flex w-full py-1 justify-between'>
-               <button onClick={confirmDelete}>Confirm</button>
-               <button onClick={() => toast.dismiss()}>Cancel</button>
+             <p>Bạn có muốn xóa lịch làm việc này?</p>
+               <div className='flex w-full py-4 justify-between'>
+               <button onClick={confirmDelete}>Đồng ý</button>
+               <button onClick={() => toast.dismiss()}>Thoát</button>
                </div>
              
             </div>,

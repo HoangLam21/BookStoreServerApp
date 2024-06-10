@@ -94,7 +94,7 @@ const Login = () => {
       let token1 = localStorage.getItem('token');
       console.log(token1, "token 1");
       showSuccessToast();      
-      navigate("/admin/Dashboard"); //Mày mở chỗ này ra nè
+      navigate("/admin/Dashboard"); 
       navigate("/admin/Customer"); 
       console.log(res.result.token, "token ben Login cai nay set token");
       fetchData();
@@ -162,9 +162,9 @@ const LoginForm = ({ username, setUsername, password, setPassword, isShowPasswor
         icon="lock" 
         onChange={(event) => setPassword(event.target.value)}
       />
-      <i 
+      {/* <i 
         className={`fa-solid ${isShowPassword ? 'fa-eye' : 'fa-eye-slash'}`} 
-        onClick={() => setIsShowPassword(!isShowPassword)}></i>
+        onClick={() => setIsShowPassword(!isShowPassword)}></i> */}
     </div>
     <FormOptions />
     <SubmitButton text="Đăng nhập" username={username} password={password} loadingAPI={loadingAPI} />
