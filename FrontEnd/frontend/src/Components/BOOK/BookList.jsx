@@ -12,26 +12,6 @@ const BOOKALL_URL = 'http://167.172.69.8:8010/BookStore/book/all';
 
 
 export default function BookList() {
-  const [bookListData, setBookListData] = useState([]);
-  const [searchBook, setSearchBook] = useState('');
-  const [showAddStock, setshowAddStock] = useState(false);
-  const [overlayVisible, setOverlayVisible] = useState(false); 
-  const [showAll, setShowAll] = useState(false);
-  const [images, setImages] = useState([]);
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-
-  const itemsPerPage = 8;
-  const totalPagesCalc = Math.ceil(bookListData.length / itemsPerPage);
-  
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = currentPage * itemsPerPage;
-  const bookOnPage = bookListData.slice(startIndex, endIndex);
-  console.log(bookListData)
-  console.log(startIndex)
-  console.log(endIndex)
-
 
   const openDialog = () => {
     setshowAddStock(true);
@@ -42,6 +22,23 @@ export default function BookList() {
       setshowAddStock(false);
       setOverlayVisible(false); // Ẩn overlay khi đóng dialog
   };
+
+  const [bookListData, setBookListData] = useState([]);
+  const [searchBook, setSearchBook] = useState('');
+  const [showAddStock, setshowAddStock] = useState(false);
+  const [overlayVisible, setOverlayVisible] = useState(false); 
+  const [images, setImages] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [filteredData, setFilteredData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 8;
+  
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = currentPage * itemsPerPage;
+  const bookOnPage = bookListData.slice(startIndex, endIndex);
+
+
   useEffect(() => {
 
       const fetchUserData = async () => {
@@ -53,32 +50,44 @@ export default function BookList() {
           }
 
           try {
-              const response = await axios.get(BOOKALL_URL, {
-                  headers: {
-                      'Authorization': `Bearer ${token}`
-                  }
-              });
-              const result = response.data.result;
-              setBookListData(result);
-              console.log(result);
-              console.log(response)
-          } catch (error) {
-              console.error('Error fetching user data:', error);
-              if (error.response?.bookListData) {
-                  console.error("Error response:", error.response.bookListData);
+            const response = await axios.get(BOOKALL_URL, {
+              headers: {
+                'Authorization': `Bearer ${token}`
               }
+            });
+            const result = response.data.result;
+            setBookListData(result);
+            setFilteredData(result);
+            setTotalPages(Math.ceil(result.length / itemsPerPage));
+          } catch (error) {
+            console.error('Error fetching user data:', error);
+            if (error.response?.data) {
+              console.error("Error response:", error.response.data);
+            }
           }
+        };
+        fetchUserData();
+      }, []);
+    
+      useEffect(() => {
+        const filtered = bookListData.filter((item) =>
+          item.id.toString().toLowerCase().includes(searchBook.toLowerCase()) ||
+          item.author.toLowerCase().includes(searchBook.toLowerCase()) ||
+          item.description.toLowerCase().includes(searchBook.toLowerCase()) ||
+          item.category.toLowerCase().includes(searchBook.toLowerCase())
+        );
+        setFilteredData(filtered);
+        setTotalPages(Math.ceil(filtered.length / itemsPerPage));
+        setCurrentPage(1); // Reset to first page after search
+      }, [searchBook, bookListData, itemsPerPage]);
+    
+      const handleSearchBook = (event) => {
+        setSearchBook(event.target.value);
       };
-
-      fetchUserData();
-  }, []);
-
-  const handleSearchBook = (event) => {
-      const value = event.target.value;
-      setSearchBook(value);
-  };
-
-  const maxItemsPerPage = 8;
+    
+      const handlePageChange = (page) => {
+        setCurrentPage(page);
+      };
  
   return (
     <div className='w-full h-full'>
@@ -111,15 +120,9 @@ export default function BookList() {
           Thêm sách
       </button>
       </div>
-      {/*  list */}
-        {/* <BookCard data={bookListData.slice(startIndex, endIndex)} currentPage={currentPage} />
-        <div className='font-medium text-lg text-primary--color border-b w-full'></div>
-        <PaginationButtons setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages} />
-      </div> */}
-
         <div className='mb-10'>
           <div className='p-4 h-4/5 overflow-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 place-items-center'>   
-            {bookOnPage.map((book) => (
+          {filteredData.slice(startIndex, endIndex).map((book) => (
               <div className="group" key={book.id}>
                 <div className='relative justify-center items-center flex-col gap-4 bg-background--lightcolor rounded-lg py-10'>
                   {images.find((image) => image.bookId === book.id) ? (
@@ -137,13 +140,6 @@ export default function BookList() {
                   )}
                   {/* hover button */}
                   <div className=' hidden group-hover:flex absolute h-full top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-full text-center group-hover:backdrop-blur-sm justify-center items-center duration-200'>
-                  <Link to={`/book/${book.id}`}>
-                      <button
-                          className=' bg-primary--color py-2 px-4 rounded text-white--color'
-                      >
-                          Xem chi tiết
-                      </button>
-                  </Link>
                   </div>
                 </div>
                 <div className='leading-7'>
@@ -154,8 +150,8 @@ export default function BookList() {
             ))}
           </div>
             <div className='font-medium text-lg text-primary--color border-b w-full'></div>
-            <PaginationButtons setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages} />
-          </div>
+            <PaginationButtons setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+            </div>
   </div>
   );
 }

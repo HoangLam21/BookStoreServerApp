@@ -105,15 +105,15 @@ export default function AddNewBook() {
             <div className='p-4 w-5/6 flex flex-col items-center'>
                 <div className="setting-content w-full h-2/5 ">
                     <div className='w-1/3 h-2/5 mt-3 flex flex-col items-center'>
-                        <img
-                            src={avatar ? `data:image/jpeg;base64,${avatar}` : 'https://via.placeholder.com/150'}
-                            alt="avatar"
-                            className="rounded-xl"
-                        />
-                        <label className="border-2 mt-5 m-2 text-header--lightcolor font-semibold py-2 px-4 rounded-full cursor-pointer">
-                            Sửa ảnh
-                            <input onChange={(e) => { setFile(e.target.files[0]) }} type="file" className="hidden" />
-                        </label>
+                    <img
+                        className="img-book h-100px w-170px object-cover rounded-md"
+                        src={file ? URL.createObjectURL(file) : 'https://via.placeholder.com/150'}
+                        alt=""
+                    />
+                    <label className="border-2 mt-5 m-2 text-header--lightcolor font-semibold py-2 px-4 rounded-full cursor-pointer">
+                        Sửa ảnh
+                        <input onChange={(e) => { setFile(e.target.files[0]) }} type="file" className="hidden" />
+                    </label>
                     </div>
                     <div className="content-bookinf flex-1 w-full flex flex-col items-start pt-2 ml-9">
                         <div className="m-2 flex gap-1 text-primary--color">

@@ -111,8 +111,9 @@ import axios from 'axios';
 import OverlayEditStaff from "./overlayStaff";
 import AddStaff from "./AddStaff";
 import AddNewStaff from "./AddNewStaff";
+
+
 const STAFFALL_URL = 'http://167.172.69.8:8010/BookStore/staff/all';
-const token = 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb20uYXV0aGVudGljYXRpb24iLCJzdWIiOiJhZG1pbiIsImV4cCI6MTcxNzczOTk5MiwiaWF0IjoxNzE3NzI5MTkyLCJzY29wZSI6IlNUQUZGIEdFVF9DVVNUT01FUl9JTkZPUyBHRVRfUEFZTUVOVF9JTkZPUyBWRVJJRllfT1JERVIgSU1QT1JUX1dPUktfVVBEQVRFIElNUE9SVF9XT1JLX0NSRUFURSBJTVBPUlRfV09SS19GSU5EIElNUE9SVF9XT1JLX0RFTEVURSBDVVNUT01FUiBHRVRfTVlfUEFZTUVOVFMgQ0FOQ0xFX09SREVSIENSRUFURV9PUkRFUiBHRVRfTVlfQk9PS1MgQURNSU4gQURNSU5fTUFOQUdFIn0.7P6G8V3syh07oW6HvlWDK7X8ANAAidEEqsvph4y71Zk';
 
 
 export default function StaffList() {
@@ -131,11 +132,10 @@ export default function StaffList() {
         setshowAddStock(false);
         setOverlayVisible(false); // Ẩn overlay khi đóng dialog
     };
-    useEffect(() => {
     
+    useEffect(() => {
         const fetchUserData = async () => {
             const token = localStorage.getItem('token');
-
             if (!token) {
                 console.error('No token found, please log in.');
                 return;
@@ -160,6 +160,34 @@ export default function StaffList() {
 
         fetchUserData();
     }, []);
+
+    useEffect (() =>{
+
+        const fetchUserData = async () =>{
+            const token = localStorage.getItem('token');
+            if(!token){
+                console.error('No token found, please log in.');
+                return
+            }
+
+            try{
+                const response = await axios.get(STAFFALL_URL,{
+                    headers:{
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const result = response.data.result;
+                setStaffListData(result);
+                console.log(result);
+            }catch(error){
+                console.error('Error fetching user data:', error);
+                if(error.response?.data){
+                    console.error("Error response:", error.response?.data)
+                }
+            }
+        };
+        fetchUserData();
+    },[])
 
     const handleSearchStaff = (event) => {
         const value = event.target.value;
@@ -206,7 +234,7 @@ export default function StaffList() {
               </button>
             </div>
 
-            <div className="KH_maincontent_footer_content w-full h-full text-primary--color overflow-auto rounded-lg shadow md:overflow-hidden">
+            <div className="KH_maincontent_footer_content w-full h-full lg:h-3/4 text-primary--color overflow-auto rounded-lg shadow md:overflow-hidden">
                 <div className="overflow-auto md:overflow-hidden md:full w-96 ml-3 sm:w-[96%] lg:w-full lg:ml-0">
                     <table className="w-full">
                         <thead className="text-primary--color whitespace-nowrap">
@@ -225,7 +253,7 @@ export default function StaffList() {
                             {filteredData.map((item) => (
                                 <tr key={item.id} className="hover:bg-backgrond--color hover:no-underline shadow py-2 whitespace-nowrap">
                                     <td className="w-1/12 text-center">
-                                        <Link to={`/NhanVien/${item.id}`} className="hover:underline">{item.id}</Link>
+                                        <Link to={`/admin/NhanVien/${item.id}`} className="hover:underline">{item.id}</Link>
                                     </td>
                                     <td className="w-1/5 text-center">{item.fullname}</td>
                                     <td className="w-1/12 text-center">{item.gender ? 'Nam' : 'Nữ'}</td>

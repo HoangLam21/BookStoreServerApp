@@ -41,6 +41,7 @@ import BookWithCategory from './Components/CustomerFrontEnd/BookWithCategory/boo
 import ProtectedRoute from './Shared/ProtectedRoute '; 
 import { UserContext } from './Components/context/UserContext';
 import OrderDetailCus from './Components/CustomerFrontEnd/Account/orderDetail';
+import AdminBookDetail from './Components/BOOK/AdminBookDetail';
 
 function App() {
   const {user, loginContext} = useContext(UserContext);
@@ -96,6 +97,7 @@ function App() {
             <Route path="/admin/KhachHang/:id" element={<CustomerDetail />} />
             <Route path="/admin/HoaDon/:id" element={<OrderDetail />} />
             <Route path="/admin/NhanVien/:id" element={<StaffDetail />} />
+            <Route path="/admin/detailBook/:id" element={<AdminBookDetail />} />
           </Route>
 
         </Routes>

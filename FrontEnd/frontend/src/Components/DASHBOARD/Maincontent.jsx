@@ -3,9 +3,10 @@ import React from 'react';
 import { customerData, productData } from './customer_product'
 import "chart.js/auto";
 import { Bar } from "react-chartjs-2";
-import ChartDashboard from './ChartDashboard';
+import ChartDashboard from './ChartDashboard'
+import BookItem from './BookItem'
 import CustomerVIP from './CustomerVIP'
-import BookItem from './BookItem';
+
 
 export default function Maincontent() {
   return (
@@ -106,3 +107,4 @@ function ProductChart() {
     />
   );
 }
+

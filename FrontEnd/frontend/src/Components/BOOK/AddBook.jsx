@@ -1,7 +1,7 @@
 import React from 'react'
 import { IoIosClose } from "react-icons/io";
 
-export default function AddStock(props) {
+export default function AddBook(props) {
   return (props.trigger) ? (
     <div>
         <div >
