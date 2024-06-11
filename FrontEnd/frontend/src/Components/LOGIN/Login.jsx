@@ -95,7 +95,7 @@ const Login = () => {
       console.log(token1, "token 1");
       showSuccessToast();      
       navigate("/admin/Dashboard"); 
-      navigate("/admin/Customer"); 
+     
       console.log(res.result.token, "token ben Login cai nay set token");
       fetchData();
       

@@ -183,7 +183,7 @@ export default function Books() {
           <div className="w-1/5">
             <span className="text-color-main-2 text-xl font-garamond font-semibold ml-10">Sắp xếp theo</span>
             <select
-              className="block appearance-none ml-7 mt-4 w-auto bg-white border text-color-main text-l font-garamond font-semibold border-gray-300 hover:border-color-main px-4 py-2 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
+              className="block appearance-none ml-7 mt-4 text-center w-auto bg-white border text-color-main text-l font-garamond font-semibold border-gray-300 hover:border-color-main px-4 py-2 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
               onChange={handleSortChange}
               value={sortBy}
             >
