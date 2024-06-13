@@ -1,17 +1,15 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect,useContext } from 'react';
 import { Link } from "react-router-dom";
 import './contact.css'
-import { faRobot } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import bgOrder from "../../Assets/www.reallygreatsite.com1.png"
 import ChattingContent from "./chat";
-import UserData from './userData'
-import { UserContext } from "../../context/UserContext";
+import { AuthContext } from '../../context/AuthContext';
 
 
 
 export default function Contact(){
+  const { token } = useContext(AuthContext);
+
 
     return (
         <div className="bg-color-background-main ">
@@ -57,8 +55,9 @@ export default function Contact(){
                     </div>
                 </div>
             </div>
-            <div className="mx-auto">
-            <ChattingContent/>
+            <div className="chatwithus mx-auto">
+            <h6 className="text-color-main text-3xl font-garamond font-light mb-3">Chat cùng chúng mình</h6>
+            <ChattingContent token={token} />
                 </div>
         </div>
         </div>

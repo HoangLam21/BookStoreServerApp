@@ -93,10 +93,10 @@ export default function StockOrder() {
     }
 
     const filteredData = importlist.filter((item) =>
-   
-    item.createBy.toLowerCase().includes(searchStock.toLowerCase()) || 
-    item.createAt.toLowerCase().includes(searchStock.toLowerCase()) || 
-    item.import_total.toLowerCase().includes(searchStock.toLowerCase()))
+    item.id.toString().toLowerCase().includes(searchStock.toLowerCase()) ||
+    // item.createBy.toLowerCase().includes(searchStock.toLowerCase()) || 
+    // item.createAt.toLowerCase().includes(searchStock.toLowerCase()) || 
+    item.import_total.toString().toLowerCase().includes(searchStock.toLowerCase()))
 
     function ShippingStatus(ordstatus){
         let status = "";

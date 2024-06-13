@@ -6,3 +6,16 @@
         margin-left:15%
     }
 }
+
+@media (max-width:1043px){
+    .main{
+        display:block
+    }
+    .ttlh{
+        margin-left:15%
+    }
+    .chatwithus{
+        margin-left:15%;
+        margin-top:30px;
+    }
+}
