@@ -100,7 +100,7 @@ function CusOrderList() {
   return (
     <div className='ordercus-list z-9 '>
       {orderlistdata.map((item) => (
-        <Link to={`/admin/HoaDon/${item.id}`} key={item.id} className={classNames('py-2 text-primary--color text-xs',linkClass)} >
+        <Link to={`/manage/HoaDon/${item.id}`} key={item.id} className={classNames('py-2 text-primary--color text-xs',linkClass)} >
           <div className='flex gap-2 cursor-pointer border border-solid border-border--color rounded-md p-1'>
 
             <div className='flex justify-center items-center border border-solid  rounded-md w-20'>
@@ -173,7 +173,7 @@ else{
   return (
     <div className='orderstock-list'>
       {importlist.map((item) => (
-        <Link to={`/admin/DonHang/${item.id}`}  key={item.id} className={classNames('py-2 text-primary--color text-xs',linkClass)}>
+        <Link to={`/manage/DonHang/${item.id}`}  key={item.id} className={classNames('py-2 text-primary--color text-xs',linkClass)}>
           <div className='flex gap-2 cursor-pointer border border-solid border-border--color rounded-md p-1'>
 
             <div className='flex justify-center items-center border border-red-500 border-solid rounded-md w-20'>

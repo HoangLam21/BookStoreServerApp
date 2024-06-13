@@ -50,7 +50,7 @@ export default function BookItem() {
                             </div>
                                 <div className="income-content-detail overflow-auto w-full h-2/4 mt-2 text-sm">
                                     {booklistdata.map((item)=>(
-                                        <Link to={`/admin/detailBook/${item.id}`}  key={item.id} className="  income-detail flex justify-around py-2 mb-2 relative hover:bg-border--color gap-4 hover:no-underline">
+                                        <Link to={`/manage/detailBook/${item.id}`}  key={item.id} className="  income-detail flex justify-around py-2 mb-2 relative hover:bg-border--color gap-4 hover:no-underline">
                                             <div className="outcome-cus-ordernumber  flex w-32 justify-center">SP{item.id}</div>
                                             <div className=" outcome-total  w-44 justify-center flex">{item.title}</div>
                                             <div className="outcome-cus-ordernumber  justify-center flex w-32 ">{item.price}vnd</div>

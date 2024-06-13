@@ -9,7 +9,7 @@ export default function Layout() {
   const location = useLocation();
 
 
-  const isLoginPage = location.pathname === '/admin';
+  const isLoginPage = location.pathname === '/manage';
   return (
    
    

@@ -94,7 +94,7 @@ const Login = () => {
       let token1 = localStorage.getItem('token');
       console.log(token1, "token 1");
       showSuccessToast();      
-      navigate("/admin/Dashboard"); 
+      navigate("/manage/Dashboard"); 
      
       console.log(res.result.token, "token ben Login cai nay set token");
       fetchData();
