@@ -24,20 +24,31 @@ const WebSocketChat = ({ messages = [] }) => {
 
             stompClientRef.current.connect({}, (frame) => {
                 console.log('Connected: ' + frame);
-                setConnected(true);
 
-                stompClientRef.current.subscribe('/topic/public', (message) => {
-                    showMessage(JSON.parse(message.body));
-                });
+                setTimeout(()=>{
 
-                stompClientRef.current.subscribe('/queue/' + username, (message) => {
-                    showMessage(JSON.parse(message.body));
-                });
+                    stompClientRef.current.subscribe('/topic/public', (message) => {
+                        showMessage(JSON.parse(message.body));
+                    });
+
+                },1000)
+
+                setTimeout(()=>{
+
+                    stompClientRef.current.subscribe('/queue/' + username, (message) => {
+                        showMessage(JSON.parse(message.body));
+                    });
+
+                },1000)
+               
                 // setTimeout(function() {
                 //     stompClientRef.current.subscribe('/topic/public', (message) => {
                 //         showMessage(JSON.parse(message.body));
                 //     });
                 //  });
+
+                setConnected(true);
+
 
             }, (error) => {
                 console.error('Error: ' + error);

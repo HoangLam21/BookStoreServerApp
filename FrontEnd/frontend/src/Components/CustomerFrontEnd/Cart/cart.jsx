@@ -5,6 +5,7 @@ import { useCart } from "../../context/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./Cart.css";
+import emptycart from "../../Assets/emptycart.png"
 
 const Cart = () => {
   const { cartItems, addToCart, handleChange } = useCart();
@@ -38,7 +39,7 @@ const Cart = () => {
                     <p className="text-color-main ml-5 mr-5 text-xl font-garamond font-light">{item.quantity}</p>
                       <button
                         className="px-4 py-2 w-14 text-color-main-2 text-xs font-bold uppercase "
-                        onClick={() => addToCart(item)}
+                        onClick={() => handleChange(item,+1)}
                       >
                         <FontAwesomeIcon icon={faPlus} />
                       </button>
@@ -53,7 +54,14 @@ const Cart = () => {
           </div>
         ))}
         {cartItems.length === 0 && (
-          <h1 className="text-color-main text-2xl font-garamond font-light">Giỏ hàng của bạn trống, hãy thêm sách vào giỏ hàng</h1>
+          <div>
+          <img className='mt-10' src={emptycart} alt='' ></img>
+          <div className="flex justify-center ">
+          <h1 className="text-color-main text-2xl font-garamond font-light">Giỏ hàng của bạn trống</h1>
+
+          </div>
+
+          </div>
         )}
         {cartItems.length > 0 && (
           <div className="flex justify-end mt-2 mr-5 mb-32">

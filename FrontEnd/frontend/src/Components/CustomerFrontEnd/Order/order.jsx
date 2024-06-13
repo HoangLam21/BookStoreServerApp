@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useCart } from "../../context/Context";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+
 
 
 import axios from "axios";
@@ -30,6 +32,7 @@ export default function OrderCus() {
   const [orderId, setOrderId] = useState(null);
   const [paymentURL, setPaymentURL] = useState(""); 
   const [detailAdress, setDetailAdress] = useState("");
+  const navigate = useNavigate();
   
 
 
@@ -90,7 +93,7 @@ export default function OrderCus() {
       book_id: item.id,
       quantity: item.quantity
     }));
-    const fullAddress = `${selectedWardName ? selectedWardName + ', ' : ''}${selectedDistrictName ? selectedDistrictName + ', ' : ''}${selectedProvinceName ? selectedProvinceName  + ', ' : ''}${detailAdress ? detailAdress : ''}`;
+    const fullAddress = `${detailAdress ? detailAdress : ''}`;
 
     const orderData = {
       fullname: fullname,
@@ -113,6 +116,9 @@ export default function OrderCus() {
           console.log("vo roi")
           payForOrder(response.data.result.id); 
         }
+        else{
+          navigate("/")
+        }
       })
       .catch(error => {
         console.error("Error creating order:", error);
@@ -131,18 +137,21 @@ export default function OrderCus() {
       }
     })
       .then(response => {
-        console.log("Payment successful:", response.data);
+        console.log("Payment successful:", response);
         // Lấy URL thanh toán từ phản hồi
         const paymentUrl = response.data.result.paymentURL;
         setPaymentURL(paymentUrl); // Lưu URL thanh toán
         // Chuyển hướng người dùng đến trang thanh toán
-        window.location.href = paymentUrl;
-      })
+        window.open(paymentUrl, '_blank');
+        navigate("/")
+        })
       .catch(error => {
         console.error("Error processing payment:", error);
         // Xử lý lỗi khi thanh toán (nếu cần)
       });
   };
+
+  
   return (
     <div className="bg-color-background-main">
       <img className="m-auto h-52 max-h-full max-w-full" src={bgOrder} alt="" />
@@ -156,7 +165,17 @@ export default function OrderCus() {
             {cartItems.map((item) => (
               <div key={item.id} className="flex mt-5">
                 <div>
-                  <img className="h-48 w-32" src={`data:image/jpeg;base64,${item.galleryManage[0].thumbnail}`} alt="" />
+                {item.galleryManage && item.galleryManage[0] && item.galleryManage[0].thumbnail ? (
+        <img
+          className="h-48 w-32"
+          src={`data:image/jpeg;base64,${item.galleryManage[0].thumbnail}`}
+          alt={item.title}
+        />
+      ) : (
+        <div className="img-book-placeholder h-80 w-60 bg-gray-200 flex items-center justify-center">
+          No Image
+        </div>
+      )}
                 </div>
                 <div className="ml-5">
                   <span className="text-color-main text-3xl font-garamond font-light"><i>{item.title}</i></span>
@@ -201,7 +220,7 @@ export default function OrderCus() {
           </div>
           <div className="mt-3 w-3/4">
             <h3 className="text-color-main text-2xl font-garamond font-light">Địa chỉ</h3>
-            <div className="grid grid-cols-2 ml-2 gap-x-3">
+            {/* <div className="grid grid-cols-2 ml-2 gap-x-3">
               <div>
                 <div>
                   <h6 className="text-color-main text-xl font-garamond font-semibold">Tỉnh/Thành phố</h6>
@@ -254,12 +273,11 @@ export default function OrderCus() {
                     </option>
                   ))}
                 </select>
-              </div>
+              </div> */}
               <div>
-                <h6 className="text-color-main text-xl font-garamond font-semibold">Địa chỉ cụ thể</h6>
-                <input className="text-color-main-2 text-xl font-garamond font-light h-9 border w-full rounded-md pl-1 border-color-main-2" type="text" onChange={(e) => setDetailAdress(e.target.value)} />
+              <input className="text-color-main-2 text-xl font-garamond font-light h-9 border w-full rounded-md pl-1 border-color-main-2" type="text" placeholder="Nhập địa chỉ" onChange={(e) => setDetailAdress(e.target.value)} />
               </div>
-            </div>
+            {/* </div> */}
           </div>
           <div>
             <h3 className="text-color-main text-2xl mt-3 font-garamond font-light">Ghi chú</h3>

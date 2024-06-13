@@ -95,7 +95,7 @@ export default function Books() {
       return (
         (!selectedFilters.category || book.category === selectedFilters.category) &&
         (!selectedFilters.author || book.authors.some(author => author.author_name === selectedFilters.author)) &&
-        (!selectedFilters.publisher || book.publisher.some( publisher =>publisher.publisher_name === selectedFilters.publisher))
+        (!selectedFilters.publisher || book.publisher_name===selectedFilters.publisher_name)
       );
     });
     setFilteredBooks(filteredResults);
@@ -183,12 +183,12 @@ if (sortBy === "newest") {
       <div className="filter-books flex">
         <div className="w-96 mt-10">
           <div>
-            <div className="flex ml-14 cursor-pointer" onClick={() => setShowCategoryFilter(!showCategoryFilter)}>
+            <div className=" ml-14 cursor-pointer" onClick={() => setShowCategoryFilter(!showCategoryFilter)}>
               <FontAwesomeIcon className="text-color-main mr-2 text-xl" icon={showCategoryFilter ? faChevronUp : faChevronDown} />
               <span className="text-color-main text-2xl font-garamond font-semibold">Thể loại</span>
             </div>
             {showCategoryFilter && categories.map((category, index) => (
-              <div key={index} className="box-book row h-auto w-64 ml-24">
+              <div key={index} className="flex justify-start box-book row h-auto w-64 ml-10">
                 <button
                   className={`text-xl font-garamond font-light ${selectedFilters.category === category.name ? 'text-[#513820]' : 'text-color-main-2'}`}
                   onClick={() => handleFilterChange('category', category.name)}
@@ -201,12 +201,12 @@ if (sortBy === "newest") {
           </div>
 
           <div>
-            <div className="flex ml-14 mt-10 cursor-pointer" onClick={() => setShowAuthorFilter(!showAuthorFilter)}>
+            <div className=" ml-14 mt-10 cursor-pointer" onClick={() => setShowAuthorFilter(!showAuthorFilter)}>
               <FontAwesomeIcon className="text-color-main mr-2 text-xl" icon={showAuthorFilter ? faChevronUp : faChevronDown} />
               <span className="text-color-main text-2xl font-garamond font-semibold">Tác giả</span>
             </div>
             {showAuthorFilter && authors.map((author, index) => (
-              <div key={index} className="box-book row h-auto w-64 ml-24">
+              <div key={index} className="flex box-book row h-auto w-64 ml-10">
                 <button
                   className={`text-xl font-garamond font-light ${selectedFilters.author === author.author_name ? 'text-[#513820]' : 'text-color-main-2'}`}
                   onClick={() => handleFilterChange('author', author.author_name)}
@@ -219,12 +219,12 @@ if (sortBy === "newest") {
           </div>
 
           <div>
-            <div className="flex ml-14 mt-10 cursor-pointer" onClick={() => setShowPublisherFilter(!showPublisherFilter)}>
+            <div className=" ml-14 mt-10 cursor-pointer" onClick={() => setShowPublisherFilter(!showPublisherFilter)}>
               <FontAwesomeIcon className="text-color-main mr-2 text-xl" icon={showPublisherFilter ? faChevronUp : faChevronDown} />
               <span className="text-color-main text-2xl font-garamond font-semibold">Nhà xuất bản</span>
             </div>
             {showPublisherFilter && publishers.map((publisher, index) => (
-              <div key={index} className="box-book row h-auto w-64 ml-24">
+              <div key={index} className="flex box-book row h-auto w-64 ml-10">
                 <button
                   className={`text-xl font-garamond font-light ${selectedFilters.publisher === publisher.publisher_name ? 'text-[#513820]' : 'text-color-main-2'}`}
                   onClick={() => handleFilterChange('publisher', publisher.publisher_name)}
@@ -240,42 +240,50 @@ if (sortBy === "newest") {
           <div className="main-books">
             <div className="books flex flex-wrap">
               {sortedBooks.map((book, index) => (
-                <div key={index} className="box-book row h-auto w-64 ml-10 mb-20">
-                  <Link
-                    to="/detailBook"
-                    onClick={() => setSelectedBook(book)}
-                  >
-                    <img
-                      className="img-book h-80 w-60"
-                      src={`data:image/jpeg;base64,${book.galleryManage[0].thumbnail}`}
-                      alt=""
-                    />
-                  </Link>
-                  <div className="book-text">
-                    <div className="h-14">
-                      <span className="text-color-main active font-garamond text-xl font-semibold mr-6"><i>{book.title}</i></span>
-                    </div>
-                    <h6 className="text-color-main-2 active font-garamond text-l font-semibold mr-6">- {book.authors.map(author => author.author_name).join(", ")}</h6>
-                    <div className="flex justify-end">
-  {book.discount > 0 && (
-    <h5 className="text-color-main text-right active font-garamond text-xl font-light line-through line-through-red mr-6">
-      {(book.price).toLocaleString('vi-VN')} vnđ
-    </h5>
-    
-  )}
-  <h5 className="text-color-main text-right active font-garamond text-xl font-light mr-6">
-    {(book.total_pay).toLocaleString('vi-VN')} vnđ
-  </h5>
-  
+                <div key={index} className="box-book row h-auto w-64 ml-10 mb-20 book-card">
+  <Link
+    to="/detailBook"
+    onClick={() => setSelectedBook(book)}
+  >
+    <div className="flex justify-center pt-2 items-center h-80 w-60">
+      {book.galleryManage && book.galleryManage[0] && book.galleryManage[0].thumbnail ? (
+        <img
+          className="img-book h-full w-full object-cover"
+          src={`data:image/jpeg;base64,${book.galleryManage[0].thumbnail}`}
+          alt={book.title}
+        />
+      ) : (
+        <div className="img-book-placeholder h-full w-full bg-gray-200 flex items-center justify-center">
+          No Image
+        </div>
+      )}
+    </div>
+  </Link>
+  <div className="book-text text-center pb-2">
+    <div className="h-14 mt-2">
+      <span className="text-color-main active font-garamond text-2xl font-semibold mr-6"><i>{book.title}</i></span>
+    </div>
+    <h6 className="text-color-main-2 active font-garamond text-l font-semibold mr-6">- {book.authors.map(author => author.author_name).join(", ")}</h6>
+    <div className="flex justify-center mt-2">
+      {book.discount > 0 && (
+        <h5 className="text-color-main text-right active font-garamond text-xl font-light line-through line-through-red mr-6">
+          {(book.price).toLocaleString('vi-VN')} vnđ
+        </h5>
+      )}
+      <h5 className="text-color-main text-right active font-garamond text-xl font-light mr-6">
+        {(book.total_pay).toLocaleString('vi-VN')} vnđ
+      </h5>
+    </div>
+    <div className="flex justify-center mt-4">
+      <button
+        onClick={() => addToCart(book)}
+        className="bg-backgrond--color hover:bg-color-main hover:text-white--color w-11/12 h-9 border border-color-main-2 rounded-md text-color-main active font-garamond text-1xl font-light"
+      >
+        Thêm vào giỏ hàng
+      </button>
+    </div>
+  </div>
 </div>
-                    <button
-                      onClick={() => addToCart(book)}
-                      className="bg-backgrond--color hover:bg-color-main hover:text-white--color w-11/12 h-9 border border-color-main-2 rounded-md text-color-main active font-garamond text-1xl font-light mr-6"
-                    >
-                      Thêm vào giỏ hàng
-                    </button>
-                  </div>
-                </div>
               ))}
             </div>
           </div>

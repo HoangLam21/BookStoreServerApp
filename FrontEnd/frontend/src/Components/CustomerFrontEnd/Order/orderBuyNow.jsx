@@ -6,6 +6,8 @@ import axios from "axios";
 import { useBook2 } from '../../context/BookContext';
 
 import bgOrder from "../../Assets/www.reallygreatsite.com1.png"
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+
 
 export default function OrderBuyNow() {
   const { token } = useContext(AuthContext);
@@ -30,6 +32,8 @@ export default function OrderBuyNow() {
   const [paymentURL, setPaymentURL] = useState(""); 
   const [detailAdress, setDetailAdress] = useState("");
   const [quantity, setQuantity] =useState(1);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     axios.get("https://vapi.vnappmob.com/api/province")
@@ -85,7 +89,7 @@ export default function OrderBuyNow() {
       quantity: quantity,
     }];
     
-    const fullAddress = `${selectedWardName ? selectedWardName + ', ' : ''}${selectedDistrictName ? selectedDistrictName + ', ' : ''}${selectedProvinceName ? selectedProvinceName + ', ' : ''}${detailAdress ? detailAdress : ''}`;
+    const fullAddress = `${detailAdress ? detailAdress : ''}`;
 
     const orderData = {
       fullname: fullname,
@@ -109,6 +113,9 @@ export default function OrderBuyNow() {
           console.log("vo roi")
           payForOrder(response.data.result.id); 
         }
+        else{
+          navigate("/")
+        }
       })
       .catch(error => {
         console.error("Error creating order:", error);
@@ -120,19 +127,24 @@ export default function OrderBuyNow() {
   };
 
   const payForOrder = (orderId) => {
+    // Thực hiện POST request để thanh toán
     axios.post(`http://167.172.69.8:8010/BookStore/payment/payfor?order_id=${orderId}&method=${paymentMethod}`, null, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
       .then(response => {
-        console.log("Payment successful:", response.data);
+        console.log("Payment successful:", response);
+        // Lấy URL thanh toán từ phản hồi
         const paymentUrl = response.data.result.paymentURL;
-        setPaymentURL(paymentUrl); 
-        window.location.href = paymentUrl;
-      })
+        setPaymentURL(paymentUrl); // Lưu URL thanh toán
+        // Chuyển hướng người dùng đến trang thanh toán
+        window.open(paymentUrl, '_blank');
+        navigate("/")
+        })
       .catch(error => {
         console.error("Error processing payment:", error);
+        // Xử lý lỗi khi thanh toán (nếu cần)
       });
   };
 
@@ -148,7 +160,17 @@ export default function OrderBuyNow() {
           <div>
             <div className="flex mt-5">
               <div>
-                <img className="h-48 w-32" src={`data:image/jpeg;base64,${selectedBook.galleryManage[0].thumbnail}`} alt="" />
+              {selectedBook.galleryManage && selectedBook.galleryManage[0] && selectedBook.galleryManage[0].thumbnail ? (
+        <img
+          className="h-48 w-32"
+          src={`data:image/jpeg;base64,${selectedBook.galleryManage[0].thumbnail}`}
+          alt={selectedBook.title}
+        />
+      ) : (
+        <div className="img-book-placeholder h-80 w-60 bg-gray-200 flex items-center justify-center">
+          No Image
+        </div>
+      )}
               </div>
               <div className="ml-5">
                 <span className="text-color-main text-3xl font-garamond font-light"><i>{selectedBook.title}</i></span>
@@ -192,7 +214,7 @@ export default function OrderBuyNow() {
           </div>
           <div className="mt-3 w-3/4">
             <h3 className="text-color-main text-2xl font-garamond font-light">Địa chỉ</h3>
-            <div className="grid grid-cols-2 ml-2 gap-x-3">
+            {/* <div className="grid grid-cols-2 ml-2 gap-x-3">
               <div>
                 <div>
                   <h6 className="text-color-main text-xl font-garamond font-semibold">Tỉnh/Thành phố</h6>
@@ -245,12 +267,12 @@ export default function OrderBuyNow() {
                     </option>
                   ))}
                 </select>
-              </div>
+              </div> */}
               <div>
-                <h6 className="text-color-main text-xl font-garamond font-semibold">Địa chỉ cụ thể</h6>
-                <input className="text-color-main-2 text-xl font-garamond font-light h-9 border w-full rounded-md pl-1 border-color-main-2" type="text" onChange={(e) => setDetailAdress(e.target.value)} />
+                {/* <h6 className="text-color-main text-xl font-garamond font-semibold">Địa chỉ cụ thể</h6> */}
+                <input className="text-color-main-2 text-xl font-garamond font-light h-9 border w-full rounded-md pl-1 border-color-main-2" type="text" placeholder="Nhập địa chỉ" onChange={(e) => setDetailAdress(e.target.value)} />
               </div>
-            </div>
+            {/* </div> */}
           </div>
           <div>
             <h3 className="text-color-main text-2xl mt-3 font-garamond font-light">Ghi chú</h3>

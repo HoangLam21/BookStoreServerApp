@@ -5,6 +5,8 @@ import axios from "axios";
 import { AuthContext } from '../../context/AuthContext';
 import "./account.css"
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
+
 
 const OrderDetailCus = () => {
     const { selectedOrder } = useOrder();
@@ -53,8 +55,18 @@ const OrderDetailCus = () => {
       );
   
       if (response.data.code === 200) {
+
         console.log("huy hoa don thành công");
         console.log(response)
+        toast.success('Hủy đơn hàng thành công!', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+      });
       } else {
         setError("tao thong tin ko dc. Vui lòng thử lại.");
       }
@@ -81,18 +93,23 @@ const OrderDetailCus = () => {
             <p className='text-color-main font-garamond text-xl font-light'>Giảm: {(selectedOrder.total_dis).toLocaleString('vi-VN')} vnđ</p>
             <p className='text-color-main font-garamond text-xl font-light'>Tổng: {(selectedOrder.total_price).toLocaleString('vi-VN')} vnđ</p>
 
+            <div className='flex'>
             <p className='text-color-main font-garamond text-xl font-light mt-5'> Trạng thái đơn hàng: {getStatusText(selectedOrder.status_trans)} </p>
 
             {selectedOrder.status_trans === 0 && (
                         <Link
-                            to="/home"
+                            to="/"
                             onClick={handleUpdateInfo}
                         >
-                            <button className="btn bg-color-main-2 hover:bg-color-main w-40 h-9 border border-gray-400 rounded-md text-white active font-garamond text-1xl font-light mr-6">Hủy đơn hàng</button>
+                            <button className=" bg-color-main-2 mt-4 ml-5 hover:bg-color-main w-40 h-9 border border-gray-400 rounded-md text-white active font-garamond text-1xl font-light mr-6">Hủy đơn hàng</button>
                         </Link>
                     )}
-                    <p className='text-color-main font-garamond text-xl font-light mt-5'><i>*Lưu ý: chỉ hủy với các hóa đơn chưa được thanh toán và chưa xác nhận hóa đơn thanh toán rồi vui lòng liên hệ nhân viên để hỗ trợ.</i>  </p>
 
+            </div>
+            <p className='text-color-main font-garamond text-xl font-light mt-5'><i>*Lưu ý: chỉ hủy với các hóa đơn chưa được thanh toán và chưa xác nhận hóa đơn thanh toán rồi vui lòng liên hệ nhân viên để hỗ trợ.</i>  </p>
+
+
+            
             <h3 className='text-color-main font-garamond text-3xl mt-10 font-light'>Danh sách sản phẩm:</h3>
             <table className="table-auto border-collapse w-full mt-5 mb-52">
               <thead>
