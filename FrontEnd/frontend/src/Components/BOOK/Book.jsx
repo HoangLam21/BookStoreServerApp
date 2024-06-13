@@ -271,7 +271,7 @@ export default function Books() {
                       : 'https://via.placeholder.com/150'}
                     alt=""
                   />
-                  <Link to={`/admin/detailBook/${book.id}`} onClick={() => handleBookDetail(book)}>
+                  <Link to={`/manage/detailBook/${book.id}`} onClick={() => handleBookDetail(book)}>
                     <button
                       className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-25 text-white border border-white font-semibold text-lg hover:bg-opacity-50 transition-opacity"
                     >

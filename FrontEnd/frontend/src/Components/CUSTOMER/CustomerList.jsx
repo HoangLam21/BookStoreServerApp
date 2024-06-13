@@ -92,7 +92,7 @@ export default function CustomerList() {
                                 return(
                                     <tr key={item.id} className="hover:bg-backgrond--color hover:no-underline shadow py-2">
                                     <td className="w-1/5 text-center">
-                                    <Link to={`/admin/KhachHang/${item.id}`} className="hover:underline">{item.id}</Link></td>
+                                    <Link to={`/manage/KhachHang/${item.id}`} className="hover:underline">{item.id}</Link></td>
                                     <td className="w-1/3 text-center">{item.fullname}</td>
                                     <td className="w-2/12 text-center">{item.gender?"Nữ":"Nam"}</td>
                                     <td className="w-1/3 text-center">{formattedDate}</td>

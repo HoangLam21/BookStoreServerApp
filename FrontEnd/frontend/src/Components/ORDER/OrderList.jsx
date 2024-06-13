@@ -183,7 +183,7 @@ export default function OrderList() {
                             {filteredData.map((item) => (
                                 <tr key={item.id} className="hover:bg-backgrond--color">
                                     <td className="w-1/7 text-center py-2">
-                                        <Link to={`/admin/HoaDon/${item.id}`} className="hover:underline">{item.id}</Link>
+                                        <Link to={`/manage/HoaDon/${item.id}`} className="hover:underline">{item.id}</Link>
                                     </td>
                                     <td className="w-1/5 text-center py-2">{item.customerId}</td>
                                     <td className="w-1/5 text-center py-2">{item.fullname}</td>

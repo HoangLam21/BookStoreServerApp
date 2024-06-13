@@ -362,7 +362,7 @@ export default function StockOrder() {
                                 return (
                                 <tr key={item.id} className="hover:bg-backgrond--color">
                                     <td className="w-1/5 text-center py-2">
-                                    <Link to={`/admin/DonHang/${item.id}`} key={item.id} className="hover:underline">{item.id}</Link>
+                                    <Link to={`/manage/DonHang/${item.id}`} key={item.id} className="hover:underline">{item.id}</Link>
                                     </td>
                                     <td className="w-1/6 text-center py-2">{item.createBy}</td>
                                     <td className="w-1/5 text-center py-2">{formattedDate}</td>

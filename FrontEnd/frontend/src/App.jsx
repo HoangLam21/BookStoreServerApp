@@ -16,7 +16,7 @@ import Setting from './Components/SETTING/Setting';
 import StockDetail from './Components/STOCK/StockDetail';
 import CustomerDetail from './Components/CUSTOMER/CustomerDetail';
 import OrderDetail from './Components/ORDER/OrderDetail';
-import Login from './Components/LOGIN/Login';
+import Login from './Components/LOGIN/Login'
 import StaffDetail from './Components/STAFF/StaffDetail';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -81,7 +81,7 @@ function App() {
           </Route>
 
 
-          <Route path="/admin/" element={<Layout />}>
+          <Route path="/manage/" element={<Layout />}>
             <Route index element={<Login />}/>
             <Route path="Book" element={<Book/>}/>
             <Route path="Dashboard" element={<Dashboard/>}/>
@@ -93,11 +93,11 @@ function App() {
             <Route path="Celander" element={<Celander/>}/>
             <Route path="Chatting" element={<Chatting/>}/>
             <Route path="Setting" element={<Setting/>}/>
-            <Route path="/admin/DonHang/:id" element={<StockDetail />} />
-            <Route path="/admin/KhachHang/:id" element={<CustomerDetail />} />
-            <Route path="/admin/HoaDon/:id" element={<OrderDetail />} />
-            <Route path="/admin/NhanVien/:id" element={<StaffDetail />} />
-            <Route path="/admin/detailBook/:id" element={<AdminBookDetail />} />
+            <Route path="/manage/DonHang/:id" element={<StockDetail />} />
+            <Route path="/manage/KhachHang/:id" element={<CustomerDetail />} />
+            <Route path="/manage/HoaDon/:id" element={<OrderDetail />} />
+            <Route path="/manage/NhanVien/:id" element={<StaffDetail />} />
+            <Route path="/manage/detailBook/:id" element={<AdminBookDetail />} />
           </Route>
 
         </Routes>

@@ -253,7 +253,7 @@ export default function StaffList() {
                             {filteredData.map((item) => (
                                 <tr key={item.id} className="hover:bg-backgrond--color hover:no-underline shadow py-2 whitespace-nowrap">
                                     <td className="w-1/12 text-center">
-                                        <Link to={`/admin/NhanVien/${item.id}`} className="hover:underline">{item.id}</Link>
+                                        <Link to={`/manage/NhanVien/${item.id}`} className="hover:underline">{item.id}</Link>
                                     </td>
                                     <td className="w-1/5 text-center">{item.fullname}</td>
                                     <td className="w-1/12 text-center">{item.gender ? 'Nam' : 'Nữ'}</td>

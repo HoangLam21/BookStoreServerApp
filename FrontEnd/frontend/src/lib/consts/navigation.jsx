@@ -10,61 +10,61 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 	{
 		key: 'dashboard',
 		label: 'Trang chủ',
-		path: '/admin/Dashboard',
+		path: '/manage/Dashboard',
 		icon: <BiHome />
 	},
 	{
 		key: 'staff',
 		label: 'Nhân Viên',
-		path: '/admin/Staff',
+		path: '/manage/Staff',
 		icon: <FaPeopleGroup/>
 	},
 	{
 		key: 'book',
 		label: 'Sách',
-		path: '/admin/Book',
+		path: '/manage/Book',
 		icon: <FaBook />
 	},
 	{
 		key: 'customers',
 		label: 'Khách hàng',
-		path: '/admin/Customer',
+		path: '/manage/Customer',
 		icon: <IoIosPeople />
 	},
 	{
 		key: 'order',
 		label: 'Đơn hàng',
-		path: '/admin/Order', // Sử dụng đường dẫn tương đối thay vì tuyệt đối
+		path: '/manage/Order', // Sử dụng đường dẫn tương đối thay vì tuyệt đối
 		icon: <IoReaderSharp />
 	},
 	{
 		key: 'stock',
 		label: 'Nhập hàng',
-		path: '/admin/Stock',
+		path: '/manage/Stock',
 		icon: <FaBox />
 	},
     {
 		key: 'revenue',
 		label: 'Doanh thu',
-		path: '/admin/Revenue',
+		path: '/manage/Revenue',
 		icon: <FaChartLine />
 	},
     {
 		key: 'celander',
 		label: 'Lịch làm việc',
-		path: '/admin/Celander',
+		path: '/manage/Celander',
 		icon: <LuCalendarDays />
 	},
 	{
 		key: 'chatting',
 		label: 'Tin nhắn',
-		path: '/admin/Chatting',
+		path: '/manage/Chatting',
 		icon: <BsChatDotsFill />
 	},
     {
 		key: 'setting',
 		label: 'Cài đặt',
-		path: '/admin/Setting',
+		path: '/manage/Setting',
 		icon: <IoMdSettings />
 	},
 
