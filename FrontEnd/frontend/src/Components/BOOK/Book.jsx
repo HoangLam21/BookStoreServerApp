@@ -7,6 +7,7 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import OverlayAddBook from "./overlayBook";
 import AddBook from "./AddBook";
 import AddNewBook from "./AddNewBook";
+import "./Book.css"
 import { Link } from "react-router-dom";
 import PaginationButtons from './PaginationButtons';
 
@@ -179,8 +180,8 @@ export default function Books() {
             </OverlayAddBook>
           </AddBook>
         )}
-        <div className="filter-books flex">
-          <div className="w-1/5">
+        <div className="filter-books flex w-full">
+          <div className="">
             <span className="text-color-main-2 text-xl font-garamond font-semibold ml-10">Sắp xếp theo</span>
             <select
               className="block appearance-none ml-7 mt-4 text-center w-auto bg-white border text-color-main text-l font-garamond font-semibold border-gray-300 hover:border-color-main px-4 py-2 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
@@ -193,10 +194,9 @@ export default function Books() {
               <option value="priceLowToHigh">Giá tăng dần</option>
               <option value="priceHighToLow">Giá giảm dần</option>
             </select>
-            <div className="text-color-main-2 text-xl font-garamond font-semibold ml-20 mt-10 mb-5">Lọc</div>
 
             <div>
-              <div className="flex ml-5 cursor-pointer" onClick={() => setShowCategoryFilter(!showCategoryFilter)}>
+              <div className="flex ml-5 cursor-pointer mt-10 mb-5" onClick={() => setShowCategoryFilter(!showCategoryFilter)}>
                 <FontAwesomeIcon className="text-color-main mr-2 text-xl" icon={showCategoryFilter ? faChevronUp : faChevronDown} />
                 <span className="text-color-main text-2xl font-garamond font-semibold">Thể loại</span>
               </div>
@@ -258,14 +258,14 @@ export default function Books() {
           Thêm sách
         </button>
       </div>
-      <div className="mt-5 w-4/5">
-        <div className="main-books">
+      <div className="mt-1 w-full">
+        <div className="main-books w-full">
           <div className="books flex flex-wrap justify-center ">
             {currentBooks.map((book, index) => (
-              <div key={index} className="box-book w-44 flex flex-col justify-center rounded-lg pb-6">
+              <div key={index} className="box-book w-44 flex flex-col justify-center rounded-lg pb-5 p-2">
                 <div className="relative">
                   <img
-                    className="img-book h-100px w-170px object-cover rounded-md"
+                    className="img-book h-60 w-56 object-cover rounded-md"
                     src={book.galleryManage && book.galleryManage.length > 0 && book.galleryManage[0].thumbnail 
                       ? `data:image/jpeg;base64,${book.galleryManage[0].thumbnail}` 
                       : 'https://via.placeholder.com/150'}
@@ -280,10 +280,10 @@ export default function Books() {
                   </Link>
                 </div>
                 <div className="book-text mt-2">
-                  <div className="h-13 text-center">
+                  <div className="h-14 ">
                     <span className="text-color-main active font-garamond text-xl items-center font-semibold"><i>{book.title}</i></span>
                   </div>
-                  <h6 className="text-color-main-2 active font-garamond text-l font-semibold mr-6 text-center">- {book.authors.map(author => author.author_name).join(", ")}</h6>
+                  <h6 className="text-color-main-2 active font-garamond text-l font-semibold mr-6 ">- {book.authors.map(author => author.author_name).join(", ")}</h6>
                   <div className="flex justify-end">
                     <h5 className="text-color-main text-right active font-garamond text-xl font-light mr-6">
                       {(book.total_pay).toLocaleString('vi-VN')} vnđ
@@ -294,7 +294,7 @@ export default function Books() {
             ))}
           </div>
           {/* Phân trang */}
-          <div className="pagination-container flex justify-center items-center mt-5">
+          <div className="pagination-container flex justify-center items-center">
             {Array.from({ length: Math.ceil(sortedBooks.length / booksPerPage) }, (_, index) => (
               <button
                 key={index}

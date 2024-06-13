@@ -59,8 +59,8 @@ function EditDetailBook({ bookId }) {
     <div className="w-full h-full flex flex-col">
       <div className="mt-2 ml-3 text-base text-primary--color p-3">Chỉnh sửa thông tin sách</div>
       <div className="ml-4 font-medium w-11/12 text-lg text-primary--color border-b"></div>
-      <div className='p-4 w-5/6 flex flex-col gap-10'>
-        <div className="setting-content flex flex-row w-full h-2/4">
+      <div className='p-4 w-5/6 gap-10'>
+        <div className="setting-content w-full h-2/4">
           <div className='w-1/3 h-2/5 mt-3'>
             <img
               src={avatar ? `data:image/jpeg;base64,${avatar}` : 'https://via.placeholder.com/150'}

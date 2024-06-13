@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faArrowRight, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faArrowRight, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useBook2 } from '../context/BookContext';
 import axios from "axios";
 import OverlayEditBook from "./overlayBook";
-import EditDetailBook from "./EditDetailBook";
 import './detailBook.css';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast, } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddBook from "./AddBook";
 import './detailBook.css'
@@ -235,40 +234,22 @@ export default function AdminDetailBook() {
             </p>
 
             <div className='flex w-full justify-between p-4'>
-              <div className="flex mt-10">
+              {/* <div className="flex mt-10">
                 <h3 className="text-color-main text-xl mr-2 font-garamond font-semibold">Chỉnh sửa thông tin sách</h3>
                 <FontAwesomeIcon className="text-color-main mt-1 text-xl" icon={faArrowRight} onClick={openDialog} />
+              </div> */}
+              <div className="flex mt-10">
+                <h3 className="text-color-main text-xl mr-2 font-garamond font-semibold">Xóa sách</h3>
+                <FontAwesomeIcon className="text-color-main mt-1 text-xl" icon={faTrash} style={{color: "#513820",}} onClick={handleDeleteBook}/>
               </div>
               <div className="flex mt-10">
-              <h3 className="text-color-main text-xl mr-2 font-garamond font-semibold">Xóa sách</h3>
-              <FontAwesomeIcon className="text-color-main mt-1 text-xl" icon={faArrowRight}  onClick={handleDeleteBook}/>
+                <h3 className="text-color-main text-xl mr-2 font-garamond font-semibold">Chỉnh sửa thông tin sách</h3>
+                <FontAwesomeIcon className="text-color-main mt-1 text-xl" icon={faArrowRight}  onClick={openDialog}/>
               </div>
             </div>
-           
           </div>
         </div>
       </div>
-      {/* {isDetailBookOpen && (
-        <>
-          <div className="fixed inset-0 bg-black opacity-50 z-0" onClick={() => setIsDetailBookOpen(false)} />
-          <div className="container fixed top-24 right-0 bottom-0 bg-white shadow-md">
-            <div className="mx-auto pt-5 pl-10 pr-10">
-              <div className="flex justify-between">
-                <div>
-                  <h1 className="text-color-main text-3xl font-garamond font-light"><i>Chỉnh sửa thông tin sách</i></h1>
-                </div>
-                <FontAwesomeIcon
-                  style={{ color: "#a89b8f", fontSize: "1.1rem" }}
-                  icon={faXmark}
-                  onClick={openDialog}
-                  className="hover:text-color-main hover:scale-110 cursor-pointer"
-                />
-              </div>
-              <EditDetailBook />
-            </div>
-          </div>
-        </>
-      )} */}
 
       <div className="z-10 ml-4 mt-1 w-full max-md:max-w-full h-1/5">
         <div className="font-medium text-lg text-primary--color border-b w-full h-5"></div>
@@ -281,7 +262,7 @@ export default function AdminDetailBook() {
           
           {feedbackList.length > 0 ? (
             <div>
-              <h2 className="text-color-main font-garamond text-header--lightcolor flex items-center mt-3">Danh sách đánh giá:</h2>
+              <h2 className=" font-garamond text-header--lightcolor flex items-center mt-3">Danh sách đánh giá:</h2>
               <ul className="list-disc ml-5">
                 {feedbackList.map((feedback, index) => (
                   <div key={index} className="flex mb-4">
@@ -384,35 +365,35 @@ function EditBookInfor({ bookId }) {
      
         const result = response.data.result;
         console.log('API Response:', result); // Log the entire result for debugging
-        const foundStaff = result.find(staff => staff.id === parseInt(bookId, 10));
-        console.log('Found Book:', foundStaff);
+        const foundBook = result.find(book => book.id === parseInt(bookId, 10));
+        console.log('Found Book:', foundBook);
 
 
-        if (foundStaff) {
-          setBook(foundStaff);
-          setBookTitle(foundStaff.title);
-          setBookNumPages(foundStaff.num_pages);
-          setBookPublicationDate(foundStaff.publication_date);
-          setBookBookQuantity(foundStaff.bookQuantity);
-          setBookPrice(foundStaff.price);
-          setBookDiscount(foundStaff.discount);
-          setBookDescription(foundStaff.description);
-          setBookHot(foundStaff.hot);
-          setBookAvailable(foundStaff.available);
-          setBookLanguageId(foundStaff.language.id);
-          setBookCategoryId(foundStaff.category);
-          setBookPublisherId(foundStaff.publisher.id);
-          setBookProviderId(foundStaff.provider.id);
-          // setBookGalleryIds(foundStaff.gallery_ids || []);
-          // setBookAuthorIds(foundStaff.author_ids || []);
+        if (foundBook) {
+          setBook(foundBook);
+          setBookTitle(foundBook.title);
+          setBookNumPages(foundBook.num_pages);
+          setBookPublicationDate(foundBook.publication_date);
+          setBookBookQuantity(foundBook.bookQuantity);
+          setBookPrice(foundBook.price);
+          setBookDiscount(foundBook.discount);
+          setBookDescription(foundBook.description);
+          setBookHot(foundBook.hot);
+          setBookAvailable(foundBook.available);
+          setBookLanguageId(foundBook.language.id);
+          setBookCategoryId(foundBook.category);
+          setBookPublisherId(foundBook.publisher.id);
+          setBookProviderId(foundBook.provider.id);
+          // setBookGalleryIds(foundBook.gallery_ids || []);
+          // setBookAuthorIds(foundBook.author_ids || []);
 
-          const galleryManage = foundStaff.galleryManage || [];
+          const galleryManage = foundBook.galleryManage || [];
           const galleryIds = galleryManage.map(gallery => parseInt(gallery.id, 10)); // Ensure IDs are integers
          // setGallery(galleryIds)
           setBookGalleryIds(galleryIds);
           console.log(book_gallery_ids)
 
-          const authors = foundStaff.authors || [];
+          const authors = foundBook.authors || [];
           const authorId = authors.map(authors => parseInt(authors.id, 10)); // Ensure IDs are integers
           setBookAuthorIds(authorId);
           console.log(book_author_ids)
@@ -571,10 +552,10 @@ function EditBookInfor({ bookId }) {
  
   return (
    <div className="w-full h-full flex flex-col overflow-auto">
-      <div className="mt-2 ml-3 text-base text-primary--color p-3 border-b">Chỉnh sửa thông tin sách</div>
-      <div className="p-4 w-5/6 flex flex-col gap-10">
-        <div className="setting-content flex flex-row w-full h-2/4 gap-10">
-          <div className="w-1/4 h-2/4 mt-3 flex flex-col items-center">
+      <div className="mt-0 ml-3 text-base text-primary--color p-3 border-b">Chỉnh sửa thông tin sách</div>
+      <div className="p-4 w-11/12">
+        <div className="setting-content flex flex-row w-full gap-10">
+          <div className="w-2/5 h-2/4 mt-1 flex flex-col">
           <img
                         src={book.galleryManage && book.galleryManage.length > 0 && book.galleryManage[0].thumbnail 
                       ? `data:image/jpeg;base64,${book.galleryManage[0].thumbnail}` 
@@ -586,166 +567,186 @@ function EditBookInfor({ bookId }) {
               type="file"
               style={{ display: 'none' }}
             />
-            <button className="border-2 mt-5 text-header--lightcolor font-semibold py-2 px-4 rounded-full">
+            <button className="border-2 mt-3 text-header--lightcolor font-semibold py-2 px-4 rounded-full">
               Sửa ảnh
             </button>
           </div>
-          <div className="content-bookinf whitespace-nowrap flex-1 w-full flex flex-col items-start pt-2 ml-3 gap-5">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="mt-1 flex gap-4 text-primary--color">
-                <div className="text-header--lightcolor flex items-center">Tên sách:</div>
+          <div className="content-bookinf whitespace-nowrap flex-1 w-full flex flex-col items-start">
+            <div className="gap-2 w-full">
+              <div className="mt-3 mb-5 flex gap-4 text-primary--color w-full">
+                <div className="text-header--lightcolor flex items-center w-1/4">Tên sách:</div>
                 <input
                   type="text"
-                  className="ml-2 p-2 w-full border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                  className="ml-2 p-2 border-2 text-center rounded-md w-3/4"
                   value={book_title}
                   onChange={(e) => setBookTitle(e.target.value)}
                 />
               </div>
-              <div className="mt-1 flex gap-4 text-primary--color">
-                <div className="text-header--lightcolor flex items-center">Số trang:</div>
-                <input
-                  type="number"
-                  className="ml-2 p-2 w-full border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                  value={book_num_pages}
-                  onChange={(e) => setBookNumPages(e.target.value)}
-                />
-              </div>
-              <div className="mt-1 flex gap-4 text-primary--color">
-                <div className="text-header--lightcolor flex items-center">Ngày xuất bản:</div>
-                <input
-                  type="date"
-                  className="ml-2 p-2 w-full border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                  value={book_publication_date}
-                  onChange={(e) => setBookPublicationDate(e.target.value)}
-                />
-              </div>
-              <div className="mt-1 flex gap-4 text-primary--color">
-                <div className="text-header--lightcolor flex items-center">Số lượng:</div>
-                <input
-                  type="number"
-                  className="ml-2 p-2 w-full border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                  value={book_bookQuantity}
-                  onChange={(e) => setBookBookQuantity(e.target.value)}
-                />
-              </div>
-              <div className="mt-1 flex gap-4 text-primary--color">
-                <div className="text-header--lightcolor flex items-center">Giá:</div>
-                <input
-                  type="number"
-                  className="ml-2 p-2 w-full border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                  value={book_price}
-                  onChange={(e) => setBookPrice(e.target.value)}
-                />
-              </div>
-              <div className="mt-1 flex gap-4 text-primary--color">
-                <div className="text-header--lightcolor flex items-center">Giảm giá:</div>
-                <input
-                  type="number"
-                  className="ml-2 p-2 w-full border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                  value={book_discount}
-                  onChange={(e) => setBookDiscount(e.target.value)}
-                />
-              </div>
-              <div className="mt-1 flex gap-4 text-primary--color">
-                <div className="text-header--lightcolor flex items-center">Mô tả:</div>
-                <textarea
-                  className="ml-2 p-2 w-full border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                  value={book_description}
-                  onChange={(e) => setBookDescription(e.target.value)}
-                />
-              </div>
-              <div className="w-full flex gap-20">
-                <div className="mt-1 flex gap-4 text-primary--color">
-                  <div className="text-header--lightcolor flex items-center">Nổi bật:</div>
+              
+              <div className="w-full flex gap-4">
+                <div className="mt-1 mb-5 flex gap-2 text-primary--color w-1/2">
+                  <div className="text-header--lightcolor flex items-center w-1/2">Nổi bật:</div>
                   <input
                     type="checkbox"
-                    className="ml-2 p-2 border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                    className="ml-2 p-2 border-2 flex rounded-md focus:outline-none focus:ring focus:border-blue-300"
                     checked={book_hot}
                     onChange={(e) => setBookHot(e.target.checked)}
                   />
                 </div>
-                <div className="mt-1 flex gap-4 text-primary--color">
-                  <div className="text-header--lightcolor flex items-center">Còn hàng:</div>
+                <div className="mt-1 mb-4 flex gap-4 text-primary--color w-1/2">
+                  <div className="text-header--lightcolor flex items-center w-1/2">Còn hàng:</div>
                   <input
                     type="checkbox"
-                    className="ml-2 p-2 border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                    className="ml-2 p-2 border-2 rounded-md text-end focus:outline-none focus:ring focus:border-blue-300"
                     checked={book_available}
                     onChange={(e) => setBookAvailable(e.target.checked)}
                   />
                 </div>
               </div>
-              <div className="mt-1 flex gap-4 text-primary--color">
-                <div className="text-header--lightcolor flex items-center">Ngôn ngữ ID:</div>
+              
+              <div className="mt-1 mb-5 flex gap-4 text-primary--color w-full">
+                <div className="text-header--lightcolor flex items-center w-1/4">Giá:</div>
                 <input
                   type="number"
-                  className="ml-2 p-2 w-full border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                  value={book_language_id}
-                  onChange={(e) => setBookLanguageId(e.target.value)}
+                  className="ml-8 p-2 border-2 rounded-md text-end w-1/3 focus:outline-none focus:ring focus:border-blue-300"
+                  value={book_price}
+                  onChange={(e) => setBookPrice(e.target.value)}
                 />
               </div>
-              <div className="mt-1 flex gap-4 text-primary--color">
-                <div className="text-header--lightcolor flex items-center">Danh mục ID:</div>
-                <select
-                  value={book_category_id}
-                  onChange={(e) => setBookCategoryId(e.target.value)}
-                  name='category'
-                  className="border-2 h-7 border-border--color rounded-md px-2 w-40"
-                >
-                  <option value="">Chọn danh mục</option>
-                  {category.map((cat, index) => (
-                    <option key={index} value={cat.id}>
-                      {cat.name} - DM{cat.id}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="mt-1 flex gap-4 text-primary--color">
-                <span className="text-header--lightcolor flex items-center">Mã nhà xuất bản:</span>
+              
+              <div className="mt-1 mb-5 flex gap-4 text-primary--color w-full">
+                <div className="text-header--lightcolor flex items-center w-1/4">Giảm giá:</div>
                 <input
                   type="number"
-                  value={book_publisher_id}
-                  onChange={(e) => setBookPublisherId(Number(e.target.value))}
-                  className="ml-2 p-2 w-full border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                  className="ml-8 p-2 border-2 rounded-md text-end w-1/3 focus:outline-none focus:ring focus:border-blue-300"
+                  value={book_discount}
+                  onChange={(e) => setBookDiscount(e.target.value)}
                 />
               </div>
-              <div className="mt-1 flex gap-4 text-primary--color">
-                <span className="text-header--lightcolor flex items-center">Mã nhà cung cấp:</span>
+              
+              <div className="mt-1 mb-5 flex gap-4 text-primary--color w-full">
+                <div className="text-header--lightcolor flex items-center w-1/4">Số trang:</div>
                 <input
                   type="number"
-                  value={book_provider_id}
-                  onChange={(e) => setBookProviderId(Number(e.target.value))}
-                  className="ml-2 p-2 w-full border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                  className="ml-8 p-2 border-2 rounded-md text-end w-1/3 focus:outline-none focus:ring focus:border-blue-300"
+                  value={book_num_pages}
+                  onChange={(e) => setBookNumPages(e.target.value)}
                 />
               </div>
-              <div className="mt-1 flex gap-4 text-primary--color">
-                <span className="text-header--lightcolor flex items-center">Mã ảnh:</span>
+              
+              <div className="mt-1 mb-5 flex gap-4 text-primary--color w-full">
+                <div className="text-header--lightcolor flex items-center w-1/4">Số lượng:</div>
                 <input
-                  type="text"
-                  value={book_gallery_ids.join(',')}
-                  onChange={(e) => setBookGalleryIds(e.target.value.split(',').map(Number))}
-                  className="ml-2 p-2 w-full border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                  type="number"
+                  className="ml-8 p-2 border-2 rounded-md text-end w-1/3 focus:outline-none focus:ring focus:border-blue-300"
+                  value={book_bookQuantity}
+                  onChange={(e) => setBookBookQuantity(e.target.value)}
                 />
               </div>
-              <div className="mt-1 flex gap-4 text-primary--color">
-                <span className="text-header--lightcolor flex items-center">Mã tác giả:</span>
+              
+              <div className="mt-1 mb-5 flex gap-4 text-primary--color w-full">
+                <div className="text-header--lightcolor flex items-center w-1/4">Ngày xuất bản:</div>
                 <input
-                  type="text"
-                  value={book_author_ids.join(',')}
-                  onChange={(e) => setBookAuthorIds(e.target.value.split(',').map(Number))}
-                  className="ml-2 p-2 w-full border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                  type="date"
+                  className="ml-8 p-2 border-2 rounded-md w-2/4 focus:outline-none focus:ring focus:border-blue-300"
+                  value={book_publication_date}
+                  onChange={(e) => setBookPublicationDate(e.target.value)}
                 />
               </div>
             </div>
           </div>
         </div>
-        
       </div>
-      <div className='h-1/6 flex justify-center items-center'>
-      <button className="bg-primary--color text-[#fff] font-bold py-2 px-4 rounded mt-1 " onClick={handleEditBook}>
-          Thêm sách mới
-        </button>
+
+
+
+        <div className='ml-10 mt-2'>
+          <div className="flex mb-6 gap-0 text-primary--color">
+            <div className="text-header--lightcolor flex items-center w-1/4">Mô tả:</div>
+            <textarea
+              className="p-2 w-4/6 h-auto border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+              value={book_description}
+              onChange={(e) => setBookDescription(e.target.value)}
+              rows="6"
+            />
+          </div>
+
+          <div className="flex gap-4">
+            <div className="flex mb-6 gap-0 text-primary--color w-1/2">
+              <div className="text-header--lightcolor flex items-center w-1/2">Ngôn ngữ ID:</div>
+              <input
+                type="number"
+                className="p-2 border-2 text-center rounded-md focus:outline-none focus:ring focus:border-blue-300 w-1/4"
+                value={book_language_id}
+                onChange={(e) => setBookLanguageId(e.target.value)}
+              />
+            </div>
+            <div className="flex mb-6 gap-4 text-primary--color w-1/2">
+              <div className="text-header--lightcolor flex items-center w-1/3">Danh mục ID:</div>
+              <select
+                value={book_category_id}
+                onChange={(e) => setBookCategoryId(e.target.value)}
+                name='category'
+                className="border-2 h-10 border-border--color rounded-md px-2 w-2/4"
+              >
+                <option value="">Chọn danh mục</option>
+                {category.map((cat, index) => (
+                  <option key={index} value={cat.id}>
+                    {cat.name} - DM{cat.id}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="flex gap-4">
+            <div className="flex mb-6 gap-0 text-primary--color w-1/2">
+              <span className="text-header--lightcolor flex items-center w-1/2">Mã tác giả:</span>
+              <input
+                type="text"
+                value={book_author_ids.join(',')}
+                onChange={(e) => setBookAuthorIds(e.target.value.split(',').map(Number))}
+                className="p-2 text-center border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-1/4"
+              />
+            </div>
+            <div className="flex mb-6 gap-0 text-primary--color w-1/2">
+              <span className="text-header--lightcolor flex items-center w-1/2">Mã nhà xuất bản:</span>
+              <input
+                type="number"
+                value={book_publisher_id}
+                onChange={(e) => setBookPublisherId(Number(e.target.value))}
+                className="p-2 text-center border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-1/4"
+              />
+            </div>
+          </div>
+
+          <div className="flex gap-4">
+            <div className="flex mb-6 gap-0 text-primary--color w-1/2">
+              <span className="text-header--lightcolor flex items-center w-1/2">Mã nhà cung cấp:</span>
+              <input
+                type="number"
+                value={book_provider_id}
+                onChange={(e) => setBookProviderId(Number(e.target.value))}
+                className="p-2 text-center border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-1/4"
+              />
+            </div>
+            <div className="flex mb-6 gap-0 text-primary--color w-1/2">
+              <span className="text-header--lightcolor flex items-center w-1/2">Mã ảnh:</span>
+              <input
+                type="text"
+                value={book_gallery_ids.join(',')}
+                onChange={(e) => setBookGalleryIds(e.target.value.split(',').map(Number))}
+                className="p-2 text-center border-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-1/4"
+              />
+            </div>
+          </div>
+        </div>
+        <div className='h-2/5 flex justify-center items-center'>
+          <button className="bg-primary--color text-[#fff] font-bold py-2 px-4 rounded-lg " onClick={handleEditBook}>
+            Cập nhật thông tin sách
+          </button>
       </div>
-      
     </div>
+    
   );
 }
