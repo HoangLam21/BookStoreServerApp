@@ -134,6 +134,20 @@
 
   overflow-x: auto; /* Tạo thanh cuộn ngang khi cần */
   white-space: nowrap; /* Đảm bảo các mục danh mục nằm trên cùng một hàng */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(155, 155, 155, 0.5) transparent; /* Firefox */
+
+  /* WebKit (Safari, Chrome, Opera) */
+  ::-webkit-scrollbar {
+    width: 4px; /* Width of the scrollbar */
+  }
+
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(155, 155, 155, 0.5); /* Thumb color */
+    border-radius: 20px; /* Rounded corners */
+    border: transparent; /* Border around the thumb */
+  }
 }
 
 .category-item {
@@ -145,4 +159,14 @@
 .customer{
   margin-left:10%;
 
+}
+
+.imageBook {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border-radius: 8px; /* Optional: for rounded corners */
+}
+
+.imageBook:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }

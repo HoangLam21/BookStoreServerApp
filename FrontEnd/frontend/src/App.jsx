@@ -41,6 +41,8 @@ import BookWithCategory from './Components/CustomerFrontEnd/BookWithCategory/boo
 import ProtectedRoute from './Shared/ProtectedRoute '; 
 import { UserContext } from './Components/context/UserContext';
 import OrderDetailCus from './Components/CustomerFrontEnd/Account/orderDetail';
+import LoginCus from './Components/CustomerFrontEnd/Account/login';
+
 import AdminBookDetail from './Components/BOOK/AdminBookDetail';
 
 function App() {
@@ -78,6 +80,8 @@ function App() {
             <Route path="detailInfoBook" element={<DetailInfoBook />} />
             <Route path="orderDetailCus" element={<OrderDetailCus />} />
             <Route path="bookWithCategory" element={<BookWithCategory />} />
+            <Route path="login" element={<LoginCus/>}/>
+
           </Route>
 
 

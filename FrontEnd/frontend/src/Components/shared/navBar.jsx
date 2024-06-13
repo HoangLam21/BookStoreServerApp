@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../Assets/Book Store (3).png"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,8 +8,11 @@ import Account from "../CustomerFrontEnd/Account/account";
 import './NavBar.css'
 import axios from "axios";
 import { useBook2 } from "../../Components/context/BookContext";
+import { AuthContext } from '../context/AuthContext';
+
 
 export default function NavBar() {
+  const [isAccount, setIsAccount] = useState(false);
   const [searchHovered, setSearchHovered] = useState(false);
   const [cartHovered, setCartHovered] = useState(false);
   const [userHovered, setUserHovered] = useState(false);
@@ -24,6 +27,26 @@ export default function NavBar() {
   const [searchInput, setSearchInput] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const { selectedBook, setSelectedBook } = useBook2();
+  const { token, id, login, logout } = useContext(AuthContext);
+
+  useEffect(() => {
+    console.log(token)
+    if (token) {
+      setIsAccount(true);
+    }
+    else{
+      setIsAccount(false)
+      setIsAccountOpen(false)
+    }
+  }, [token]);
+
+  const HorizontalLine = () => {
+    return (
+      <div style={{ borderTop: '1px solid #a89b8f', width: 'full', margin: '0 auto' }} />
+    );
+  }
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,13 +69,17 @@ export default function NavBar() {
       document.body.classList.remove('no-scroll');
     }
   }, [isCartOpen, isAccountOpen, isSearchOpen]);
+  
+  const removeDiacritics = (str) => {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  };
 
   useEffect(() => {
     const filteredSuggestions = books.filter(book =>
-      book.title.toLowerCase().includes(searchInput.toLowerCase())
+      removeDiacritics(book.title).toLowerCase().includes(removeDiacritics(searchInput).toLowerCase())
     );
     setSuggestions(filteredSuggestions);
-    console.log("suggestions", suggestions);
+    console.log("suggestions", filteredSuggestions);
   }, [searchInput, books]);
 
   const toggleCart = () => {
@@ -61,7 +88,11 @@ export default function NavBar() {
 
   const toggleAccount = () => {
     setIsAccountOpen(!isAccountOpen);
+
   };
+
+
+  
 
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
@@ -98,16 +129,16 @@ export default function NavBar() {
         <img className="logo" src={Logo} alt="Logo" />
       </div>
       <div className={`navbar ${menuOpen ? 'open' : ''}`}>
-        <Link to="/" onClick={handleMenuItemClick} className={`text-color-main-2 text-xl font-garamond font-semibold ${isActive('/home')}`}>Home</Link>
-        <Link to="/books" onClick={handleMenuItemClick} className={`text-color-main-2 text-xl font-garamond font-semibold ${isActive('/books')}`}>Books</Link>
-        <Link to="/discount" onClick={handleMenuItemClick} className={`text-color-main-2 text-xl font-garamond font-semibold ${isActive('/discount')}`}>Discount</Link>
-        <Link to="/contact" onClick={handleMenuItemClick} className={`text-color-main-2 text-xl font-garamond font-semibold ${isActive('/contact')}`}>Contact</Link>
-        <Link to="/customerCare" onClick={handleMenuItemClick} className={`text-color-main-2 text-xl font-garamond font-semibold ${isActive('/customerCare')}`}>Customer Care</Link>
-        <Link to="/aboutUs" onClick={handleMenuItemClick} className={`text-color-main-2 text-xl font-garamond font-semibold ${isActive('/aboutUs')}`}>About Us</Link>
+        <Link to="/" onClick={handleMenuItemClick} className={`text-color-main-2 nav font-garamond font-semibold ${isActive('/')}`}>Home</Link>
+        <Link to="/books" onClick={handleMenuItemClick} className={`text-color-main-2 nav font-garamond font-semibold ${isActive('/books')}`}>Books</Link>
+        <Link to="/discount" onClick={handleMenuItemClick} className={`text-color-main-2 nav font-garamond font-semibold ${isActive('/discount')}`}>Discount</Link>
+        <Link to="/contact" onClick={handleMenuItemClick} className={`text-color-main-2 nav font-garamond font-semibold ${isActive('/contact')}`}>Contact</Link>
+        <Link to="/customerCare" onClick={handleMenuItemClick} className={`text-color-main-2 nav font-garamond font-semibold ${isActive('/customerCare')}`}>Customer Care</Link>
+        <Link to="/aboutUs" onClick={handleMenuItemClick} className={`text-color-main-2 nav font-garamond font-semibold ${isActive('/aboutUs')}`}>About Us</Link>
       </div>
       <div>
         <FontAwesomeIcon
-          style={{ marginLeft: '1.3rem', color: searchHovered ? '#513820' : '#a89b8f', fontSize: '1.1rem' }}
+          style={{ marginLeft: '1.3rem', color: searchHovered ? '#513820' : '#a89b8f', fontSize: '1.3rem' }}
           icon={faSearch}
           onClick={toggleSearch}
           onMouseEnter={() => setSearchHovered(true)}
@@ -115,21 +146,33 @@ export default function NavBar() {
           className="hover:text-color-main hover:scale-110"
         />
         <FontAwesomeIcon
-          style={{ marginLeft: '1rem', color: cartHovered ? '#513820' : '#a89b8f', fontSize: '1.1rem' }}
+          style={{ marginLeft: '1rem', color: cartHovered ? '#513820' : '#a89b8f', fontSize: '1.3rem' }}
           icon={faCartShopping}
           onClick={toggleCart}
           onMouseEnter={() => setCartHovered(true)}
           onMouseLeave={() => setCartHovered(false)}
           className="hover:text-color-main hover:scale-110"
         />
-        <FontAwesomeIcon
-          style={{ marginLeft: '1rem', color: userHovered ? '#513820' : '#a89b8f', fontSize: '1.1rem' }}
-          icon={faUser}
-          onClick={toggleAccount}
-          onMouseEnter={() => setUserHovered(true)}
-          onMouseLeave={() => setUserHovered(false)}
-          className="hover:text-color-main hover:scale-110"
-        />
+       {
+  isAccount ? (
+
+    <FontAwesomeIcon
+      style={{ marginLeft: '1rem', color: userHovered ? '#513820' : '#a89b8f', fontSize: '1.3rem' }}
+      icon={faUser}
+      onClick={toggleAccount}
+      onMouseEnter={() => setUserHovered(true)}
+      onMouseLeave={() => setUserHovered(false)}
+      className="hover:text-color-main hover:scale-110"
+    />
+  ) : (
+    <div>
+      <Link to="/login" onClick={handleMenuItemClick} className={`text-color-main-2 text-xl font-garamond font-semibold ${isActive('/login')}`}>
+        Login | Signup
+      </Link>
+    </div>
+  )
+}
+        
         {(isCartOpen || isAccountOpen) && (
           <div className="fixed inset-0 bg-background--overlay opacity-50 z-40" onClick={() => {
             if (isCartOpen) setIsCartOpen(false);
@@ -142,11 +185,11 @@ export default function NavBar() {
           }} />
         )}
         {isCartOpen && (
-          <div className="fixed h-full w-auto top-0 right-0 bottom-0 bg-backgrond--color shadow-md z-50">
+          <div id="cart-bar" className="fixed h-full w-auto top-0 right-0 bottom-0 bg-white shadow-md z-50 animate-slideIn">
             <div className="mx-auto pt-5 pl-10 pr-10">
               <div className="flex justify-between">
                 <div>
-                  <h1 className="text-color-main text-3xl font-garamond font-light"><i>Your Cart</i></h1>
+                  <h1 className="text-color-main text-3xl font-garamond font-semibold"><i>Your Cart</i></h1>
                 </div>
                 <FontAwesomeIcon
                   style={{ color: "#a89b8f", fontSize: "1.1rem" }}
@@ -155,17 +198,19 @@ export default function NavBar() {
                   className="hover:text-color-main hover:scale-110 cursor-pointer"
                 />
               </div>
+              <HorizontalLine/>
               <Cart />
             </div>
           </div>
         )}
         {isAccountOpen && (
-          <div className="fixed h-full w-auto top-0 right-0 bottom-0 bg-white--color shadow-md z-50">
+          <div id="account-bar" className="fixed h-full w-auto top-0 right-0 bottom-0 bg-white shadow-md z-50 animate-slideIn">
             <div className="mx-auto pt-5 pl-10 pr-10">
               <div className="flex justify-between">
                 <div>
-                  <h1 className="text-color-main text-3xl font-garamond font-light"><i>Account</i></h1>
+                  <h1 className="text-color-main text-3xl font-garamond font-semibold"><i>Account</i></h1>
                 </div>
+                
                 <FontAwesomeIcon
                   style={{ color: "#a89b8f", fontSize: "1.1rem" }}
                   icon={faXmark}
@@ -173,6 +218,7 @@ export default function NavBar() {
                   className="hover:text-color-main hover:scale-110 cursor-pointer"
                 />
               </div>
+              <HorizontalLine/>
               <Account />
             </div>
           </div>

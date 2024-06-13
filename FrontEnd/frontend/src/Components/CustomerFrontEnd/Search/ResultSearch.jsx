@@ -37,7 +37,7 @@ export default function Books() {
       try {
         const response = await axios.get("http://167.172.69.8:8010/BookStore/book/all");
         setBooks(response.data.result);
-        setFilteredBooks(response.data.result); // Khởi tạo filteredBooks với tất cả sách
+        setFilteredBooks(response.data.result); 
         setLoading(false);
       } catch (error) {
         setError(error);

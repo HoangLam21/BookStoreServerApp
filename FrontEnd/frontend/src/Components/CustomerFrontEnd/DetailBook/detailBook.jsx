@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faArrowRight, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useBook2 } from '../../context/BookContext';
@@ -7,17 +7,19 @@ import DetailInfoBook from "./detailInfoBook";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Feedback from "./feedback";
-import '../DetailBook/detailBook.css'
+
+import './detailBook.css'
+import ChattingContent from "../Contact/chat";
+import Consultation from "./consultation";
 
 
 export default function DetailBook() {
   const [isDetailBookOpen, setIsDetailBookOpen] = useState(false);
   const [isFeedbackBookOpen, setIsFeedbackBookOpen] = useState(false);
-
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [isOverlay, setIsOverlay] = useState(false);
   const [allBooks, setAllBooks] = useState([]);
   const [relatedBooks, setRelatedBooks] = useState([]);
-
   const { cartItems, addToCart } = useCart();
   const { selectedBook, setSelectedBook } = useBook2();
 
@@ -35,7 +37,10 @@ const averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / 
   const toggleOverlay = () => {
     setIsOverlay(!isOverlay);
   };
-
+  const toggleChatOpen = () => {
+    setIsChatOpen(!isChatOpen);
+  };
+  
   useEffect(() => {
     if (isDetailBookOpen || isFeedbackBookOpen) {
       document.body.classList.add('no-scroll');
@@ -43,6 +48,10 @@ const averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / 
       document.body.classList.remove('no-scroll');
     }
   }, [isDetailBookOpen, isFeedbackBookOpen]);
+
+  
+
+
 
   useEffect(() => {
     const fetchAllBooks = async () => {
@@ -76,11 +85,42 @@ const averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / 
     <div className="main flex justify-center bg-color-background-main">
       <div className=" flex w-1/3" style={{ marginLeft: '10%' }}>
         <div>
-          <img className="w-24" src={`data:image/jpeg;base64,${selectedBook.galleryManage[0].thumbnail}`} alt="" />
-          <img className="w-24 mt-3" src={`data:image/jpeg;base64,${selectedBook.galleryManage[0].thumbnail}`} alt="" />
+        {selectedBook.galleryManage && selectedBook.galleryManage[0] && selectedBook.galleryManage[0].thumbnail ? (
+        <img
+          className=" w-24"
+          src={`data:image/jpeg;base64,${selectedBook.galleryManage[0].thumbnail}`}
+          alt={selectedBook.title}
+        />
+      ) : (
+        <div className=" w-24">
+          No Image
+        </div>
+      )}
+      {selectedBook.galleryManage && selectedBook.galleryManage[0] && selectedBook.galleryManage[0].thumbnail ? (
+        <img
+          className=" w-24 mt-3"
+          src={`data:image/jpeg;base64,${selectedBook.galleryManage[0].thumbnail}`}
+          alt={selectedBook.title}
+        />
+      ) : (
+        <div className=" w-24 mt-3">
+          No Image
+        </div>
+      )}
+          
         </div>
         <div>
-          <img className="h-auto w-64 ml-10" src={`data:image/jpeg;base64,${selectedBook.galleryManage[0].thumbnail}`} alt="" />
+        {selectedBook.galleryManage && selectedBook.galleryManage[0] && selectedBook.galleryManage[0].thumbnail ? (
+        <img
+          className="h-auto w-64 ml-10"
+          src={`data:image/jpeg;base64,${selectedBook.galleryManage[0].thumbnail}`}
+          alt={selectedBook.title}
+        />
+      ) : (
+        <div className="h-auto w-64 ml-10">
+          No Image
+        </div>
+      )}
         </div>
         </div>
         <div className="content ">
@@ -122,22 +162,56 @@ const averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / 
             <h3 className="text-color-main text-xl mr-2 font-garamond font-semibold">Xem chi tiết thông tin sản phẩm</h3>
             <FontAwesomeIcon className="text-color-main mt-1 text-xl" icon={faArrowRight} onClick={() => { toggleDetailBookOpen(); toggleOverlay(); }} />
           </div>
-          <div className="w-5/6">
-            <button onClick={() => addToCart(selectedBook)} className="bg-background-button mt-5 hover:bg-color-main hover:text-white w-2/4 h-9 border-color-main-2 text-color-main active font-garamond text-1xl font-light">Thêm vào giỏ hàng</button>
-            <Link
+          <div className="w-5/6 flex">
+          <div className="w-2/4">
+          <button onClick={() => addToCart(selectedBook)} className="bg-background-button mt-5 w-full hover:bg-color-main hover:text-white  h-9 border-color-main-2 text-color-main active font-garamond text-1xl font-light">Thêm vào giỏ hàng</button>
+
+          </div>
+          <div className="w-2/4 mt-5">
+          <Link
                     to="/orderBuyNow"
                     onClick={() => setSelectedBook(selectedBook)}
                   >
-            <button className="bg-color-main hover:bg-background-button w-2/4 h-9 border hover:text-color-main text-white active font-garamond text-1xl font-light">Mua ngay</button>
+            <button className="bg-color-main hover:bg-background-button w-full h-9 border hover:text-color-main text-white active font-garamond text-1xl font-light">Mua ngay</button>
 
                   </Link>
+          </div>
+           
 
           </div>
-          <div>
-            <button className="bg-white mt-5 hover:bg-color-main hover:text-white w-5/6 h-9 border text-color-main active font-garamond border-color-main text-1xl font-semibold">Nhận tư vấn</button>
+          <div className="w-5/6">
+          <button 
+        
+        className="bg-white mt-5 w-full hover:bg-color-main hover:text-white h-9 border text-color-main active font-garamond border-color-main text-1xl font-semibold"
+        onClick={() => { toggleChatOpen() }}
+        >
+        Nhận tư vấn
+        </button>
           </div>
         </div>
       </div>
+      {isChatOpen &&(
+          <div className="container fixed top-24 w-96 right-0 bottom-0 border border-white--color bg-white shadow-md rounded-lg">
+            <div className="mx-auto pt-5 pl-10 pr-10">
+              <div className="flex justify-between">
+                <div>
+                  <h1 className="text-color-main text-3xl font-garamond font-light"><i>Tin nhắn </i></h1>
+                </div>
+                <FontAwesomeIcon
+                style={{ color: "#a89b8f", fontSize: "1.1rem" }}
+                icon={faXmark}
+                onClick={() => toggleChatOpen()} 
+                className="hover:text-color-main hover:scale-110 cursor-pointer"
+                />
+
+              </div>
+              <Consultation/>
+
+            </div>
+          </div>
+        
+        )
+      }
       {isDetailBookOpen && (
         <>
           <div className="fixed inset-0 bg-black opacity-50 z-0" onClick={() => setIsDetailBookOpen(false)} />
@@ -194,11 +268,17 @@ const averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / 
                     to="/detailBook"
                     onClick={() => setSelectedBook(book)}
                   >
-                    <img
-                      className="img-book h-80 w-60"
-                      src={`data:image/jpeg;base64,${book.galleryManage[0].thumbnail}`}
-                      alt=""
-                    />
+                    {book.galleryManage && book.galleryManage[0] && book.galleryManage[0].thumbnail ? (
+        <img
+          className="img-book h-80 w-60"
+          src={`data:image/jpeg;base64,${book.galleryManage[0].thumbnail}`}
+          alt={book.title}
+        />
+      ) : (
+        <div className="img-book-placeholder h-80 w-60 bg-gray-200 flex items-center justify-center">
+          No Image
+        </div>
+      )}
                   </Link>
               <h3 className="text-color-main text-xl font-garamond font-semibold">{book.title}</h3>
               <h4 className="text-color-main-2 text-lg font-garamond font-light">by {book.authors.map(author => author.author_name).join(", ")}</h4>

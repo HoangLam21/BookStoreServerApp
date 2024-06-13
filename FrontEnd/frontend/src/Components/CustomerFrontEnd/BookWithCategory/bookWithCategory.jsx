@@ -33,7 +33,19 @@ export default function BookWithCategory() {
   const filteredBooks = selectedCategory ? books.filter(book => book.category === selectedCategory.name) : books;
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="loadermain">
+    <div className="loader">
+    <div className="letter">B</div>
+    <div className="letter">O</div>
+    <div className="letter">O</div>
+    <div className="letter">K</div>
+    <div className="letter">S</div>
+    <div className="letter">T</div>
+    <div className="letter">O</div>
+    <div className="letter">R</div>
+    <div className="letter">E</div>
+  </div>
+    </div>;
   }
 
   if (error) {

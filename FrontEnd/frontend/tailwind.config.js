@@ -32,7 +32,26 @@ module.exports = {
       'red':"#ff0000"
 
 
-    }
+    },
+    keyframes: {
+        slideIn: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+        slideOut: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 0.5 },
+        },
+      },
+      animation: {
+        slideIn: 'slideIn 0.5s ease-out forwards',
+        slideOut: 'slideOut 0.5s ease-out forwards',
+        fadeIn: 'fadeIn 0.5s ease-out forwards',
+      },
   },
   plugins: [require('tailwind-scrollbar'),
   "react-html-attrs",

@@ -97,11 +97,12 @@ export default function Books() {
       return (
         (!selectedFilters.category || book.category === selectedFilters.category) &&
         (!selectedFilters.author || book.authors.some(author => author.author_name === selectedFilters.author)) &&
-        (!selectedFilters.publisher || book.publisher.some( publisher =>publisher.publisher_name === selectedFilters.publisher))
+        (!selectedFilters.publisher || book.publisher_name===selectedFilters.publisher_name)
       );
     });
     setFilteredBooks(filteredResults);
   }, [selectedFilters, books]);
+
 
   const handleFilterChange = (filterType, filterValue) => {
     setSelectedFilters(prevFilters => ({
@@ -181,14 +182,14 @@ if (sortBy === "newest") {
         </div>
       </div>
       <div className="filter-books flex">
-        <div className="w-96 mt-10">
+      <div className="w-96 mt-10">
           <div>
-            <div className="flex ml-14 cursor-pointer" onClick={() => setShowCategoryFilter(!showCategoryFilter)}>
+            <div className=" ml-14 cursor-pointer" onClick={() => setShowCategoryFilter(!showCategoryFilter)}>
               <FontAwesomeIcon className="text-color-main mr-2 text-xl" icon={showCategoryFilter ? faChevronUp : faChevronDown} />
               <span className="text-color-main text-2xl font-garamond font-semibold">Thể loại</span>
             </div>
             {showCategoryFilter && categories.map((category, index) => (
-              <div key={index} className="box-book row h-auto w-64 ml-24">
+              <div key={index} className="flex box-book row h-auto w-64 ml-10">
                 <button
                   className={`text-xl font-garamond font-light ${selectedFilters.category === category.name ? 'text-[#513820]' : 'text-color-main-2'}`}
                   onClick={() => handleFilterChange('category', category.name)}
@@ -201,12 +202,12 @@ if (sortBy === "newest") {
           </div>
 
           <div>
-            <div className="flex ml-14 mt-10 cursor-pointer" onClick={() => setShowAuthorFilter(!showAuthorFilter)}>
+            <div className=" ml-14 mt-10 cursor-pointer" onClick={() => setShowAuthorFilter(!showAuthorFilter)}>
               <FontAwesomeIcon className="text-color-main mr-2 text-xl" icon={showAuthorFilter ? faChevronUp : faChevronDown} />
               <span className="text-color-main text-2xl font-garamond font-semibold">Tác giả</span>
             </div>
             {showAuthorFilter && authors.map((author, index) => (
-              <div key={index} className="box-book row h-auto w-64 ml-24">
+              <div key={index} className="flex box-book row h-auto w-64 ml-10">
                 <button
                   className={`text-xl font-garamond font-light ${selectedFilters.author === author.author_name ? 'text-[#513820]' : 'text-color-main-2'}`}
                   onClick={() => handleFilterChange('author', author.author_name)}
@@ -219,12 +220,12 @@ if (sortBy === "newest") {
           </div>
 
           <div>
-            <div className="flex ml-14 mt-10 cursor-pointer" onClick={() => setShowPublisherFilter(!showPublisherFilter)}>
+            <div className=" ml-14 mt-10 cursor-pointer" onClick={() => setShowPublisherFilter(!showPublisherFilter)}>
               <FontAwesomeIcon className="text-color-main mr-2 text-xl" icon={showPublisherFilter ? faChevronUp : faChevronDown} />
               <span className="text-color-main text-2xl font-garamond font-semibold">Nhà xuất bản</span>
             </div>
             {showPublisherFilter && publishers.map((publisher, index) => (
-              <div key={index} className="box-book row h-auto w-64 ml-24">
+              <div key={index} className="flex box-book row h-auto w-64 ml-10">
                 <button
                   className={`text-xl font-garamond font-light ${selectedFilters.publisher === publisher.publisher_name ? 'text-[#513820]' : 'text-color-main-2'}`}
                   onClick={() => handleFilterChange('publisher', publisher.publisher_name)}
@@ -240,18 +241,27 @@ if (sortBy === "newest") {
           <div className="main-books">
             <div className="books flex flex-wrap">
               {filteredBooks.map((book, index) => (
-                <div key={index} className="box-book row h-auto w-64 ml-10 mb-20">
+                <div key={index} className="box-book row h-auto w-64 ml-10 mb-20 book-card">
+                <h6 className="text-red active font-garamond text-xl font-semibold mr-6 text-left mb-2">
+    Sale&nbsp;{((1 - (book.total_pay / book.price)) * 100).toFixed(2)}%
+  </h6>
                   <Link
                     to="/detailBook"
                     onClick={() => setSelectedBook(book)}
                   >
-                    <img
-                      className="img-book h-80 w-60"
-                      src={`data:image/jpeg;base64,${book.galleryManage[0].thumbnail}`}
-                      alt=""
-                    />
+                    {book.galleryManage && book.galleryManage[0] && book.galleryManage[0].thumbnail ? (
+        <img
+          className="img-book h-80 w-60"
+          src={`data:image/jpeg;base64,${book.galleryManage[0].thumbnail}`}
+          alt={book.title}
+        />
+      ) : (
+        <div className="img-book-placeholder h-full w-full bg-gray-200 flex items-center justify-center">
+          No Image
+        </div>
+      )}
                   </Link>
-                  <div className="book-text">
+                  <div className="book-text text-center pb-2">
                     <div className="h-14">
                       <span className="text-color-main active font-garamond text-xl font-semibold mr-6"><i>{book.title}</i></span>
                     </div>
@@ -266,8 +276,8 @@ if (sortBy === "newest") {
                       </div>
                       <button
                       onClick={() => addToCart(book)}
-                      className="bg-backgrond--color hover:bg-color-main hover:text-white--color w-11/12 h-9 border border-color-main-2 rounded-md text-color-main active font-garamond text-1xl font-light mr-6"
-                    >
+                      className="bg-backgrond--color hover:bg-color-main hover:text-white--color w-11/12 h-9 border border-color-main-2 rounded-md text-color-main active font-garamond text-1xl font-light"
+                      >
                       Thêm vào giỏ hàng
                     </button>
                   </div>

@@ -61,7 +61,6 @@ export default function Home() {
   const { selectedCategory, setSelectedCategory } = useCategory();
 
 
-
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -116,7 +115,7 @@ export default function Home() {
                     to="/orderBuyNow"
                     onClick={() => setSelectedBook(book)}
                   >
-                                        <button className="btn bg-color-main-2 hover:bg-color-main w-40 h-9 border border-gray-400 rounded-md text-white active font-garamond text-1xl font-light mr-6">Mua ngay</button>
+                                        <button className=" bg-color-main-2 hover:bg-color-main w-52 h-10 border  rounded-md text-white active font-garamond text-1xl font-light mr-6">Mua ngay</button>
 
                   </Link>
                   </div>
@@ -126,7 +125,17 @@ export default function Home() {
                     to="/detailBook"
                     onClick={() => setSelectedBook(book)}
                   >
-                                        <img src={`data:image/jpeg;base64,${book.galleryManage[0].thumbnail}`} alt="" className="imageBook w-60 h-80 shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl" />
+                  {book.galleryManage && book.galleryManage[0] && book.galleryManage[0].thumbnail ? (
+        <img
+          className="imageBook w-60 h-80 shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl" 
+          src={`data:image/jpeg;base64,${book.galleryManage[0].thumbnail}`}
+          alt={book.title}
+        />
+      ) : (
+        <div className="img-book-placeholder h-80 w-60 bg-gray-200 flex items-center justify-center">
+          No Image
+        </div>
+      )}
 
                   </Link>
                   </div>
@@ -167,9 +176,21 @@ export default function Home() {
                     to="/detailBook"
                     onClick={() => setSelectedBook(book)}
                   >
-                                        <img src={`data:image/jpeg;base64,${book.galleryManage[0].thumbnail}`} alt="" className=" w-60 h-80 shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl" />
+                  {book.galleryManage && book.galleryManage[0] && book.galleryManage[0].thumbnail ? (
+        <img
+          className="imageBook w-60 h-80 shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl" 
+          src={`data:image/jpeg;base64,${book.galleryManage[0].thumbnail}`}
+          alt={book.title}
+        />
+      ) : (
+        <div className="img-book-placeholder h-80 w-60 bg-gray-200 flex items-center justify-center">
+          No Image
+        </div>
+      )}
 
-                  </Link>                    </div>
+                  </Link>              
+                  
+                  </div>
                     <div className="contentNA w-2/3 ml-[3%] mt-20">
                       <h3 className="title text-color-main-2 text-4xl font-garamond font-semibold ">{book.title}</h3>
                       <h6 className="author text-color-main-2  active font-garamond mb-4 text-xl font-semibold mr-6">- {book.authors.map(author => author.author_name).join(", ")}</h6>
@@ -179,7 +200,7 @@ export default function Home() {
                     to="/orderBuyNow"
                     onClick={() => setSelectedBook(book)}
                   >
-                                        <button className="btn bg-color-main-2 hover:bg-color-main w-40 h-9 border border-gray-400 rounded-md text-white active font-garamond text-1xl font-light mr-6">Mua ngay</button>
+                                        <button className=" bg-color-main-2 hover:bg-color-main w-52 h-10 border  rounded-md text-white active font-garamond text-1xl font-light mr-6">Mua ngay</button>
 
                   </Link>
                     </div>
