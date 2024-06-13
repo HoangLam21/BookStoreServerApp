@@ -480,7 +480,7 @@ export default function AddNewBook() {
             </div>
           </div>
           <div className='h-2/5 flex justify-center items-center'>
-            <button className="bg-primary--color text-[#fff] font-bold py-2 px-4 rounded-lg " onClick={handleAddBook}>
+            <button className="bg-primary--color text-[#fff] font-bold py-2 px-4 rounded-lg cursor-pointer" onClick={handleAddBook}>
                   Thêm sách
             </button>
         </div>

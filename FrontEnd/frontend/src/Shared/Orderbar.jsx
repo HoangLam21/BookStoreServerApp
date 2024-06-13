@@ -22,7 +22,7 @@ export default function Orderbar() {
   return (
     <div className='flex flex-col w-80 p-3 gap-4 hidden lg:flex'>
     <div className='flex justify-start items-center border-b border-border--lightcolor'>
-        <label className=' text-header--lightcolor text-base '>Danh sách nhập hàng</label>
+        <label className=' text-header--lightcolor text-base '>Danh sách đơn hàng của khách hàng</label>
       </div>
 
       <div className='flex flex-col flex-1 gap-4 overflow-auto pr-1 '>
@@ -30,7 +30,7 @@ export default function Orderbar() {
         <CusOrderList />
       </div>
       <div className='flex justify-center items-center border-b border-border--lightcolor'>
-        <label className=' text-header--lightcolor text-base'>Danh sách đơn hàng của khách hàng</label>
+        <label className=' text-header--lightcolor text-base'>Danh sách nhập hàng </label>
       </div>
       <div className='flex flex-col flex-1 gap-4 overflow-auto '>
         <StockOrderList />

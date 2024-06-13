@@ -37,8 +37,8 @@ const Login = () => {
             }
           });
           const result = response.data.result;
-          console.log('login2',result.fullname,result.avatar)
-          login2(result.fullname,result.avatar)
+          console.log('login2',result.fullname,result.avatar,result.id)
+          login2(result.fullname,result.avatar,result.id)
   
           console.log(response.data)
         } catch (error) {

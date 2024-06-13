@@ -20,6 +20,6 @@
   }
 
   .scrollable-table-container {
-    max-height: 200px; /* Đặt chiều cao cố định cho container */
+    max-height: 400px; /* Đặt chiều cao cố định cho container */
     overflow-y: auto;  /* Cho phép cuộn dọc nếu nội dung vượt quá chiều cao */
 }

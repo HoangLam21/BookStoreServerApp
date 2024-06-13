@@ -78,7 +78,9 @@ export default function AdminDetailBook() {
     const fetchAllBooks = async () => {
       try {
         const response = await axios.get("http://167.172.69.8:8010/BookStore/book/all");
+        const rs = response.data.result
         setAllBooks(response.data.result);
+        setFeedbackList(rs.feedback)
       } catch (error) {
         console.error("Failed to fetch books:", error);
       }
@@ -96,20 +98,20 @@ export default function AdminDetailBook() {
     }
   }, [selectedBook, allBooks]);
 
-  useEffect(() => {
-    const fetchFeedback = async () => {
-      try {
-        const response = await axios.get(`http://167.172.69.8:8010/BookStore/feedback/${selectedBook.id}`);
-        setFeedbackList(response.data.result);
-      } catch (error) {
-        console.error("Failed to fetch feedback:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchFeedback = async () => {
+  //     try {
+  //       const response = await axios.get(`http://167.172.69.8:8010/BookStore/feedback/${bookId}`);
+  //       setFeedbackList(response.data.result);
+  //     } catch (error) {
+  //       console.error("Failed to fetch feedback:", error);
+  //     }
+  //   };
 
-    if (selectedBook) {
-      fetchFeedback();
-    }
-  }, [selectedBook]);
+  //   if (selectedBook) {
+  //     fetchFeedback();
+  //   }
+  // }, [selectedBook]);
 
   const extractDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -124,13 +126,14 @@ export default function AdminDetailBook() {
   }
 
   const handleDeleteBook = async (event) => {
+    console.log("da vo deleete")
     event.preventDefault();
     toast.warn(
         <div className='flex flex-col'>
-         <p>Bạn có muốn xóa sách này</p>
-           <div className='flex w-full py-1 justify-between'>
-           <button onClick={confirmDelete}>Confirm</button>
-           <button onClick={() => toast.dismiss()}>Cancel</button>
+         <p className='w-full flex items-center justify-center pb-2'>Bạn có muốn xóa sách này</p>
+           <div className='flex px-4 py-1 justify-between p-2'>
+           <button onClick={confirmDelete}>Đồng ý</button>
+           <button onClick={() => toast.dismiss()}>Hủy</button>
            </div>
          
         </div>,
@@ -160,7 +163,7 @@ export default function AdminDetailBook() {
          
             console.log('Book deleted:', response.data);
             // Add any additional logic after successful deletion, e.g., update state or UI
-            toast.success("Book deleted successfully!", {
+            toast.success("Xóa sách thành công!", {
               position: "top-center",
               autoClose: 2000,
               hideProgressBar: false,
@@ -239,12 +242,12 @@ export default function AdminDetailBook() {
                 <FontAwesomeIcon className="text-color-main mt-1 text-xl" icon={faArrowRight} onClick={openDialog} />
               </div> */}
               <div className="flex mt-10">
-                <h3 className="text-color-main text-xl mr-2 font-garamond font-semibold">Xóa sách</h3>
-                <FontAwesomeIcon className="text-color-main mt-1 text-xl" icon={faTrash} style={{color: "#513820",}} onClick={handleDeleteBook}/>
+                <h3 className="text-color-main text-xl mr-2 font-garamond font-semibold ">Xóa sách</h3>
+                <FontAwesomeIcon className="text-color-main mt-1 text-xl cursor-pointer" icon={faTrash} style={{color: "#513820",}} onClick={handleDeleteBook}/>
               </div>
               <div className="flex mt-10">
-                <h3 className="text-color-main text-xl mr-2 font-garamond font-semibold">Chỉnh sửa thông tin sách</h3>
-                <FontAwesomeIcon className="text-color-main mt-1 text-xl" icon={faArrowRight}  onClick={openDialog}/>
+                <h3 className="text-color-main text-xl mr-2 font-garamond font-semibold  ">Chỉnh sửa thông tin sách</h3>
+                <FontAwesomeIcon className="text-color-main mt-1 text-xl cursor-pointer" icon={faArrowRight}  onClick={openDialog}/>
               </div>
             </div>
           </div>
@@ -260,11 +263,11 @@ export default function AdminDetailBook() {
         
         <div className="p-5 overflow-y-auto max-h-screen">
           
-          {feedbackList.length > 0 ? (
+        {selectedBook.feedback.length > 0 ?  (
             <div>
               <h2 className=" font-garamond text-header--lightcolor flex items-center mt-3">Danh sách đánh giá:</h2>
               <ul className="list-disc ml-5">
-                {feedbackList.map((feedback, index) => (
+              {selectedBook.feedback.map((feedback, index) => (
                   <div key={index} className="flex mb-4">
                     <img className="w-12 h-12 rounded-full" src={`data:image/jpeg;base64,${feedback.avatar}`} alt="" />
                     <div className="ml-4">
@@ -742,7 +745,7 @@ function EditBookInfor({ bookId }) {
           </div>
         </div>
         <div className='h-2/5 flex justify-center items-center'>
-          <button className="bg-primary--color text-[#fff] font-bold py-2 px-4 rounded-lg " onClick={handleEditBook}>
+          <button className="bg-primary--color text-[#fff] font-bold py-2 px-4 rounded-lg cursor-pointer " onClick={handleEditBook}>
             Cập nhật thông tin sách
           </button>
       </div>

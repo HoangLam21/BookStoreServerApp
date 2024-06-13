@@ -79,61 +79,35 @@ export default function OrderDetail() {
         }
     }
     const handleDeleteStock = async () => {
-        toast.warn(
-            <div className='flex flex-col'>
-             <p>Bạn có muốn xóa đơn hàng này</p>
-               <div className='flex w-full py-1 justify-between'>
-               <button onClick={confirmDelete}>Confirm</button>
-               <button onClick={() => toast.dismiss()}>Cancel</button>
-               </div>
-             
-            </div>,
-            {
-              position: "top-center",
-              autoClose: false,
-              closeOnClick: true,
-              draggable: true,
-              pauseOnHover: true,
-              progress: undefined
+        console.log("da vo xoa don hang")
+        const token = localStorage.getItem('token');
+
+        try {
+          const response = await axios.delete(DeleteUrl, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
             }
-          );
+          });
+          console.log('Stock deleted:', response.data);
+          // Add any additional logic after successful deletion, e.g., update state or UI
+          toast.success("Stock deleted successfully!", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined
+          });
+        } catch (error) {
+          console.error('Error deleting stock:', error);
+          if (error.response?.data) {
+            console.error("Error response:", error.response.data);
+          }
         };
       
-        const confirmDelete = async () => {
-          const token = localStorage.getItem('token');
-          try {
-            const response = await axios.delete(DeleteUrl, {
-              headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-              }
-            });
-            console.log('Stock deleted:', response.data);
-            // Add any additional logic after successful deletion, e.g., update state or UI
-            toast.success("Stock deleted successfully!", {
-              position: "top-center",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined
-            });
-          } catch (error) {
-            console.error('Error deleting stock:', error);
-            if (error.response?.data) {
-              console.error("Error response:", error.response.data);
-            }
-            toast.error("Error deleting stock. Please try again later.", {
-              position: "top-center",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined
-            });
-          }
+     
       };
     
       return (

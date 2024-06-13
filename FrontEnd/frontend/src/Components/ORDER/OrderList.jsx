@@ -155,7 +155,7 @@ export default function OrderList() {
     };
 
     return (
-        <div className='w-full h-full'>
+        <div className='w-full h-full flex flex-col'>
             <div className="list-chat-search relative flex items-center gap-10 w-full border-b h-16 -top-0 border-border--lightcolor">
                 <div className='w-2/5 relative flex items-center'>
                     <input type="text" value={searchStock} placeholder="Tìm kiếm" className="search-input border text-primary--color border-border--lightcolor h-11 w-full rounded-lg relative pl-4 pr-10" onChange={handleSearchStock} />
@@ -165,9 +165,9 @@ export default function OrderList() {
 
             <ToastContainer />
 
-            <div className="KH_maincontent_footer_content w-full h-full text-primary--color overflow-auto rounded-lg shadow md:overflow-hidden">
-                <div className="overflow-x-auto md:overflow-hidden md:w-full sm:w-[96%]">
-                    <table className="min-w-full">
+            <div className="KH_maincontent_footer_content w-full h-5/6 text-primary--color">
+                <div className=" scrollable-table-container ">
+                    <table className=" w-full h-full">
                         <thead className="bg-header--lightcolor text-primary--color whitespace-nowrap">
                             <tr>
                                 <th className='w-1/7 text-center py-2'>Mã hóa đơn</th>

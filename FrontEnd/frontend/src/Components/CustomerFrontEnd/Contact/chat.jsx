@@ -1,160 +1,72 @@
 
 
-
-
-import React, { useState, useEffect, useRef, useContext } from 'react';
-import { IoSearchOutline } from "react-icons/io5";
+import React, { useState, useEffect,useContext } from 'react';
 import axios from 'axios';
 import WebSocketChat from './webSocketChat';
-import io from 'socket.io-client';
-import './chat.css'
 import { AuthContext } from '../../context/AuthContext';
-import { UserContext } from "../../context/UserContext";
+import './chat.css'
 
 
-
-const SOCKET_SERVER_URL = "http://167.172.69.8:8010/BookStore/";
-const MESSAGEADD_URL = "http://167.172.69.8:8010/BookStore/message/add";
 const MESSAGELOAD_URL = "http://167.172.69.8:8010/BookStore/message/loadchat";
 
-const MESSAGEALL_URL = 'http://167.172.69.8:8010/BookStore/message/all';
 
 
-export default function ChattingContent() {
-    const [searchMess, setSearchMess] = useState('');
-    const socket = useRef(null);
-    const [messagelistdata, setMessageListData] = useState([]);
-    const { fullname,avatar,login2, logout2} = useContext(UserContext)
+export default function ChattingContent({token}) {
+    const [messageContent, setMessageContent] = useState([]);
+    const { id, username  } = useContext(AuthContext);
 
 
+
+   
     
-    const { token, id, login, logout } = useContext(AuthContext);
-
-
     useEffect(() => {
-        const connectWebSocket = () => {
-            const ws = new WebSocket(SOCKET_SERVER_URL);
-            ws.onopen = () => {
-                console.log('WebSocket connection established.');
-                socket.current = ws; 
-            };
-            ws.onclose = () => {
-                console.log('WebSocket connection closed.');
-            };
-            ws.onerror = (error) => {
-                console.error('WebSocket error:', error);
-            };
-        };
-
-        connectWebSocket(); 
-    }, []);
-
-
-    useEffect(() => {
-        localStorage.setItem('token', token);
-
-        const fetchUserData = async () => {
-            const token = localStorage.getItem('token');
-
+        const fetchMessage = async () => {
             if (!token) {
                 console.error('No token found, please log in.');
                 return;
             }
 
             try {
-                const response = await axios.get(MESSAGEALL_URL, {
+                const response = await axios.get(MESSAGELOAD_URL, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 });
                 const result = response.data.result;
-                setMessageListData(result);
-                console.log(result);
+                console.log(id)
+               
+                const messages = result.flatMap(messages => messages).filter(message =>
+                    (parseInt(message.sender_id) === parseInt(id) && parseInt(message.receiver_id) === 1) ||
+                    (parseInt(message.sender_id) === 1 && parseInt(message.receiver_id) === parseInt(id))
+                );
+                setMessageContent(messages);
+              
+                console.log("mess", messageContent);
+
             } catch (error) {
                 console.error('Error fetching user data:', error);
                 if (error.response?.data) {
-                    console.error("Error response:", error.response?.data)
+                    console.error("Error response:", error.response?.data);
                 }
             }
         };
-        fetchUserData();
-    }, []);
+        fetchMessage();
+    }, [token]);
 
-    useEffect(() => {
-        localStorage.setItem('token', token);
 
-        const fetchUserData = async () => {
-            const token = localStorage.getItem('token');
-
-            if (!token) {
-                console.error('No token found, please log in.');
-                return;
-            }
-
-            try {
-                const response = await axios.get(MESSAGEALL_URL, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                const result = response.data.result;
-                setMessageListData(result);
-                console.log(result);
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-                if (error.response?.data) {
-                    console.error("Error response:", error.response?.data)
-                }
-            }
-        };
-        fetchUserData();
-    }, [])
-
-    const uniqueUsers = messagelistdata.filter((item, index, self) => 
-        index === self.findIndex((t) => t.receiver_id === item.receiver_id)
-    );
-
-    const filteredData = uniqueUsers.filter((item) =>
-        item.receiver_name && item.receiver_name.toLowerCase().includes(searchMess.toLowerCase())
-    );
-
-    
-
-    const Avatar = ({ avaSRC }) => (
-        <div className="userava img w-10 h-10 rounded-full">
-            <img src={`data:image/jpeg;base64, ${avaSRC}`} alt="" style={{ borderRadius: '50%' }} />
-        </div>
-    );
-
-    const [receiverId, setReceiverId] = useState(null);
-    const [receiverName, setReceiverName] = useState('');
-    const [receiverAvatar, setReceiverAvatar] = useState('');
-
-    const handleReceiverSelection = (receiver) => {
-        setReceiverId(receiver.receiver_id);
-        setReceiverName(receiver.receiver_name);
-        setReceiverAvatar(receiver.receiver_avatar);
-    };
-
+    console.log("messageContent", messageContent);
+   
     return (
-        <div className="maincontent flex border border-[#a89b8f] rounded-md">
-            <div className="maincontent_left ">
-                
-                
-            </div>
-            <div className="maincontent_right w-96 h-96">
-                <div className="chatbox-header flex justify-between pr-4 pb-8 items-center">
+        <div className="maincontent1 border border-color-main-2 flex h-full w-full  rounded-lg overflow-hidden gap-8">
+            
+            <div className="h-full flex flex-col overflow-hidden gap-4 w-96">
+               
+                <div className="maincontent_right chatbox-body w-full h-full  overflow-auto">
                     
-                </div>
-                <div className="chatbox-body w-full h-5/6 overflow-auto">
-                    <WebSocketChat
-                        senderId={15}
-                        receiverId={1}
-                        senderName={fullname}
-                        senderAvatar={avatar}
-                    />
-                </div>
+                <WebSocketChat  messages={messageContent}/>
+
+                </div> 
             </div>
         </div>
     );
-};
+}

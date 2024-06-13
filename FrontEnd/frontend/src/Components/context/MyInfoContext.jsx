@@ -4,6 +4,7 @@ export const MyInfoContext = createContext();
 
 export const MyInfoProvider = ({ children }) => {
   const [fullname, setFullname] = useState(null);
+  const [id, setId] = useState(null);
   const [avatar, setAvatar] = useState(null);
 
 
@@ -21,12 +22,14 @@ export const MyInfoProvider = ({ children }) => {
   }, []);
 
 
-  const login2 = (newFullName, newAvatar) => {
+  const login2 = (newFullName, newAvatar, newId) => {
     setFullname(newFullName);
     setAvatar(newAvatar)
+    setId(newId)
     
     localStorage.setItem('fullname', newFullName);
     localStorage.setItem('avatar', newAvatar)
+    localStorage.setItem('id', newId)
   };
 
   const logout2 = () => {
@@ -35,12 +38,13 @@ export const MyInfoProvider = ({ children }) => {
    
     localStorage.removeItem('fullname');
     localStorage.removeItem('avatar');
+    localStorage.setItem('id')
 
 
   };
 
   return (
-    <MyInfoContext.Provider value={{fullname,avatar, login2, logout2 }}>
+    <MyInfoContext.Provider value={{fullname,avatar,id, login2, logout2 }}>
       {children}
     </MyInfoContext.Provider>
   );
