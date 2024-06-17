@@ -74,8 +74,8 @@ export default function CustomerList() {
                 </div>
             </div>
             <div className="KH_maincontent_footer_content w-full h-full text-primary--color overflow-auto rounded-lg shadow md:overflow-hidden">
-                <div className="overflow-auto md:overflow-hidden md:full w-96 ml-3 sm:w-[96%]">
-                    <table className="w-full">
+                <div className="scrollable-table-container">
+                    <table className="w-full ">
                         <thead className="text-primary--color whitespace-nowrap">
                             <tr>
                                 <th className='w-1/5 text-center'>Mã khách hàng</th>
