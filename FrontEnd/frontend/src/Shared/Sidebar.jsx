@@ -31,7 +31,7 @@ export default function Sidebar() {
         draggable: true,
         progress: undefined,
       });
-      navigate("/admin");
+      navigate("/manage");
   }
   return (
     <div className='flex flex-col bg-backgrond--color lg:w-60 lg:p-3 w-14 '>

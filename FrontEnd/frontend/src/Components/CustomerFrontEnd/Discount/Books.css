@@ -126,3 +126,6 @@
   .mr-6 {
     margin-right: 1.5rem; /* Tailwind CSS utility class for margin-right */
   }
+  .filter-books{
+    width:100%;
+  }
