@@ -346,9 +346,9 @@ export default function StockOrder() {
                     <table className="min-w-full">
                         <thead className="bg-header--lightcolor text-primary--color">
                             <tr>
-                                <th className='w-1/5 text-center py-2'>Mã đơn hàng</th>
+                                <th className='w-1/5 text-center py-2'>Mã nhập hàng</th>
                                 <th className='w-1/6 text-center py-2'>Mã nhân viên</th>
-                                <th className='w-1/5 text-center py-2'>Ngày hóa đơn</th>
+                                <th className='w-1/5 text-center py-2'>Ngày nhập</th>
                                 <th className='w-1/6 text-center py-2'>Tổng tiền</th>
                                 <th className='w-1/3 text-center py-2'>Trạng thái</th>
                                 <th className='w-5/12 text-center py-2'>Xác nhận</th>
@@ -395,23 +395,10 @@ export default function StockOrder() {
         {showAddStock && (
             <AddStock trigger={setshowAddStock} setTrigger={setshowAddStock}>
                 <Overlay isOpen={overlayVisible} onClose={closeDialog}>
-                    <h2 className='text-header--lightcolor border-b border-border--color p-2'>Thêm hóa đơn nhập hàng</h2>
+                    <h2 className='text-header--lightcolor border-b border-border--color p-4'>Thêm hóa đơn nhập hàng</h2>
                     <div className='flex flex-col w-full h-full'>
-                        <div className="HDNH_maincontent_body1 flex gap-8 py-4 text-primary--color w-full h-1/6 items-center">
-                            <div className="body1_stocknumber w-32 h-full flex justify-center items-center border-2 rounded-xl border-primary--color">{newOrderId}</div>
-                            <div className="body1_des flex flex-col gap-4">
-                                <div className={stockfinfor}>
-                                    <label for="stockdate" className={stockInfTitle}>Ngày tạo hóa đơn: </label>
-                                    <div className="stockdate">{formattedDate}</div>
-                                </div>
-                                <div className={classNames(stockfinfor, 'flex items-center')}>
-                                    <label for="staffnumber" className={stockInfTitle}>Nhân viên tạo: </label>
-                                    <input type="text" className="border-2 h-7 border-border--color rounded-md px-2"/>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div className='w-full h-4/6 flex overflow-hidden'>
+                        <div className='w-full h-5/6 flex overflow-hidden'>
                             <div className='grid md:grid-cols-3 lg:grid-cols-5 grid-cols-1 w-2/6 gap-4 h-full md:w-2/3 lg:w-3/4 overflow-auto pr-2'>
                                 {booklistdata.map((book, index) => (
                                     <ProductItem key={index} imageUrl={book.galleryManage[0]?.thumbnail || ''} productName={book.title} price={book.price} addToCart={() => addToCart(book)} />
@@ -468,7 +455,7 @@ export default function StockOrder() {
                             </div>
                         </div>
 
-                        <div className='w-full mt-10 flex justify-center items-center'>
+                        <div className='w-full mt-10 flex flex-row justify-center items-center '>
                             <button
                                 onClick={handleAddOrder}
                                 className=" bg-primary--color text-white--color h-10 w-52 rounded-full ml-4 cursor-pointer hover:opacity-70 border text-xs">
