@@ -4,6 +4,8 @@ import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import logo from "../Assets/Beige And Blue Minimal Modern Book Store Logo (1).png";
 import { MyInfoContext } from '../../Components/context/MyInfoContext';
+
+
 const WebSocketChat = ({ receiver_id, receiver_avatar, messageContentList = [] }) => {
     const stompClientRef = useRef(null);
     const [connected, setConnected] = useState(false);
@@ -13,46 +15,52 @@ const WebSocketChat = ({ receiver_id, receiver_avatar, messageContentList = [] }
     const { id, fullname, avatar } = useContext(MyInfoContext);
 
     useEffect(() => {
-        console.log(username)
         const connect = () => {
+            console.log('Opening Web Socket...');
             const socket = new SockJS('http://167.172.69.8:8010/BookStore/ws');
             stompClientRef.current = Stomp.over(socket);
 
             stompClientRef.current.connect({}, (frame) => {
                 console.log('Connected: ' + frame);
 
-                setTimeout(()=>{
+                // Đăng ký lắng nghe tin nhắn công khai (public)
+                if (!subscribedRef.current.public) {
                     stompClientRef.current.subscribe('/topic/public', (message) => {
                         showMessage(JSON.parse(message.body));
                     });
-                },1000)
-                setTimeout(()=>{
+                    subscribedRef.current.public = true;
+                }
+
+                // Đăng ký lắng nghe tin nhắn riêng tư (private)
+                if (!subscribedRef.current.private) {
                     stompClientRef.current.subscribe('/queue/' + username, (message) => {
                         showMessage(JSON.parse(message.body));
                     });
-                },1000)
-                
+                    subscribedRef.current.private = true;
+                }
 
-               
-                // setTimeout(function() {
-                //     stompClientRef.current.subscribe('/topic/public', (message) => {
-                //         showMessage(JSON.parse(message.body));
-                //     });
-                //  });
                 setConnected(true);
-
-
             }, (error) => {
                 console.error('Error: ' + error);
                 setConnected(false);
-                // Attempt reconnection after a delay
+                // Xử lý reconnect sau một khoảng thời gian
                 // setTimeout(connect, 10000);
             });
-
         };
 
         connect();
-    }, []);
+
+        // Cleanup function
+        return () => {
+            if (stompClientRef.current) {
+                stompClientRef.current.disconnect();
+                setConnected(false);
+                subscribedRef.current.public = false;
+                subscribedRef.current.private = false;
+            }
+        };
+    }, [username]);
+
     
     useEffect(() => {
         const messagesDiv = document.getElementById('messages');
@@ -60,7 +68,6 @@ const WebSocketChat = ({ receiver_id, receiver_avatar, messageContentList = [] }
         messageContentList.forEach(message => showMessage(message));
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }, [messageContentList]);
-
    
 
     const showMessage = (message) => {
