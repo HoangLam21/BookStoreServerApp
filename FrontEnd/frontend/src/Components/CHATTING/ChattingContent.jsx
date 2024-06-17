@@ -5,7 +5,7 @@ import WebSocketChat from './WebSocketChat';
 import {MyInfoContext} from '../../Components/context/MyInfoContext'
 
 const SOCKET_SERVER_URL = "http://167.172.69.8:8010/BookStore/";
-const MESSAGELOAD_URL = "http://167.172.69.8:8010/BookStore/message/loadchat";
+const MESSAGELOAD_URL = "http://167.172.69.8:8010/BookStore/message/loadstaffchat";
 const MESSAGEALL_URL = "http://167.172.69.8:8010/BookStore/message/all";
 
 
@@ -56,11 +56,11 @@ export default function ChattingContent() {
 
     const handleClickCustomer = (customer) => {
        
-        const receiver_id = customer.sender_id === id? customer.receiver_id : customer.sender_id
+        const receiver_id = customer.receiver_id 
 
         console.log(receiver_id)
         setReceiver_Id(receiver_id);
-        setSenderName(customer.sender_id === id ? customer.receiver_name : customer.sender_name);
+        setSenderName(customer.receiver_name);
         setReciver_Ava(customer.receiver_avatar);
 
         const messages = loadmessages.flatMap(messages => messages).filter(message =>
@@ -75,7 +75,7 @@ export default function ChattingContent() {
  
 
     const getTimeAgo = (messageTimestamp) => {
-        if (!messageTimestamp) return 'Unknown time';
+        if (!messageTimestamp) return '';
     
         const createdAt = new Date(messageTimestamp);
         if (isNaN(createdAt)) return 'Invalid date';
@@ -134,12 +134,16 @@ export default function ChattingContent() {
                                 <Avatar avaSRC={mess.receiver_avatar} />
                                 <div className="sm:contacts_item_content sm:unread sm:flex-1 sm:flex sm:flex-col whitespace-nowrap overflow-hidden hidden">
                                     <span className="user_inf font-medium">{mess.receiver_name}</span>
-                                    <span className='text-xs'>{mess.message_content}</span>
+                                    <span className='text-xs'> {mess.message_content === null || mess.message_content === '' ? "Bắt đầu đoạn chat" : mess.message_content}</span>
                                 </div>
                                 <div className='sm:w-20 sm:flex sm:flex-col sm:justify-center sm:items-center sm:gap-1 hidden overflow-hidden'>
+                                {mess.message_content !== null && mess.message_content !== '' && (
                                     <div className="numbermess unread bg-primary--color w-4 h-4 rounded-full">
-                                        <div className="numbermessnow flex justify-center items-center text-xs text-white--color">{1}</div>
+                                        <div className="numbermessnow flex justify-center items-center text-xs text-white--color">
+                                            {1}
+                                        </div>
                                     </div>
+                                )}
                                     <div className='w-full text-xs whitespace-nowrap flex items-center justify-start'>{getTimeAgo(mess.createAt)}</div>
                                 </div>
                             </div>
@@ -168,3 +172,4 @@ export default function ChattingContent() {
         </div>
     );
 }
+
