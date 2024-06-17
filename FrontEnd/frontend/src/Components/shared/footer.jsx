@@ -34,7 +34,7 @@ export default function Footer(){
             </div>
         </div>
         <div className="part mt-7 w-56">
-        <p className="font-garamond w-28 text-2xl font-semibold mr-6 text-color-main">cửa hàng</p>
+        <p className="font-garamond w-28 text-2xl font-semibold mr-6 text-color-main">Cửa hàng</p>
         <div>
         <p style={{ color: '#a89b8f' }} className="active font-garamond text-xl font-semibold mr-6">Chi nhánh 1 </p>
         <p style={{ color: '#513820' }} className="active font-garamond text-l mb-3 font-semibold mr-6">Trường Đại học Công nghệ Thông tin, Đại học Quốc gia Thành phố Hồ Chí Minh </p>

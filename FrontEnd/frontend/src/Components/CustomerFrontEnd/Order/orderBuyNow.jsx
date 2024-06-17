@@ -84,42 +84,48 @@ export default function OrderBuyNow() {
   };
 
   const handleOrder = () => {
-    const order_details = [{
-      book_id: selectedBook.id,
-      quantity: quantity,
-    }];
-    
-    const fullAddress = `${detailAdress ? detailAdress : ''}`;
-
-    const orderData = {
-      fullname: fullname,
-      order_note: orderNote,
-      address: fullAddress,
-      phonenumber: phonenumber,
-      order_details: order_details // Ensure this is an array
-    };
-
-    console.log("Order Data: ", orderData);
-
-    axios.post("http://167.172.69.8:8010/BookStore/order/add", orderData, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then(response => {
-        console.log("Order created successfully:", response.data);
-        setOrderId(response.data.result.id);
-        if (showPaymentOptions === true) {
-          console.log("vo roi")
-          payForOrder(response.data.result.id); 
-        }
-        else{
-          navigate("/")
+    if (!token) {
+      alert("Vui lòng đăng nhập để mua hàng.");
+      return; 
+    }else{
+      const order_details = [{
+        book_id: selectedBook.id,
+        quantity: quantity,
+      }];
+      
+      const fullAddress = `${detailAdress ? detailAdress : ''}`;
+  
+      const orderData = {
+        fullname: fullname,
+        order_note: orderNote,
+        address: fullAddress,
+        phonenumber: phonenumber,
+        order_details: order_details // Ensure this is an array
+      };
+  
+      console.log("Order Data: ", orderData);
+  
+      axios.post("http://167.172.69.8:8010/BookStore/order/add", orderData, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
       })
-      .catch(error => {
-        console.error("Error creating order:", error);
-      });
+        .then(response => {
+          console.log("Order created successfully:", response.data);
+          setOrderId(response.data.result.id);
+          if (showPaymentOptions === true) {
+            console.log("vo roi")
+            payForOrder(response.data.result.id); 
+          }
+          else{
+            navigate("/")
+          }
+        })
+        .catch(error => {
+          console.error("Error creating order:", error);
+        });
+    }
+    
   };
 
   const cartTotal = () => {

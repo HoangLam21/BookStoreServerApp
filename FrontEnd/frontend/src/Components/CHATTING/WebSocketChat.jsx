@@ -13,51 +13,47 @@ const WebSocketChat = ({ receiver_id, receiver_avatar, messageContentList = [] }
     const { id, fullname, avatar } = useContext(MyInfoContext);
 
     useEffect(() => {
+        console.log(username)
         const connect = () => {
             const socket = new SockJS('http://167.172.69.8:8010/BookStore/ws');
-            const stompClient = Stomp.over(socket);
-            stompClientRef.current = stompClient;
+            stompClientRef.current = Stomp.over(socket);
 
-            const onConnect = (frame) => {
+            stompClientRef.current.connect({}, (frame) => {
                 console.log('Connected: ' + frame);
+
+                setTimeout(()=>{
+                    stompClientRef.current.subscribe('/topic/public', (message) => {
+                        showMessage(JSON.parse(message.body));
+                    });
+                },1000)
+                setTimeout(()=>{
+                    stompClientRef.current.subscribe('/queue/' + username, (message) => {
+                        showMessage(JSON.parse(message.body));
+                    });
+                },1000)
+                
+
+               
+                // setTimeout(function() {
+                //     stompClientRef.current.subscribe('/topic/public', (message) => {
+                //         showMessage(JSON.parse(message.body));
+                //     });
+                //  });
                 setConnected(true);
 
-                if (!subscribedRef.current.public) {
-                    stompClient.subscribe('/topic/public', (message) => {
-                        showMessage(JSON.parse(message.body));
-                    });
-                    subscribedRef.current.public = true;
-                }
 
-                if (!subscribedRef.current.private) {
-                    stompClient.subscribe('/queue/' + username, (message) => {
-                        showMessage(JSON.parse(message.body));
-                    });
-                    subscribedRef.current.private = true;
-                }
-            };
-
-            const onError = (error) => {
+            }, (error) => {
                 console.error('Error: ' + error);
                 setConnected(false);
-                // Optional: Attempt reconnection after a delay
+                // Attempt reconnection after a delay
                 // setTimeout(connect, 10000);
-            };
+            });
 
-            stompClient.connect({}, onConnect, onError);
         };
 
         connect();
-
-        return () => {
-            if (stompClientRef.current && stompClientRef.current.connected) {
-                stompClientRef.current.disconnect(() => {
-                    console.log('Disconnected');
-                });
-            }
-        };
-    }, [username]);
-
+    }, []);
+    
     useEffect(() => {
         const messagesDiv = document.getElementById('messages');
         messagesDiv.innerHTML = '';

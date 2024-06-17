@@ -89,40 +89,44 @@ export default function OrderCus() {
       alert("Vui lòng đăng nhập để mua hàng.");
       return; 
     }
-    const order_details = cartItems.map(item => ({
-      book_id: item.id,
-      quantity: item.quantity
-    }));
-    const fullAddress = `${detailAdress ? detailAdress : ''}`;
-
-    const orderData = {
-      fullname: fullname,
-      order_note: orderNote,
-      address: fullAddress,
-      phonenumber: phonenumber,
-      order_details: order_details
-    };
-    console.log("Order Data: ", orderData);
-
-    axios.post("http://167.172.69.8:8010/BookStore/order/add", orderData, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then(response => {
-        console.log("Order created successfully:", response.data);
-        setOrderId(response.data.result.id);
-        if (showPaymentOptions === true) {
-          console.log("vo roi")
-          payForOrder(response.data.result.id); 
-        }
-        else{
-          navigate("/")
+    else{
+      const order_details = cartItems.map(item => ({
+        book_id: item.id,
+        quantity: item.quantity
+      }));
+      const fullAddress = `${detailAdress ? detailAdress : ''}`;
+  
+      const orderData = {
+        fullname: fullname,
+        order_note: orderNote,
+        address: fullAddress,
+        phonenumber: phonenumber,
+        order_details: order_details
+      };
+      console.log("Order Data: ", orderData);
+  
+      axios.post("http://167.172.69.8:8010/BookStore/order/add", orderData, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
       })
-      .catch(error => {
-        console.error("Error creating order:", error);
-      });
+        .then(response => {
+          console.log("Order created successfully:", response.data);
+          setOrderId(response.data.result.id);
+          if (showPaymentOptions === true) {
+            console.log("vo roi")
+            payForOrder(response.data.result.id); 
+          }
+          else{
+            navigate("/")
+          }
+        })
+        .catch(error => {
+          console.error("Error creating order:", error);
+        });
+
+    }
+    
   };
 
   const cartTotal = () => {

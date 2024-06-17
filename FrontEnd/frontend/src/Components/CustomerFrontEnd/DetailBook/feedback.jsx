@@ -75,14 +75,14 @@ const Feedback = () => {
           {selectedBook.feedback && selectedBook.feedback.length > 0 ? (
             <div>
               <h2 className="text-color-main font-garamond text-lg font-semibold mt-3">Danh sách đánh giá:</h2>
-              <ul className="list-disc ml-5">
+              <ul className="list-disc ml-5 mt-5">
                 {selectedBook.feedback.map((feedback, index) => (
                   <div key={index} className="flex mb-4">
                     <img className="w-12 h-12 rounded-full" src={`data:image/jpeg;base64,${feedback.avatar}`} alt="" />
                     <div className="ml-4">
-                      <p className="text-color-main font-garamond text-xl">{feedback.fullname}</p>
+                      <p className="text-color-main font-garamond  text-xl">{feedback.fullname}</p>
                       <Rating value={feedback.rating} />
-                      <p className="text-color-main font-garamond text-xl">{feedback.feedback_comment}</p>
+                      <p className="text-color-main font-garamond text-light text-xl">{feedback.feedback_comment}</p>
                     </div>
                   </div>
                 ))}
